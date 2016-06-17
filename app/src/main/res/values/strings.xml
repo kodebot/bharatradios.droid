@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Bharat Radios</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="list_item_radio_avatar_desc">Radio avatar image</string>
+    <string name="list_item_radio_fav_desc">Radio favorite action</string>
+    <string name="list_item_radio_secondary_action_desc">Radio secondary action</string>
+</resources>
