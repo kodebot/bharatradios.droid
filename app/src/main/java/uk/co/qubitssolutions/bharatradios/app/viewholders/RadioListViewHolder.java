@@ -5,6 +5,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,16 +20,14 @@ public class RadioListViewHolder extends RecyclerView.ViewHolder implements  Aud
     TextView title;
     TextView subtitle;
     ImageView favImage;
-    ImageView secondaryActionImage;
     String radioUrl;
     public RadioListViewHolder(View itemView) {
         super(itemView);
 
         title = (TextView)itemView.findViewById(R.id.list_item_radio_title);
         subtitle = (TextView)itemView.findViewById(R.id.list_item_radio_subtitle);
-        favImage = (ImageView)itemView.findViewById(R.id.list_item_radio_fav);
-        secondaryActionImage = (ImageView)itemView.findViewById(R.id.list_item_radio_secondary_action);
-        CardView radioItem = (CardView) itemView.findViewById(R.id.radio_item);
+        favImage = (ImageView)itemView.findViewById(R.id.action_list_item_radio_fav);
+        LinearLayout radioItem = (LinearLayout) itemView.findViewById(R.id.radio_item);
         radioItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
