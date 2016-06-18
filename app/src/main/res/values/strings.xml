@@ -8,4 +8,8 @@
     <string name="list_item_radio_avatar_desc">Radio avatar image</string>
     <string name="list_item_radio_fav_desc">Radio favorite action</string>
     <string name="list_item_radio_secondary_action_desc">Radio secondary action</string>
+    <string name="nav_language_title">Languages</string>
+    <string name="nav_preferences_title">Preferences</string>
+    <string name="nav_about_title">About</string>
+    <string name="nav_help_title">Help</string>
 </resources>

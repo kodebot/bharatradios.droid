@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/radio_player_controls"
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    android:layout_gravity="bottom"
+    android:layout_weight="0"
+    android:padding="@dimen/card_view_medium_padding">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <android.support.v7.widget.AppCompatImageButton
+                    android:id="@+id/action_radio_player_previous"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/image_button_background"
+                    android:clickable="true"
+                    android:foreground="?android:selectableItemBackground"
+                    android:padding="@dimen/image_button_medium_padding"
+                    android:src="@drawable/ic_skip_previous_black_24dp_wrapped"
+                    android:tint="@color/colorAccent" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <android.support.v7.widget.AppCompatImageButton
+                    android:id="@+id/action_radio_player_play_stop_toggle"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/ic_play_arrow_black_24dp_wrapped"
+                    android:clickable="true"
+                    android:foreground="?android:selectableItemBackground"
+                    android:padding="@dimen/image_button_medium_padding"
+                    app:backgroundTint="@color/colorAccent" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <android.support.v7.widget.AppCompatImageButton
+                    android:id="@+id/action_radio_player_next"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/image_button_background"
+                    android:clickable="true"
+                    android:foreground="?android:selectableItemBackground"
+                    android:padding="@dimen/image_button_medium_padding"
+                    android:src="@drawable/ic_skip_next_black_24dp_wrapped"
+                    android:tint="@color/colorPrimary" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:baselineAligned="false">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+
+                    <android.support.v7.widget.AppCompatImageButton
+                        android:id="@+id/action_radio_player_volume_off"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ic_volume_off_black_24dp_wrapped"
+                        android:clickable="true"
+                        android:foreground="?android:selectableItemBackground"
+                        android:padding="@dimen/image_button_medium_padding"
+                        app:backgroundTint="@color/colorAccent" />
+
+                </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <SeekBar
+                    android:id="@+id/action_radio_player_volume_seek_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+                <android.support.v7.widget.AppCompatImageButton
+                    android:id="@+id/action_radio_player_volume_full"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_volume_up_black_24dp"
+                    android:clickable="true"
+                    android:foreground="?android:selectableItemBackground"
+                    android:padding="@dimen/image_button_medium_padding"
+                    app:backgroundTint="@color/colorAccent" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</android.support.v7.widget.CardView>
