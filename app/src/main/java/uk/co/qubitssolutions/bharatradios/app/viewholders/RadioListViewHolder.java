@@ -1,51 +1,48 @@
 package uk.co.qubitssolutions.bharatradios.app.viewholders;
 
-import android.content.Intent;
-import android.support.v7.widget.CardView;
+import android.app.Application;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import uk.co.qubitssolutions.bharatradios.R;
-import uk.co.qubitssolutions.bharatradios.app.services.BackgroundAudioPlayerService;
+import uk.co.qubitssolutions.bharatradios.app.BharatRadiosApplication;
 import uk.co.qubitssolutions.bharatradios.model.Constants;
 import uk.co.qubitssolutions.bharatradios.model.Radio;
-import uk.co.qubitssolutions.bharatradios.services.AudioPlayer;
+import uk.co.qubitssolutions.bharatradios.services.player.AudioPlayer;
 
 
-public class RadioListViewHolder extends RecyclerView.ViewHolder implements  AudioPlayer.StateChangeListener{
+public class RadioListViewHolder extends RecyclerView.ViewHolder
+        implements AudioPlayer.StateChangeListener, View.OnClickListener {
+
+    BharatRadiosApplication application;
     TextView title;
     TextView subtitle;
     ImageView favImage;
-    String radioUrl;
-    public RadioListViewHolder(View itemView) {
-        super(itemView);
+    Radio radio;
+    ActionListener actionListener;
 
-        title = (TextView)itemView.findViewById(R.id.list_item_radio_title);
-        subtitle = (TextView)itemView.findViewById(R.id.list_item_radio_subtitle);
-        favImage = (ImageView)itemView.findViewById(R.id.action_list_item_radio_fav);
+    public RadioListViewHolder(View itemView, Application application, ActionListener actionListener) {
+        super(itemView);
+        this.application = (BharatRadiosApplication) application;
+        title = (TextView) itemView.findViewById(R.id.list_item_radio_title);
+        subtitle = (TextView) itemView.findViewById(R.id.list_item_radio_subtitle);
+        favImage = (ImageView) itemView.findViewById(R.id.action_list_item_radio_fav);
+
+        this.actionListener = actionListener;
+
         LinearLayout radioItem = (LinearLayout) itemView.findViewById(R.id.radio_item);
-        radioItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(v.getContext(), title.getText(),Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(v.getContext(), BackgroundAudioPlayerService.class);
-                intent.putExtra(Constants.EXTRA_ACTION, Constants.ACTION_PLAY);
-                intent.putExtra(Constants.EXTRA_AUDIO_URL, radioUrl);
-                intent.putExtra(Constants.EXTRA_RADIO_ID, 0);
-                intent.putExtra(Constants.EXTRA_RADIO_NAME, title.getText());
-                v.getContext().startService(intent);
-            }
-        });
+        radioItem.setOnClickListener(this);
+
     }
 
-    public void setData(Radio radio){
+    public void setData(Radio radio) {
+        this.radio = radio;
         title.setText(radio.getName());
         subtitle.setText(radio.getSubtext());
-        radioUrl = radio.getStreamUrl();
     }
 
 
@@ -73,4 +70,24 @@ public class RadioListViewHolder extends RecyclerView.ViewHolder implements  Aud
     public void onError(Exception ex) {
 
     }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.radio_item:
+                application.getRadioData().setCurrentRadioIndex(application.getRadioData().getRadios().indexOf(radio));
+                actionListener.run(Constants.ACTION_PLAY);
+                break;
+        }
+    }
+
+    public interface ActionListener {
+        void run(String action);
+    }
+
+
+    /**********************************************************************************************
+     * ********************************* PRIVATE METHODS ******************************************
+     ********************************************************************************************/
+
 }

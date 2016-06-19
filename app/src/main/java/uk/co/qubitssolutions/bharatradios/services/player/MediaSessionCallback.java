@@ -1,4 +1,4 @@
-package uk.co.qubitssolutions.bharatradios.services;
+package uk.co.qubitssolutions.bharatradios.services.player;
 
 import android.os.SystemClock;
 import android.support.v4.media.session.MediaSessionCompat;

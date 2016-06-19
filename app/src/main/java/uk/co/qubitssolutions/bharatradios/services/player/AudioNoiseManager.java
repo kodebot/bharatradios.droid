@@ -1,4 +1,4 @@
-package uk.co.qubitssolutions.bharatradios.services;
+package uk.co.qubitssolutions.bharatradios.services.player;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -15,7 +15,7 @@ public class AudioNoiseManager extends BroadcastReceiver {
 //            Intent stopPlayerIntent = new Intent(
 //                    BackgroundAudioPlayerPlugin.mainActivity.getApplicationContext(),
 //                    BackgroundAudioPlayerService.class);
-//            stopPlayerIntent.putExtra(BackgroundAudioPlayerPlugin.EXTRA_ACTION, "action.stop");
+//            stopPlayerIntent.putExtra(BackgroundAudioPlayerPlugin.EXTRA_ACTION, "run.stop");
 //            BackgroundAudioPlayerPlugin.mainActivity.startService(stopPlayerIntent);
 //        }
         // TODO: implement this as it is important to stop playing when unplugged the ear phone

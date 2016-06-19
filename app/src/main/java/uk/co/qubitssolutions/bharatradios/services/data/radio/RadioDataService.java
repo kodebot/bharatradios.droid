@@ -1,4 +1,4 @@
-package uk.co.qubitssolutions.bharatradios.services;
+package uk.co.qubitssolutions.bharatradios.services.data.radio;
 
 import android.util.Log;
 

@@ -84,10 +84,10 @@
                     android:layout_height="match_parent">
 
                     <android.support.v7.widget.AppCompatImageButton
-                        android:id="@+id/action_radio_player_volume_off"
+                        android:id="@+id/action_radio_player_volume_mute_toggle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/ic_volume_off_black_24dp_wrapped"
+                        android:background="@drawable/ic_volume_up_black_24dp_wrapped"
                         android:clickable="true"
                         android:foreground="?android:selectableItemBackground"
                         android:padding="@dimen/image_button_medium_padding"
@@ -108,21 +108,6 @@
                     android:layout_height="wrap_content" />
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent">
-
-                <android.support.v7.widget.AppCompatImageButton
-                    android:id="@+id/action_radio_player_volume_full"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/ic_volume_up_black_24dp"
-                    android:clickable="true"
-                    android:foreground="?android:selectableItemBackground"
-                    android:padding="@dimen/image_button_medium_padding"
-                    app:backgroundTint="@color/colorAccent" />
-
-            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 </android.support.v7.widget.CardView>

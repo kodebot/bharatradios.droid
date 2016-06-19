@@ -1,4 +1,4 @@
-package uk.co.qubitssolutions.bharatradios.services;
+package uk.co.qubitssolutions.bharatradios.services.player;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

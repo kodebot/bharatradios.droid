@@ -1,35 +1,35 @@
 package uk.co.qubitssolutions.bharatradios.app.services;
 
-        import android.app.Activity;
-        import android.app.PendingIntent;
-        import android.app.Service;
-        import android.content.ComponentName;
-        import android.content.Context;
-        import android.content.Intent;
-        import android.graphics.Bitmap;
-        import android.graphics.BitmapFactory;
-        import android.media.AudioManager;
-        import android.media.AudioManager.OnAudioFocusChangeListener;
-        import android.net.wifi.WifiManager;
-        import android.os.IBinder;
-        import android.os.PowerManager;
-        import android.os.SystemClock;
-        import android.support.v4.app.NotificationCompat;
-        import android.support.v4.media.VolumeProviderCompat;
-        import android.support.v4.media.session.MediaSessionCompat;
-        import android.support.v4.media.session.PlaybackStateCompat;
-        import android.util.Log;
+import android.app.PendingIntent;
+import android.app.Service;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.AudioManager;
+import android.media.AudioManager.OnAudioFocusChangeListener;
+import android.net.wifi.WifiManager;
+import android.os.IBinder;
+import android.os.PowerManager;
+import android.os.SystemClock;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.media.session.MediaSessionCompat;
+import android.support.v4.media.session.PlaybackStateCompat;
+import android.util.Log;
 
 
-        import java.util.Date;
-        import java.util.Timer;
-        import java.util.TimerTask;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
-        import uk.co.qubitssolutions.bharatradios.app.activities.MainActivity;
-        import uk.co.qubitssolutions.bharatradios.model.Constants;
-        import uk.co.qubitssolutions.bharatradios.services.AudioPlayer;
-        import uk.co.qubitssolutions.bharatradios.services.MediaSessionCallback;
-        import uk.co.qubitssolutions.bharatradios.services.RemoteControlReceiver;
+import uk.co.qubitssolutions.bharatradios.app.BharatRadiosApplication;
+import uk.co.qubitssolutions.bharatradios.app.activities.MainActivity;
+import uk.co.qubitssolutions.bharatradios.model.Constants;
+import uk.co.qubitssolutions.bharatradios.services.player.AudioPlayer;
+import uk.co.qubitssolutions.bharatradios.services.player.MediaSessionCallback;
+import uk.co.qubitssolutions.bharatradios.services.player.RemoteControlReceiver;
 
 public class BackgroundAudioPlayerService extends Service
         implements OnAudioFocusChangeListener,
@@ -39,7 +39,6 @@ public class BackgroundAudioPlayerService extends Service
     // todo : hardware button integration
     private static WifiManager.WifiLock wifiLock;
     private static PowerManager.WakeLock wakeLock;
-    public static MediaSessionCompat mediaSession;
     private static String currentlyPlayingUrl;
     private static Timer stopTimer;
     private static AudioPlayer audioPlayer;
@@ -49,16 +48,14 @@ public class BackgroundAudioPlayerService extends Service
 
     private static final float DUCKING_VOLUME = 0.1f;
 
-    public static boolean isPlaying = false;
-    public static float currentVolume = 0.5f;
-    public static int currentRadio = 0;
-    public static Date closeTime = null;
+    public static MediaSessionCompat mediaSession;
 
     public final int NOTIFICATION_ID = 12745;
-
+    private BharatRadiosApplication application;
 
     public BackgroundAudioPlayerService() {
         super();
+
     }
 
     @Override
@@ -72,13 +69,14 @@ public class BackgroundAudioPlayerService extends Service
         // reset states
         isTransientAudioFocusLoss = false;
         isDucked = false;
-        isPlaying = false;
+        application.getRadioData().setIsCurrentlyPlaying(false);
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
         Log.v(Constants.LOG_TAG, "Creating the background service");
+        application = (BharatRadiosApplication)getApplication();
         audioPlayer = AudioPlayer.getInstance(getApplicationContext(), this);
         setupPlayer();
     }
@@ -90,7 +88,8 @@ public class BackgroundAudioPlayerService extends Service
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if (intent == null) return super.onStartCommand(null, flags, startId); // just call super when intent is null
+        if (intent == null)
+            return super.onStartCommand(null, flags, startId); // just call super when intent is null
         Log.v(Constants.LOG_TAG, "Starting command");
         Runnable task = createIntentTask(intent);
         new Thread(task).start();
@@ -112,24 +111,27 @@ public class BackgroundAudioPlayerService extends Service
 
         String action = intent.getStringExtra(Constants.EXTRA_ACTION);
         try {
-            Log.v(Constants.LOG_TAG, "Processing action: " + action);
-            if (action.equals(Constants.ACTION_PLAY)) {
-                currentlyPlayingUrl = intent.getStringExtra(Constants.EXTRA_AUDIO_URL);
-                currentRadio = intent.getIntExtra(Constants.EXTRA_RADIO_ID, 0);
-                currentRadioName = intent.getStringExtra(Constants.EXTRA_RADIO_NAME);
-                actionPlay();
-                setupAsForeground();
-            } else if (action.equals(Constants.ACTION_STOP)) {
-                actionStop();
-                stopForeground(true);
-            } else if (action.equals(Constants.ACTION_SET_VOLUME)) {
-                currentVolume = Float.parseFloat(intent.getStringExtra(Constants.EXTRA_VOLUME));
-                actionSetVolume();
-            } else if (action.equals(Constants.ACTION_SCHEDULE_CLOSE)) {
-                int closeTimeInMinutes = intent.getIntExtra(Constants.EXTRA_CLOSE_TIME_MINS, 0);
-                actionScheduleClose(closeTimeInMinutes);
-            } else if (action.equals(Constants.ACTION_CANCEL_SCHEDULED_CLOSE)) {
-                actionCancelScheduledClose();
+            Log.v(Constants.LOG_TAG, "Processing run: " + action);
+            switch (action) {
+                case Constants.ACTION_PLAY:
+                    currentlyPlayingUrl = application.getRadioData().getCurrentRadio().getStreamUrl();
+                    currentRadioName = application.getRadioData().getCurrentRadio().getName();
+                    actionPlay();
+                    setupAsForeground();
+                    break;
+                case Constants.ACTION_STOP:
+                    actionStop();
+                    stopForeground(true);
+                    break;
+                case Constants.ACTION_SET_VOLUME:
+                    actionSetVolume();
+                    break;
+                case Constants.ACTION_SCHEDULE_CLOSE:
+                    actionScheduleClose();
+                    break;
+                case Constants.ACTION_CANCEL_SCHEDULED_CLOSE:
+                    actionCancelScheduledClose();
+                    break;
             }
         } catch (Exception ex) {
             // TODO: change the radio status
@@ -138,7 +140,7 @@ public class BackgroundAudioPlayerService extends Service
     }
 
     /*******************************************************************************************************************
-     * ************************************Intent action methods ********************************************************
+     * ************************************Intent run methods ********************************************************
      ******************************************************************************************************************/
     private void actionPlay() {
         if (currentlyPlayingUrl != null) {
@@ -156,31 +158,30 @@ public class BackgroundAudioPlayerService extends Service
 
     private void actionSetVolume() {
         Log.v(Constants.LOG_TAG, "Adjusting volume...");
-        audioPlayer.setVolume(currentVolume);
+        audioPlayer.setVolume(application.getRadioData().getCurrentVolume());
         Log.v(Constants.LOG_TAG, "Volume adjusted successfully");
     }
 
-    private void actionScheduleClose(int minutes) {
+    private void actionScheduleClose() {
         actionCancelScheduledClose(); // cancel any previously scheduled close
-        int durationInMillis = minutes * 60 * 1000;
+        long closeTimeInMillis = application.getRadioData().getCloseTime().getTime();
+        long currentTimeInMillis = Calendar.getInstance().get(Calendar.MILLISECOND);
+        long durationInMillis =  closeTimeInMillis - currentTimeInMillis;
         stopTimer = new Timer();
         stopTimer.schedule(new TimerTask() {
             @Override
             public void run() {
                 actionStop();
-                closeTime = null;
+                application.getRadioData().setCloseTime(null);
                 stopForeground(true);
                 fireActionCallback();
             }
         }, durationInMillis);
-
-        closeTime = new Date(System.currentTimeMillis() + durationInMillis);
     }
 
     private void actionCancelScheduledClose() {
         if (stopTimer != null) {
             stopTimer.cancel();
-            closeTime = null;
         }
     }
 
@@ -355,7 +356,7 @@ public class BackgroundAudioPlayerService extends Service
 
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
                 Log.v(Constants.LOG_TAG, "Audio focus transient lost");
-                if (isPlaying) {
+                if (application.getRadioData().getIsCurrentlyPlaying()) {
                     isTransientAudioFocusLoss = true;
                 }
                 actionStop();
@@ -363,7 +364,7 @@ public class BackgroundAudioPlayerService extends Service
 
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
                 Log.v(Constants.LOG_TAG, "Audio focus loss transient can duck");
-                if (isPlaying) {
+                if (application.getRadioData().getIsCurrentlyPlaying()) {
                     streamDuck();
                 }
                 break;
@@ -376,13 +377,13 @@ public class BackgroundAudioPlayerService extends Service
     @Override
     public void onPlaying() {
         Log.v(Constants.LOG_TAG, "Playing event fired");
-        isPlaying = true;
+        application.getRadioData().setIsCurrentlyPlaying(true);
     }
 
     @Override
     public void onStopped() {
         Log.v(Constants.LOG_TAG, "Stopped event fired");
-        isPlaying = false;
+        application.getRadioData().setIsCurrentlyPlaying(false);
     }
 
     @Override
