@@ -23,15 +23,12 @@ public class BharatRadiosApplication extends Application {
 
     public class RadioData {
         private boolean isCurrentlyPlaying;
-        private float currentVolume;
         private int currentRadioIndex;
         private Date closeTime;
         private List<uk.co.qubitssolutions.bharatradios.model.Radio> radios;
-        private boolean isInMute;
 
         public RadioData() {
             isCurrentlyPlaying = false;
-            currentVolume = 0.5f;
             currentRadioIndex = 0;
             closeTime = null;
             radios = new ArrayList<>();
@@ -39,10 +36,6 @@ public class BharatRadiosApplication extends Application {
 
         public boolean getIsCurrentlyPlaying() {
             return isCurrentlyPlaying;
-        }
-
-        public float getCurrentVolume() {
-            return currentVolume;
         }
 
         public int getCurrentRadioIndex() {
@@ -61,16 +54,8 @@ public class BharatRadiosApplication extends Application {
             return radios.get(this.currentRadioIndex);
         }
 
-        public boolean getIsInMute() {
-            return isInMute;
-        }
-
         public void setIsCurrentlyPlaying(boolean currentlyPlaying) {
             isCurrentlyPlaying = currentlyPlaying;
-        }
-
-        public void setCurrentVolume(float currentVolume) {
-            this.currentVolume = currentVolume;
         }
 
         public void setCurrentRadioIndex(int currentRadioIndex) {
@@ -83,10 +68,6 @@ public class BharatRadiosApplication extends Application {
 
         public void setRadios(List<Radio> radios) {
             this.radios = radios;
-        }
-
-        public void setInMute(boolean inMute) {
-            isInMute = inMute;
         }
 
         public void moveToNextRadio() {

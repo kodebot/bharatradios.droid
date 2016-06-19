@@ -18,6 +18,11 @@ public class RadioDataAsyncTask extends AsyncTask<Void, Void, List<Radio>> {
 
     @Override
     protected List<Radio> doInBackground(Void... params) {
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return radioDataService.getRadios();
     }
 

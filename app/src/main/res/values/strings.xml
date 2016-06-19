@@ -12,4 +12,9 @@
     <string name="nav_preferences_title">Preferences</string>
     <string name="nav_about_title">About</string>
     <string name="nav_help_title">Help</string>
+    <string name="menu_action_fav_toggle">Favorite Toggle</string>
+    <string name="menu_action_off_timer">Off Timer</string>
+    <string name="message_radio_list_network_error">Unable to retrieve radios list. Please check your internet connection and try again.</string>
+    <string name="message_title_radio_list_network_error">Error</string>
+    <string name="text_retry_button">Retry</string>
 </resources>

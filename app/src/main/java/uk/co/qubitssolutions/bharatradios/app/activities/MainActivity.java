@@ -1,9 +1,12 @@
 package uk.co.qubitssolutions.bharatradios.app.activities;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.widget.AppCompatImageButton;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.design.widget.NavigationView;
@@ -15,7 +18,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.SeekBar;
+import android.view.Window;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import java.util.List;
 
@@ -31,17 +36,21 @@ import uk.co.qubitssolutions.bharatradios.services.data.radio.RadioDataAsyncTask
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         RadioListViewHolder.ActionListener,
-        View.OnClickListener,
-        SeekBar.OnSeekBarChangeListener {
+        View.OnClickListener {
+
+    static {
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+    }
 
     private BharatRadiosApplication application;
     private FloatingActionButton playStopToggleButton;
+    private RelativeLayout progressBarContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
+        progressBarContainer = (RelativeLayout) findViewById(R.id.activity_main_progress_bar);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         application = (BharatRadiosApplication) getApplication();
 
@@ -76,10 +85,10 @@ public class MainActivity extends AppCompatActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            case R.id.menu_action_fav_toggle:
+            case R.id.menu_action_off_timer:
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -91,14 +100,19 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_language) {
-            // Handle the camera run
-        } else if (id == R.id.nav_preference) {
+        switch (id) {
+            case R.id.nav_language:
+                // Handle the camera run
+                break;
+            case R.id.nav_preference:
 
-        } else if (id == R.id.nav_about) {
+                break;
+            case R.id.nav_about:
 
-        } else if (id == R.id.nav_help) {
+                break;
+            case R.id.nav_help:
 
+                break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -130,26 +144,9 @@ public class MainActivity extends AppCompatActivity
             case R.id.action_radio_player_next:
                 onNextClick();
                 break;
-            case R.id.action_radio_player_volume_mute_toggle:
-                onVolumeMuteToggleClick();
-                break;
         }
     }
 
-    @Override
-    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        onVolumeChange((float) progress / 100);
-    }
-
-    @Override
-    public void onStartTrackingTouch(SeekBar seekBar) {
-
-    }
-
-    @Override
-    public void onStopTrackingTouch(SeekBar seekBar) {
-
-    }
 
     /**********************************************************************************************
      * ******************************* PRIVATE METHODS*********************************************
@@ -182,15 +179,28 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void setupRadioList() {
-        RadioDataAsyncTask asyncTask = new RadioDataAsyncTask(new RadioDataAsyncTask.Callback() {
+        final RadioDataAsyncTask asyncTask = new RadioDataAsyncTask(new RadioDataAsyncTask.Callback() {
             @Override
             public void run(List<Radio> radios) {
+                if (radios.isEmpty()) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                    builder.setMessage(R.string.message_radio_list_network_error)
+                            .setTitle(R.string.message_title_radio_list_network_error)
+                            .setNeutralButton(R.string.text_retry_button, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                    setupRadioList();
+                                }
+                            }).show();
+                }
 
                 application.getRadioData().setRadios(radios);
                 RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view_radio_list);
                 RecyclerAdapter recyclerAdapter = new RecyclerAdapter(getApplication(), recyclerView.getContext(), MainActivity.this);
                 recyclerView.setAdapter(recyclerAdapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext(), LinearLayoutManager.VERTICAL, false));
+                progressBarContainer.setVisibility(View.INVISIBLE);
             }
         });
         asyncTask.execute();
@@ -200,15 +210,10 @@ public class MainActivity extends AppCompatActivity
         playStopToggleButton = (FloatingActionButton) findViewById(R.id.action_radio_player_play_stop_toggle);
         FloatingActionButton previousButton = (FloatingActionButton) findViewById(R.id.action_radio_player_previous);
         FloatingActionButton nextButton = (FloatingActionButton) findViewById(R.id.action_radio_player_next);
-        AppCompatImageButton volumeMuteToggleButton = (AppCompatImageButton) findViewById(R.id.action_radio_player_volume_mute_toggle);
-        SeekBar volumeChangeSeekBar = (SeekBar) findViewById(R.id.action_radio_player_volume_seek_bar);
 
         playStopToggleButton.setOnClickListener(this);
         previousButton.setOnClickListener(this);
         nextButton.setOnClickListener(this);
-        volumeMuteToggleButton.setOnClickListener(this);
-        volumeChangeSeekBar.setOnSeekBarChangeListener(this);
-        volumeChangeSeekBar.setProgress((int) (application.getRadioData().getCurrentVolume() * 100));
     }
 
     private void onPlayStopToggleClick() {
@@ -229,18 +234,6 @@ public class MainActivity extends AppCompatActivity
         play();
     }
 
-    private void onVolumeMuteToggleClick() {
-        if (application.getRadioData().getIsInMute()) {
-            mute();
-        } else {
-            unmute();
-        }
-    }
-
-    private void onVolumeChange(float volume) {
-        changeVolume(volume);
-    }
-
     private void stop() {
         sendActionIntent(Constants.ACTION_STOP);
         showPlayIcon();
@@ -249,22 +242,6 @@ public class MainActivity extends AppCompatActivity
     private void play() {
         sendActionIntent(Constants.ACTION_PLAY);
         showStopIcon();
-    }
-
-    private void mute() {
-        application.getRadioData().setInMute(true);
-        sendActionIntent(Constants.ACTION_MUTE);
-    }
-
-    private void unmute() {
-        application.getRadioData().setInMute(false);
-        sendActionIntent(Constants.ACTION_UNMUTE);
-
-    }
-
-    private void changeVolume(float volume) {
-        application.getRadioData().setCurrentVolume(volume);
-        sendActionIntent(Constants.ACTION_SET_VOLUME);
     }
 
     private void sendActionIntent(String action) {

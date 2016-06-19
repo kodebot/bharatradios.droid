@@ -47,6 +47,7 @@ public class BackgroundAudioPlayerService extends Service
     private static String currentRadioName;
 
     private static final float DUCKING_VOLUME = 0.1f;
+    private static final float FULL_VOLUME = 1.0f;
 
     public static MediaSessionCompat mediaSession;
 
@@ -123,9 +124,6 @@ public class BackgroundAudioPlayerService extends Service
                     actionStop();
                     stopForeground(true);
                     break;
-                case Constants.ACTION_SET_VOLUME:
-                    actionSetVolume();
-                    break;
                 case Constants.ACTION_SCHEDULE_CLOSE:
                     actionScheduleClose();
                     break;
@@ -158,7 +156,7 @@ public class BackgroundAudioPlayerService extends Service
 
     private void actionSetVolume() {
         Log.v(Constants.LOG_TAG, "Adjusting volume...");
-        audioPlayer.setVolume(application.getRadioData().getCurrentVolume());
+        audioPlayer.setVolume(FULL_VOLUME);
         Log.v(Constants.LOG_TAG, "Volume adjusted successfully");
     }
 
