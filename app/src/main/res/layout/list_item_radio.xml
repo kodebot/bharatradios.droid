@@ -23,62 +23,63 @@
             android:layout_height="match_parent">
 
             <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/list_item_radio_avatar"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:background="@drawable/image_button_background"
-                android:contentDescription="@string/list_item_radio_avatar_desc"
-                android:id="@+id/list_item_radio_avatar"/>
+                android:contentDescription="@string/list_item_radio_avatar_desc" />
 
             <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/list_item_radio_avatar_text"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="A"
                 android:textColor="@color/colorTextLight"
-                android:textSize="@dimen/avatar_text_size"
-                android:id="@+id/list_item_radio_avatar_text"/>
+                android:textSize="@dimen/avatar_text_size" />
         </FrameLayout>
 
         <LinearLayout
+            android:id="@+id/radio_item"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:id="@+id/radio_item"
             android:clickable="true"
-            android:foreground="?android:selectableItemBackground">
+            android:foreground="?android:selectableItemBackground"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/list_item_radio_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
-                android:textSize="@dimen/text_size_large"/>
+                android:textSize="@dimen/text_size_medium" />
 
             <TextView
                 android:id="@+id/list_item_radio_subtitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="7dp" />
+                android:layout_marginLeft="7dp"
+                android:layout_marginRight="7dp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="top"
-            android:paddingTop="@dimen/image_button_medium_padding"
+            android:orientation="vertical"
             android:paddingRight="@dimen/image_button_medium_padding"
-            android:orientation="vertical">
+            android:paddingTop="@dimen/image_button_medium_padding">
 
             <android.support.v7.widget.AppCompatImageButton
                 android:id="@+id/action_list_item_radio_fav"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:clickable="true"
-                android:foreground="?android:selectableItemBackground"
                 android:background="@drawable/image_button_background"
+                android:clickable="true"
                 android:contentDescription="@string/list_item_radio_fav_desc"
+                android:foreground="?android:selectableItemBackground"
                 android:src="@drawable/ic_favorite_border_black_24dp_wrapped"
                 android:tint="@color/colorPrimary" />
         </LinearLayout>
