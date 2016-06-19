@@ -1,0 +1,10 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <size android:height="@dimen/avatar_width" android:width="@dimen/avatar_height"/>
+    <gradient
+        android:angle="135"
+        android:centerColor="#F44336"
+        android:endColor="#C62828"
+        android:startColor="#E57373"
+        android:type="linear" />
+</shape>

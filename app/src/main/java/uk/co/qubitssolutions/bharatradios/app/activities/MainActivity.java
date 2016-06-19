@@ -2,6 +2,7 @@ package uk.co.qubitssolutions.bharatradios.app.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,7 +16,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.SeekBar;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity
         SeekBar.OnSeekBarChangeListener {
 
     private BharatRadiosApplication application;
-    private AppCompatImageButton playStopToggleButton;
+    private FloatingActionButton playStopToggleButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -197,9 +197,9 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void setupPlayerControls() {
-        playStopToggleButton = (AppCompatImageButton) findViewById(R.id.action_radio_player_play_stop_toggle);
-        AppCompatImageButton previousButton = (AppCompatImageButton) findViewById(R.id.action_radio_player_previous);
-        AppCompatImageButton nextButton = (AppCompatImageButton) findViewById(R.id.action_radio_player_next);
+        playStopToggleButton = (FloatingActionButton) findViewById(R.id.action_radio_player_play_stop_toggle);
+        FloatingActionButton previousButton = (FloatingActionButton) findViewById(R.id.action_radio_player_previous);
+        FloatingActionButton nextButton = (FloatingActionButton) findViewById(R.id.action_radio_player_next);
         AppCompatImageButton volumeMuteToggleButton = (AppCompatImageButton) findViewById(R.id.action_radio_player_volume_mute_toggle);
         SeekBar volumeChangeSeekBar = (SeekBar) findViewById(R.id.action_radio_player_volume_seek_bar);
 

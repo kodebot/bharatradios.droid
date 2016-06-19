@@ -7,6 +7,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
 
 import uk.co.qubitssolutions.bharatradios.R;
 import uk.co.qubitssolutions.bharatradios.app.BharatRadiosApplication;
@@ -18,12 +20,32 @@ import uk.co.qubitssolutions.bharatradios.services.player.AudioPlayer;
 public class RadioListViewHolder extends RecyclerView.ViewHolder
         implements AudioPlayer.StateChangeListener, View.OnClickListener {
 
-    BharatRadiosApplication application;
-    TextView title;
-    TextView subtitle;
-    ImageView favImage;
-    Radio radio;
-    ActionListener actionListener;
+    private final static List<Integer> avatarImages;
+
+    static {
+        avatarImages = new ArrayList<>();
+        avatarImages.add(R.drawable.radio_item_avatar_blue);
+        avatarImages.add(R.drawable.radio_item_avatar_blue_grey);
+        avatarImages.add(R.drawable.radio_item_avatar_brown);
+        avatarImages.add(R.drawable.radio_item_avatar_dark_purple);
+        avatarImages.add(R.drawable.radio_item_avatar_deep_orange);
+        avatarImages.add(R.drawable.radio_item_avatar_green);
+        avatarImages.add(R.drawable.radio_item_avatar_indigo);
+        avatarImages.add(R.drawable.radio_item_avatar_orange);
+        avatarImages.add(R.drawable.radio_item_avatar_pink);
+        avatarImages.add(R.drawable.radio_item_avatar_purple);
+        avatarImages.add(R.drawable.radio_item_avatar_red);
+        avatarImages.add(R.drawable.radio_item_avatar_teal);
+    }
+
+    private TextView avatarText;
+    private ImageView avatarImage;
+    private BharatRadiosApplication application;
+    private TextView title;
+    private TextView subtitle;
+    private ImageView favImage;
+    private Radio radio;
+    private ActionListener actionListener;
 
     public RadioListViewHolder(View itemView, Application application, ActionListener actionListener) {
         super(itemView);
@@ -31,6 +53,8 @@ public class RadioListViewHolder extends RecyclerView.ViewHolder
         title = (TextView) itemView.findViewById(R.id.list_item_radio_title);
         subtitle = (TextView) itemView.findViewById(R.id.list_item_radio_subtitle);
         favImage = (ImageView) itemView.findViewById(R.id.action_list_item_radio_fav);
+        avatarImage = (ImageView) itemView.findViewById(R.id.list_item_radio_avatar);
+        avatarText = (TextView) itemView.findViewById(R.id.list_item_radio_avatar_text);
 
         this.actionListener = actionListener;
 
@@ -43,6 +67,10 @@ public class RadioListViewHolder extends RecyclerView.ViewHolder
         this.radio = radio;
         title.setText(radio.getName());
         subtitle.setText(radio.getSubtext());
+        avatarText.setText(getInitials(radio.getName()));
+
+        avatarImage.setImageResource(avatarImages.get(radio.getName().length() % avatarImages.size()));
+
     }
 
 
@@ -89,5 +117,17 @@ public class RadioListViewHolder extends RecyclerView.ViewHolder
     /**********************************************************************************************
      * ********************************* PRIVATE METHODS ******************************************
      ********************************************************************************************/
+
+    private String getInitials(String text) {
+        String result = "";
+        String[] textParts = text.split(" ");
+        for (String textPart : textParts) {
+            result = result + textPart.charAt(0);
+            if (result.length() == 2) {
+                break;
+            }
+        }
+        return result;
+    }
 
 }
