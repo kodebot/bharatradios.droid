@@ -1,12 +1,12 @@
 package uk.co.qubitssolutions.bharatradios.app.activities;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatDelegate;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.design.widget.NavigationView;
@@ -18,9 +18,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+import android.widget.ProgressBar;
 
 import java.util.List;
 
@@ -44,13 +42,17 @@ public class MainActivity extends AppCompatActivity
 
     private BharatRadiosApplication application;
     private FloatingActionButton playStopToggleButton;
-    private RelativeLayout progressBarContainer;
+    private CardView playerControls;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        progressBarContainer = (RelativeLayout) findViewById(R.id.activity_main_progress_bar);
+
+        progressBar = (ProgressBar) findViewById(R.id.activity_main_progress_bar);
+        playerControls = (CardView) findViewById(R.id.radio_player_controls);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         application = (BharatRadiosApplication) getApplication();
 
@@ -179,6 +181,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void setupRadioList() {
+        showProgessBar();
         final RadioDataAsyncTask asyncTask = new RadioDataAsyncTask(new RadioDataAsyncTask.Callback() {
             @Override
             public void run(List<Radio> radios) {
@@ -200,7 +203,7 @@ public class MainActivity extends AppCompatActivity
                 RecyclerAdapter recyclerAdapter = new RecyclerAdapter(getApplication(), recyclerView.getContext(), MainActivity.this);
                 recyclerView.setAdapter(recyclerAdapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext(), LinearLayoutManager.VERTICAL, false));
-                progressBarContainer.setVisibility(View.INVISIBLE);
+                hideProgessBar();
             }
         });
         asyncTask.execute();
@@ -255,12 +258,24 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void showPlayIcon() {
-        playStopToggleButton.setBackgroundResource(R.drawable.ic_play_arrow_black_24dp_wrapped);
+        playStopToggleButton.setImageResource(R.drawable.ic_play_arrow_black_24dp_wrapped);
         playStopToggleButton.refreshDrawableState();
     }
 
     private void showStopIcon() {
-        playStopToggleButton.setBackgroundResource(R.drawable.ic_stop_black_24dp_wrapped);
+        playStopToggleButton.setImageResource(R.drawable.ic_stop_black_24dp_wrapped);
         playStopToggleButton.refreshDrawableState();
+    }
+
+    private void showProgessBar(){
+        progressBar.setVisibility(View.VISIBLE);
+        playerControls.setVisibility(View.INVISIBLE);
+        playerControls.refreshDrawableState();
+    }
+
+    private void hideProgessBar(){
+        progressBar.setVisibility(View.INVISIBLE);
+        playerControls.setVisibility(View.VISIBLE);
+        playerControls.refreshDrawableState();
     }
 }
