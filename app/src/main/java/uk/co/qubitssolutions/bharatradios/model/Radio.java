@@ -11,7 +11,7 @@ public class Radio {
         return id;
     }
 
-    public void setId(int id){
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -19,10 +19,11 @@ public class Radio {
         return name;
     }
 
-public String getSubtext(){
-    return subtext;
-}
-    public String getStreamUrl(){
+    public String getSubtext() {
+        return subtext;
+    }
+
+    public String getStreamUrl() {
         return streamUrl;
     }
 
@@ -38,11 +39,11 @@ public String getSubtext(){
         this.description = description;
     }
 
-    public void setSubtext(String subtext){
+    public void setSubtext(String subtext) {
         this.subtext = subtext;
     }
 
-    public void setStreamUrl(String streamUrl){
+    public void setStreamUrl(String streamUrl) {
         this.streamUrl = streamUrl;
     }
 }

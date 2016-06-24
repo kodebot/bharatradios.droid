@@ -1,0 +1,6 @@
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="#88E91E63">
+
+    <item android:drawable="@drawable/selector_radio_item_card_foreground" />
+
+</ripple>

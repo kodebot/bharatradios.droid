@@ -1,6 +1,7 @@
 package uk.co.qubitssolutions.bharatradios.app.viewholders;
 
 import android.app.Application;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,8 +14,10 @@ import java.util.List;
 import uk.co.qubitssolutions.bharatradios.R;
 import uk.co.qubitssolutions.bharatradios.app.BharatRadiosApplication;
 import uk.co.qubitssolutions.bharatradios.model.Constants;
+import uk.co.qubitssolutions.bharatradios.model.FavoriteRadio;
 import uk.co.qubitssolutions.bharatradios.model.Radio;
 import uk.co.qubitssolutions.bharatradios.services.player.AudioPlayer;
+import uk.co.qubitssolutions.bharatradios.services.preferences.FavoriteRadioPreferenceService;
 
 
 public class RadioListViewHolder extends RecyclerView.ViewHolder
@@ -38,6 +41,7 @@ public class RadioListViewHolder extends RecyclerView.ViewHolder
         avatarImages.add(R.drawable.radio_item_avatar_teal);
     }
 
+    private CardView listItemCard;
     private TextView avatarText;
     private ImageView avatarImage;
     private BharatRadiosApplication application;
@@ -50,6 +54,7 @@ public class RadioListViewHolder extends RecyclerView.ViewHolder
     public RadioListViewHolder(View itemView, Application application, ActionListener actionListener) {
         super(itemView);
         this.application = (BharatRadiosApplication) application;
+        listItemCard = (CardView) itemView;
         title = (TextView) itemView.findViewById(R.id.list_item_radio_title);
         subtitle = (TextView) itemView.findViewById(R.id.list_item_radio_subtitle);
         favImage = (ImageView) itemView.findViewById(R.id.action_list_item_radio_fav);
@@ -60,6 +65,8 @@ public class RadioListViewHolder extends RecyclerView.ViewHolder
 
         LinearLayout radioItem = (LinearLayout) itemView.findViewById(R.id.radio_item);
         radioItem.setOnClickListener(this);
+        favImage.setOnClickListener(this);
+
 
     }
 
@@ -103,8 +110,15 @@ public class RadioListViewHolder extends RecyclerView.ViewHolder
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.radio_item:
+                // listItemCard.requestFocus();
                 application.getRadioData().setCurrentRadioIndex(application.getRadioData().getRadios().indexOf(radio));
                 actionListener.run(Constants.ACTION_PLAY);
+                break;
+            case R.id.action_list_item_radio_fav:
+                FavoriteRadio favRadio = new FavoriteRadio();
+                favRadio.setRadioId(radio.getId());
+                favRadio.setLanguageId(0); // TODO: UPDATE CORRECT LANG ID
+                FavoriteRadioPreferenceService.getInstance(view.getContext()).update(favRadio);
                 break;
         }
     }
