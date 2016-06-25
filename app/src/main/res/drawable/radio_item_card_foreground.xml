@@ -1,4 +1,5 @@
-<inset xmlns:android="http://schemas.android.com/apk/res/android" android:drawable="@drawable/selector_radio_item_card_foreground"
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/selector_radio_item_card_foreground"
     android:insetLeft="2dp"
     android:insetRight="2dp"
     android:insetTop="4dp"

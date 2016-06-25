@@ -34,7 +34,7 @@ public class FavoriteRadioPreferenceService {
         for (FavoriteRadio fav : this.favoriteRadios) {
             if (fav.getLanguageId() == favRadio.getLanguageId() &&
                     fav.getRadioId() == favRadio.getRadioId()) {
-                radioFoundInFav = favRadio;
+                radioFoundInFav = fav;
             }
         }
 
@@ -61,7 +61,7 @@ public class FavoriteRadioPreferenceService {
         SharedPreferences preferences = this.context.getSharedPreferences(FAV_RADIOS_FILE, Context.MODE_PRIVATE);
         String favRadios = preferences.getString(FAV_RADIOS_KEY, "");
         favoriteRadios = new ArrayList<>();
-        for (String favRadio : favRadios.split("|")) {
+        for (String favRadio : favRadios.split("¬")) {
             String[] favRadioParts = favRadio.split(",");
             if(favRadioParts.length == 2) { // it is junk if the length is not 2
                 FavoriteRadio fav = new FavoriteRadio();
@@ -81,7 +81,7 @@ public class FavoriteRadioPreferenceService {
             favRadiosString.append(favRadio.getLanguageId());
             favRadiosString.append(",");
             favRadiosString.append(favRadio.getRadioId());
-            favRadiosString.append("|");
+            favRadiosString.append("¬");
         }
 
         SharedPreferences.Editor editor = this.context.getSharedPreferences(FAV_RADIOS_FILE, Context.MODE_PRIVATE).edit();

@@ -7,18 +7,38 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import uk.co.qubitssolutions.bharatradios.model.FavoriteRadio;
 import uk.co.qubitssolutions.bharatradios.model.Radio;
+import uk.co.qubitssolutions.bharatradios.services.preferences.FavoriteRadioPreferenceService;
 
 public class BharatRadiosApplication extends Application {
     private RadioData radioData;
+    private ToolBarData toolBarData;
 
     public BharatRadiosApplication() {
         super();
         radioData = new RadioData();
+        toolBarData = new ToolBarData();
     }
 
     public RadioData getRadioData() {
         return radioData;
+    }
+
+    public ToolBarData getToolBarData(){
+        return toolBarData;
+    }
+
+    public class ToolBarData {
+        private boolean isFavoriteOnly;
+
+        public boolean getIsFavoriteOnly() {
+            return isFavoriteOnly;
+        }
+
+        public void setIsFavoriteOnly(boolean favoriteOnly) {
+            isFavoriteOnly = favoriteOnly;
+        }
     }
 
     public class RadioData {
@@ -50,9 +70,28 @@ public class BharatRadiosApplication extends Application {
             return radios;
         }
 
+        public List<Radio> getFavoriteRadios(){
+            List<Radio> favRadios = new ArrayList<>();
+            List<FavoriteRadio> favorites = FavoriteRadioPreferenceService.getInstance(BharatRadiosApplication.this)
+                    .getAll();
+
+            for(Radio radio:radios){
+                for(FavoriteRadio fav:favorites){
+                    if(radio.getId() == fav.getRadioId() &&
+                            radio.getLanguageId() == fav.getLanguageId()){
+                        radio.setIsFavorite(true);
+                        favRadios.add(radio);
+                    }
+                }
+            }
+
+            return favRadios;
+        }
+
         public Radio getCurrentRadio() {
             return radios.get(this.currentRadioIndex);
         }
+
 
         public void setIsCurrentlyPlaying(boolean currentlyPlaying) {
             isCurrentlyPlaying = currentlyPlaying;

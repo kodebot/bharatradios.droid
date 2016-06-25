@@ -22,12 +22,19 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RadioListViewHolder> {
     private LayoutInflater layoutInflater;
     private List<Radio> radios;
 
-    public RecyclerAdapter(Application application, Context context, RadioListViewHolder.ActionListener viewHolderActionListener) {
+    public RecyclerAdapter(
+            Application application,
+            Context context,
+            RadioListViewHolder.ActionListener viewHolderActionListener) {
         this.application = (BharatRadiosApplication) application;
         this.context = context;
         this.viewHolderActionListener = viewHolderActionListener;
         this.layoutInflater = LayoutInflater.from(context);
-        this.radios = ((BharatRadiosApplication) application).getRadioData().getRadios();
+        if (((BharatRadiosApplication) application).getToolBarData().getIsFavoriteOnly()) {
+            this.radios = ((BharatRadiosApplication) application).getRadioData().getFavoriteRadios();
+        } else {
+            this.radios = ((BharatRadiosApplication) application).getRadioData().getRadios();
+        }
     }
 
     @Override

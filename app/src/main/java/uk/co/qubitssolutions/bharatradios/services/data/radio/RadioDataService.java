@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -47,6 +46,7 @@ public class RadioDataService {
                 radio.setDescription(item.getString("description"));
                 radio.setStreamUrl((item.getString("streamUrl")));
                 radio.setSubtext(item.getString("subtext"));
+                radio.setLanguageId(0); // TODO: MV: THIS SHOULD BE CHANGED TO SUPPORT MULTI LANG
                 radios.add(radio);
             }
 
@@ -61,7 +61,6 @@ public class RadioDataService {
                 connection.disconnect();
             }
         }
-
         return radios;
     }
 

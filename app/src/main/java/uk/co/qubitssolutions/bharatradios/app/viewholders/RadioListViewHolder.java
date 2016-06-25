@@ -5,8 +5,10 @@ import android.content.res.ColorStateList;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.ColorUtils;
 import android.support.v7.widget.AppCompatImageButton;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -53,7 +55,7 @@ public class RadioListViewHolder extends RecyclerView.ViewHolder
     private BharatRadiosApplication application;
     private TextView title;
     private TextView subtitle;
-    private ImageView favImage;
+    private AppCompatImageButton favImage;
     private Radio radio;
     private ActionListener actionListener;
 
@@ -63,7 +65,7 @@ public class RadioListViewHolder extends RecyclerView.ViewHolder
         listItemCard = (CardView) itemView;
         title = (TextView) itemView.findViewById(R.id.list_item_radio_title);
         subtitle = (TextView) itemView.findViewById(R.id.list_item_radio_subtitle);
-        favImage = (ImageView) itemView.findViewById(R.id.action_list_item_radio_fav);
+        favImage = (AppCompatImageButton) itemView.findViewById(R.id.action_list_item_radio_fav);
         avatarImage = (ImageView) itemView.findViewById(R.id.list_item_radio_avatar);
         avatarText = (TextView) itemView.findViewById(R.id.list_item_radio_avatar_text);
 
@@ -72,8 +74,6 @@ public class RadioListViewHolder extends RecyclerView.ViewHolder
         LinearLayout radioItem = (LinearLayout) itemView.findViewById(R.id.radio_item);
         radioItem.setOnClickListener(this);
         favImage.setOnClickListener(this);
-
-
     }
 
     public void setData(Radio radio) {
@@ -81,9 +81,8 @@ public class RadioListViewHolder extends RecyclerView.ViewHolder
         title.setText(radio.getName());
         subtitle.setText(radio.getSubtext());
         avatarText.setText(getInitials(radio.getName()));
-
+        setupFavRadio();
         avatarImage.setImageResource(avatarImages.get(radio.getName().length() % avatarImages.size()));
-
     }
 
 
@@ -116,7 +115,7 @@ public class RadioListViewHolder extends RecyclerView.ViewHolder
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.radio_item:
-                // listItemCard.requestFocus();
+                listItemCard.requestFocus();
                 application.getRadioData().setCurrentRadioIndex(application.getRadioData().getRadios().indexOf(radio));
                 actionListener.run(Constants.ACTION_PLAY);
                 break;
@@ -124,26 +123,6 @@ public class RadioListViewHolder extends RecyclerView.ViewHolder
                 toggleFavorite(radio, view);
                 break;
         }
-    }
-
-    private void toggleFavorite(Radio radio, View view) {
-        radio.setIsFavorite(!radio.getIsFavorite());
-        FavoriteRadio favRadio = new FavoriteRadio();
-        favRadio.setRadioId(radio.getId());
-        favRadio.setLanguageId(0); // TODO: UPDATE CORRECT LANG ID
-        FavoriteRadioPreferenceService.getInstance(view.getContext()).update(favRadio);
-        if (radio.getIsFavorite()) {
-            view.setBackgroundResource(R.drawable.ic_favorite_white_24dp_wrapped);
-            ((AppCompatImageButton) view).setSupportBackgroundTintList(new ColorStateList(
-                    new int[][]{new int[0]},
-                    new int[]{view.getResources().getColor(R.color.colorAccent)}));
-        } else {
-            view.setBackgroundResource(R.drawable.ic_favorite_border_white_24dp_wrapped);
-            ((AppCompatImageButton) view).setSupportBackgroundTintList(new ColorStateList(
-                    new int[][]{new int[0]},
-                    new int[]{view.getResources().getColor(R.color.colorAccent)}));
-        }
-
     }
 
     public interface ActionListener {
@@ -166,5 +145,45 @@ public class RadioListViewHolder extends RecyclerView.ViewHolder
         }
         return result;
     }
+
+    private void setupFavRadio() {
+        List<FavoriteRadio> favoriteRadios = FavoriteRadioPreferenceService
+                .getInstance(this.application.getApplicationContext())
+                .getAll();
+        for (FavoriteRadio favRadio : favoriteRadios) {
+            if (favRadio.getLanguageId() == radio.getLanguageId() &&
+                    favRadio.getRadioId() == radio.getId()) {
+                this.radio.setIsFavorite(true);
+                break;
+            }
+        }
+
+        updateFavIcon(favImage);
+    }
+
+    private void toggleFavorite(Radio radio, View view) {
+        radio.setIsFavorite(!radio.getIsFavorite());
+        FavoriteRadio favRadio = new FavoriteRadio();
+        favRadio.setRadioId(radio.getId());
+        favRadio.setLanguageId(radio.getLanguageId());
+        FavoriteRadioPreferenceService.getInstance(view.getContext()).update(favRadio);
+        updateFavIcon((AppCompatImageButton) view);
+
+    }
+
+    private void updateFavIcon(AppCompatImageButton view) {
+        if (radio.getIsFavorite()) {
+            view.setBackgroundResource(R.drawable.ic_favorite_white_24dp_wrapped);
+            view.setSupportBackgroundTintList(new ColorStateList(
+                    new int[][]{new int[0]},
+                    new int[]{ContextCompat.getColor(view.getContext(), R.color.colorAccent)}));
+        } else {
+            view.setBackgroundResource(R.drawable.ic_favorite_border_white_24dp_wrapped);
+            view.setSupportBackgroundTintList(new ColorStateList(
+                    new int[][]{new int[0]},
+                    new int[]{ContextCompat.getColor(view.getContext(), R.color.colorAccent)}));
+        }
+    }
+
 
 }

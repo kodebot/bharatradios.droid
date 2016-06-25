@@ -65,6 +65,16 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if(application.getRadioData().getIsCurrentlyPlaying()){
+            showStopIcon();
+        }else{
+            showPlayIcon();
+        }
+    }
+
+    @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer != null && drawer.isDrawerOpen(GravityCompat.START)) {
@@ -89,6 +99,8 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
         switch (id) {
             case R.id.menu_action_fav_toggle:
+                toggleFav(item);
+                return true;
             case R.id.menu_action_off_timer:
                 return true;
         }
@@ -199,14 +211,18 @@ public class MainActivity extends AppCompatActivity
                 }
 
                 application.getRadioData().setRadios(radios);
-                RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view_radio_list);
-                RecyclerAdapter recyclerAdapter = new RecyclerAdapter(getApplication(), recyclerView.getContext(), MainActivity.this);
-                recyclerView.setAdapter(recyclerAdapter);
-                recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext(), LinearLayoutManager.VERTICAL, false));
-                hideProgessBar();
+                setupRadioListView();
             }
         });
         asyncTask.execute();
+    }
+
+    private void setupRadioListView(){
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view_radio_list);
+        RecyclerAdapter recyclerAdapter = new RecyclerAdapter(getApplication(), recyclerView.getContext(), MainActivity.this);
+        recyclerView.setAdapter(recyclerAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext(), LinearLayoutManager.VERTICAL, false));
+        hideProgessBar();
     }
 
     private void setupPlayerControls() {
@@ -277,5 +293,15 @@ public class MainActivity extends AppCompatActivity
         progressBar.setVisibility(View.INVISIBLE);
         playerControls.setVisibility(View.VISIBLE);
         playerControls.refreshDrawableState();
+    }
+
+    private void toggleFav(MenuItem item){
+        this.application.getToolBarData().setIsFavoriteOnly(!this.application.getToolBarData().getIsFavoriteOnly());
+        setupRadioListView();
+        if (this.application.getToolBarData().getIsFavoriteOnly()) {
+            item.setIcon(R.drawable.ic_favorite_white_24dp_wrapped);
+        }else{
+            item.setIcon(R.drawable.ic_favorite_border_white_24dp_wrapped);
+        }
     }
 }

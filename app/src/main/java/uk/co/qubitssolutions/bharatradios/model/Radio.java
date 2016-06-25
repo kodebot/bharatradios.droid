@@ -6,6 +6,7 @@ public class Radio {
     private String description;
     private String subtext;
     private String streamUrl;
+    private int languageId;
     private boolean isFavorite;
 
     public int getId() {
@@ -27,6 +28,10 @@ public class Radio {
 
     public String getDescription() {
         return description;
+    }
+
+    public int getLanguageId(){
+        return languageId;
     }
 
     public boolean getIsFavorite() {
@@ -51,6 +56,10 @@ public class Radio {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setLanguageId(int languageId) {
+        this.languageId = languageId;
     }
 
     public void setIsFavorite(boolean isFavorite) {
