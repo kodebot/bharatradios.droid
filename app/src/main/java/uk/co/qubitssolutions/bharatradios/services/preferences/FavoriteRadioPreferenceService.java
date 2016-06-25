@@ -3,6 +3,7 @@ package uk.co.qubitssolutions.bharatradios.services.preferences;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import uk.co.qubitssolutions.bharatradios.model.FavoriteRadio;
@@ -59,13 +60,15 @@ public class FavoriteRadioPreferenceService {
 
         SharedPreferences preferences = this.context.getSharedPreferences(FAV_RADIOS_FILE, Context.MODE_PRIVATE);
         String favRadios = preferences.getString(FAV_RADIOS_KEY, "");
-
+        favoriteRadios = new ArrayList<>();
         for (String favRadio : favRadios.split("|")) {
             String[] favRadioParts = favRadio.split(",");
-            FavoriteRadio fav = new FavoriteRadio();
-            fav.setLanguageId(Integer.parseInt(favRadioParts[0]));
-            fav.setRadioId(Integer.parseInt(favRadioParts[1]));
-            favoriteRadios.add(fav);
+            if(favRadioParts.length == 2) { // it is junk if the length is not 2
+                FavoriteRadio fav = new FavoriteRadio();
+                fav.setLanguageId(Integer.parseInt(favRadioParts[0]));
+                fav.setRadioId(Integer.parseInt(favRadioParts[1]));
+                favoriteRadios.add(fav);
+            }
         }
 
         return favoriteRadios;

@@ -1,6 +1,12 @@
 package uk.co.qubitssolutions.bharatradios.app.viewholders;
 
 import android.app.Application;
+import android.content.res.ColorStateList;
+import android.graphics.drawable.ColorDrawable;
+import android.support.annotation.ColorInt;
+import android.support.annotation.ColorRes;
+import android.support.v4.graphics.ColorUtils;
+import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -115,12 +121,29 @@ public class RadioListViewHolder extends RecyclerView.ViewHolder
                 actionListener.run(Constants.ACTION_PLAY);
                 break;
             case R.id.action_list_item_radio_fav:
-                FavoriteRadio favRadio = new FavoriteRadio();
-                favRadio.setRadioId(radio.getId());
-                favRadio.setLanguageId(0); // TODO: UPDATE CORRECT LANG ID
-                FavoriteRadioPreferenceService.getInstance(view.getContext()).update(favRadio);
+                toggleFavorite(radio, view);
                 break;
         }
+    }
+
+    private void toggleFavorite(Radio radio, View view) {
+        radio.setIsFavorite(!radio.getIsFavorite());
+        FavoriteRadio favRadio = new FavoriteRadio();
+        favRadio.setRadioId(radio.getId());
+        favRadio.setLanguageId(0); // TODO: UPDATE CORRECT LANG ID
+        FavoriteRadioPreferenceService.getInstance(view.getContext()).update(favRadio);
+        if (radio.getIsFavorite()) {
+            view.setBackgroundResource(R.drawable.ic_favorite_white_24dp_wrapped);
+            ((AppCompatImageButton) view).setSupportBackgroundTintList(new ColorStateList(
+                    new int[][]{new int[0]},
+                    new int[]{view.getResources().getColor(R.color.colorAccent)}));
+        } else {
+            view.setBackgroundResource(R.drawable.ic_favorite_border_white_24dp_wrapped);
+            ((AppCompatImageButton) view).setSupportBackgroundTintList(new ColorStateList(
+                    new int[][]{new int[0]},
+                    new int[]{view.getResources().getColor(R.color.colorAccent)}));
+        }
+
     }
 
     public interface ActionListener {

@@ -6,13 +6,10 @@ public class Radio {
     private String description;
     private String subtext;
     private String streamUrl;
+    private boolean isFavorite;
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -27,12 +24,17 @@ public class Radio {
         return streamUrl;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public String getDescription() {
         return description;
+    }
+
+    public boolean getIsFavorite() {
+        return isFavorite;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setDescription(String description) {
@@ -46,4 +48,13 @@ public class Radio {
     public void setStreamUrl(String streamUrl) {
         this.streamUrl = streamUrl;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setIsFavorite(boolean isFavorite) {
+        this.isFavorite = isFavorite;
+    }
+
 }
