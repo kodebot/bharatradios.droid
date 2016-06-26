@@ -4,10 +4,11 @@ import android.os.AsyncTask;
 
 import java.util.List;
 
+import uk.co.qubitssolutions.bharatradios.model.Language;
 import uk.co.qubitssolutions.bharatradios.model.Radio;
 
 
-public class RadioDataAsyncTask extends AsyncTask<Void, Void, List<Radio>> {
+public class RadioDataAsyncTask extends AsyncTask<Language, Void, List<Radio>> {
     private Callback callback;
     private RadioDataService radioDataService;
 
@@ -17,8 +18,8 @@ public class RadioDataAsyncTask extends AsyncTask<Void, Void, List<Radio>> {
     }
 
     @Override
-    protected List<Radio> doInBackground(Void... params) {
-        return radioDataService.getRadios();
+    protected List<Radio> doInBackground(Language... params) {
+        return radioDataService.getRadios(params[0]);
     }
 
     @Override

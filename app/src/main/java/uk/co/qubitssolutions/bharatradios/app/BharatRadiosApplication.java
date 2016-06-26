@@ -5,28 +5,49 @@ import android.app.Application;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Dictionary;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 
 import uk.co.qubitssolutions.bharatradios.model.FavoriteRadio;
+import uk.co.qubitssolutions.bharatradios.model.Language;
 import uk.co.qubitssolutions.bharatradios.model.Radio;
 import uk.co.qubitssolutions.bharatradios.services.preferences.FavoriteRadioPreferenceService;
 
 public class BharatRadiosApplication extends Application {
-    private RadioData radioData;
+    private Map<Language,RadioData> radioDataMap;
     private ToolBarData toolBarData;
+    private LanguageData languageData;
 
     public BharatRadiosApplication() {
         super();
-        radioData = new RadioData();
+        radioDataMap = new Hashtable<>();
         toolBarData = new ToolBarData();
+        languageData = new LanguageData();
     }
 
-    public RadioData getRadioData() {
+    public RadioData getRadioData(){
+        return getRadioData(getLanguageData().getCurrentLanguage());
+    }
+
+    public RadioData getRadioData(Language language) {
+        RadioData radioData = radioDataMap.get(language);
+
+        if(radioData == null){
+            radioData = new RadioData();
+            radioDataMap.put(language, radioData);
+        }
+
         return radioData;
     }
 
     public ToolBarData getToolBarData(){
         return toolBarData;
+    }
+
+    public LanguageData getLanguageData() {
+        return languageData;
     }
 
     public class ToolBarData {
@@ -119,6 +140,27 @@ public class BharatRadiosApplication extends Application {
             if (--this.currentRadioIndex < 0) {
                 this.currentRadioIndex = this.radios.size() - 1;
             }
+        }
+    }
+
+    public class LanguageData{
+        private List<Language> languages;
+        private Language currentLanguage;
+
+        public List<Language> getLanguages(){
+            return languages;
+        }
+
+        public Language getCurrentLanguage() {
+            return currentLanguage;
+        }
+
+        public void setLanguages(List<Language> languages){
+            this.languages = languages;
+        }
+
+        public void setCurrentLanguage(Language currentLanguage) {
+            this.currentLanguage = currentLanguage;
         }
     }
 }

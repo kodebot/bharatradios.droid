@@ -2,13 +2,8 @@ package uk.co.qubitssolutions.bharatradios.app.viewholders;
 
 import android.app.Application;
 import android.content.res.ColorStateList;
-import android.graphics.drawable.ColorDrawable;
-import android.support.annotation.ColorInt;
-import android.support.annotation.ColorRes;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.ColorUtils;
 import android.support.v7.widget.AppCompatImageButton;
-import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -21,6 +16,7 @@ import java.util.List;
 
 import uk.co.qubitssolutions.bharatradios.R;
 import uk.co.qubitssolutions.bharatradios.app.BharatRadiosApplication;
+import uk.co.qubitssolutions.bharatradios.app.adapters.RadioListRecyclerAdapter;
 import uk.co.qubitssolutions.bharatradios.model.Constants;
 import uk.co.qubitssolutions.bharatradios.model.FavoriteRadio;
 import uk.co.qubitssolutions.bharatradios.model.Radio;
@@ -28,7 +24,7 @@ import uk.co.qubitssolutions.bharatradios.services.player.AudioPlayer;
 import uk.co.qubitssolutions.bharatradios.services.preferences.FavoriteRadioPreferenceService;
 
 
-public class RadioListViewHolder extends RecyclerView.ViewHolder
+public class RadioListItemViewHolder extends RecyclerView.ViewHolder
         implements AudioPlayer.StateChangeListener, View.OnClickListener {
 
     private final static List<Integer> avatarImages;
@@ -57,9 +53,10 @@ public class RadioListViewHolder extends RecyclerView.ViewHolder
     private TextView subtitle;
     private AppCompatImageButton favImage;
     private Radio radio;
+    private RadioListRecyclerAdapter.SelectionChangeListener selectionChangeListener;
     private ActionListener actionListener;
 
-    public RadioListViewHolder(View itemView, Application application, ActionListener actionListener) {
+    public RadioListItemViewHolder(View itemView, Application application, ActionListener actionListener) {
         super(itemView);
         this.application = (BharatRadiosApplication) application;
         listItemCard = (CardView) itemView;
@@ -76,13 +73,19 @@ public class RadioListViewHolder extends RecyclerView.ViewHolder
         favImage.setOnClickListener(this);
     }
 
-    public void setData(Radio radio) {
+    public void setData(Radio radio,
+                        RadioListRecyclerAdapter.SelectionChangeListener selectionChangeListener,
+                        boolean isSelected) {
         this.radio = radio;
+        this.selectionChangeListener = selectionChangeListener;
         title.setText(radio.getName());
         subtitle.setText(radio.getSubtext());
         avatarText.setText(getInitials(radio.getName()));
         setupFavRadio();
         avatarImage.setImageResource(avatarImages.get(radio.getName().length() % avatarImages.size()));
+        if(isSelected){
+            listItemCard.requestFocus();
+        }
     }
 
 
@@ -118,6 +121,7 @@ public class RadioListViewHolder extends RecyclerView.ViewHolder
                 listItemCard.requestFocus();
                 application.getRadioData().setCurrentRadioIndex(application.getRadioData().getRadios().indexOf(radio));
                 actionListener.run(Constants.ACTION_PLAY);
+                this.selectionChangeListener.onChange(getAdapterPosition());
                 break;
             case R.id.action_list_item_radio_fav:
                 toggleFavorite(radio, view);

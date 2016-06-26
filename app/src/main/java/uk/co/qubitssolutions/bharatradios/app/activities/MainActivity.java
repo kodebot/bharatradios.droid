@@ -1,39 +1,38 @@
 package uk.co.qubitssolutions.bharatradios.app.activities;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatDelegate;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import java.util.List;
 
 import uk.co.qubitssolutions.bharatradios.R;
 import uk.co.qubitssolutions.bharatradios.app.BharatRadiosApplication;
-import uk.co.qubitssolutions.bharatradios.app.adapters.RecyclerAdapter;
+import uk.co.qubitssolutions.bharatradios.app.adapters.RadioListViewPagerAdapter;
 import uk.co.qubitssolutions.bharatradios.app.services.BackgroundAudioPlayerService;
-import uk.co.qubitssolutions.bharatradios.app.viewholders.RadioListViewHolder;
 import uk.co.qubitssolutions.bharatradios.model.Constants;
+import uk.co.qubitssolutions.bharatradios.model.Language;
 import uk.co.qubitssolutions.bharatradios.model.Radio;
-import uk.co.qubitssolutions.bharatradios.services.data.radio.RadioDataAsyncTask;
+import uk.co.qubitssolutions.bharatradios.services.data.radio.LanguageDataAsyncTask;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
-        RadioListViewHolder.ActionListener,
         View.OnClickListener {
 
     static {
@@ -43,6 +42,7 @@ public class MainActivity extends AppCompatActivity
     private BharatRadiosApplication application;
     private FloatingActionButton playStopToggleButton;
     private CardView playerControls;
+    private ViewPager viewPager;
     private ProgressBar progressBar;
 
     @Override
@@ -50,27 +50,27 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        progressBar = (ProgressBar) findViewById(R.id.activity_main_progress_bar);
         playerControls = (CardView) findViewById(R.id.radio_player_controls);
-
+        progressBar = (ProgressBar) findViewById(R.id.activity_main_progress_bar);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         application = (BharatRadiosApplication) getApplication();
 
         setSupportActionBar(toolbar);
-        setupFab();
         setupDrawer(toolbar);
         setupNav();
-        setupRadioList();
+        loadLanguages();
         setupPlayerControls();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if(application.getRadioData().getIsCurrentlyPlaying()){
-            showStopIcon();
-        }else{
-            showPlayIcon();
+        if (application.getLanguageData().getCurrentLanguage() != null) {
+            if (application.getRadioData().getIsCurrentlyPlaying()) {
+                showStopIcon();
+            } else {
+                showPlayIcon();
+            }
         }
     }
 
@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    @Override
+    // @Override
     public void run(String action) {
         switch (action) {
             case Constants.ACTION_PLAY:
@@ -165,19 +165,6 @@ public class MainActivity extends AppCompatActivity
     /**********************************************************************************************
      * ******************************* PRIVATE METHODS*********************************************
      **********************************************************************************************/
-    private void setupFab() {
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        if (fab != null) {
-//            fab.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    Snackbar.make(view, "Replace with your own run", Snackbar.LENGTH_LONG)
-//                            .setAction("Action", null).show();
-//                }
-//            });
-//        }
-    }
-
     private void setupDrawer(Toolbar toolbar) {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -192,37 +179,27 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-    private void setupRadioList() {
-        showProgessBar();
-        final RadioDataAsyncTask asyncTask = new RadioDataAsyncTask(new RadioDataAsyncTask.Callback() {
+    private void loadLanguages() {
+        showProgressBar();
+        LanguageDataAsyncTask languageAsync = new LanguageDataAsyncTask(new LanguageDataAsyncTask.Callback() {
             @Override
-            public void run(List<Radio> radios) {
-                if (radios.isEmpty()) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                    builder.setMessage(R.string.message_radio_list_network_error)
-                            .setTitle(R.string.message_title_radio_list_network_error)
-                            .setNeutralButton(R.string.text_retry_button, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.cancel();
-                                    setupRadioList();
-                                }
-                            }).show();
-                }
-
-                application.getRadioData().setRadios(radios);
-                setupRadioListView();
+            public void run(List<Language> languages) {
+                application.getLanguageData().setLanguages(languages);
+                hideProgressBar();
+                setupRadioListViewPager();
             }
         });
-        asyncTask.execute();
+
+        languageAsync.execute();
     }
 
-    private void setupRadioListView(){
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view_radio_list);
-        RecyclerAdapter recyclerAdapter = new RecyclerAdapter(getApplication(), recyclerView.getContext(), MainActivity.this);
-        recyclerView.setAdapter(recyclerAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext(), LinearLayoutManager.VERTICAL, false));
-        hideProgessBar();
+    private void setupRadioListViewPager() {
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.language_tab);
+
+        viewPager = (ViewPager) findViewById(R.id.radio_list_view_pager);
+        RadioListViewPagerAdapter adapter = new RadioListViewPagerAdapter(getSupportFragmentManager(), application);
+        viewPager.setAdapter(adapter);
+        tabLayout.setupWithViewPager(viewPager);
     }
 
     private void setupPlayerControls() {
@@ -259,6 +236,10 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void play() {
+//        Snackbar.make(
+//                mainContentContainer,
+//                application.getRadioData().getCurrentRadio().getName(),
+//                Snackbar.LENGTH_LONG).show();
         sendActionIntent(Constants.ACTION_PLAY);
         showStopIcon();
     }
@@ -267,10 +248,6 @@ public class MainActivity extends AppCompatActivity
         Intent intent = new Intent(this, BackgroundAudioPlayerService.class);
         intent.putExtra(Constants.EXTRA_ACTION, action);
         startService(intent);
-    }
-
-    private Radio getCurrentRadio() {
-        return application.getRadioData().getCurrentRadio();
     }
 
     private void showPlayIcon() {
@@ -283,24 +260,24 @@ public class MainActivity extends AppCompatActivity
         playStopToggleButton.refreshDrawableState();
     }
 
-    private void showProgessBar(){
+    private void showProgressBar() {
         progressBar.setVisibility(View.VISIBLE);
         playerControls.setVisibility(View.INVISIBLE);
         playerControls.refreshDrawableState();
     }
 
-    private void hideProgessBar(){
+    private void hideProgressBar() {
         progressBar.setVisibility(View.INVISIBLE);
         playerControls.setVisibility(View.VISIBLE);
         playerControls.refreshDrawableState();
     }
 
-    private void toggleFav(MenuItem item){
+    private void toggleFav(MenuItem item) {
         this.application.getToolBarData().setIsFavoriteOnly(!this.application.getToolBarData().getIsFavoriteOnly());
-        setupRadioListView();
+        setupRadioListViewPager();
         if (this.application.getToolBarData().getIsFavoriteOnly()) {
             item.setIcon(R.drawable.ic_favorite_white_24dp_wrapped);
-        }else{
+        } else {
             item.setIcon(R.drawable.ic_favorite_border_white_24dp_wrapped);
         }
     }

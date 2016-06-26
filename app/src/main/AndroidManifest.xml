@@ -28,9 +28,6 @@
             android:name=".app.services.BackgroundAudioPlayerService"
             android:enabled="true" />
 
-        <activity android:name=".app.activities.TestActivity">
-
-        </activity>
     </application>
 
 </manifest>
