@@ -58,6 +58,12 @@ public class RadioListRecyclerAdapter extends RecyclerView.Adapter<RadioListItem
     }
 
     @Override
+    public void onViewAttachedToWindow(RadioListItemViewHolder holder) {
+        super.onViewAttachedToWindow(holder);
+        holder.updataSelection(selectedItem);
+    }
+
+    @Override
     public int getItemCount() {
         return radios.size();
     }

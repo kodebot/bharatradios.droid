@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
@@ -17,7 +16,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import java.util.List;
@@ -28,7 +26,6 @@ import uk.co.qubitssolutions.bharatradios.app.adapters.RadioListViewPagerAdapter
 import uk.co.qubitssolutions.bharatradios.app.services.BackgroundAudioPlayerService;
 import uk.co.qubitssolutions.bharatradios.model.Constants;
 import uk.co.qubitssolutions.bharatradios.model.Language;
-import uk.co.qubitssolutions.bharatradios.model.Radio;
 import uk.co.qubitssolutions.bharatradios.services.data.radio.LanguageDataAsyncTask;
 
 public class MainActivity extends AppCompatActivity
@@ -116,7 +113,7 @@ public class MainActivity extends AppCompatActivity
 
         switch (id) {
             case R.id.nav_language:
-                // Handle the camera run
+                startActivity(new Intent(this, LanguagesActivity.class));
                 break;
             case R.id.nav_preference:
 

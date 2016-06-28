@@ -129,6 +129,12 @@ public class RadioListItemViewHolder extends RecyclerView.ViewHolder
         }
     }
 
+    public void updataSelection(int selectedItem) {
+        if(getLayoutPosition() == selectedItem){
+            listItemCard.requestFocus();
+        }
+    }
+
     public interface ActionListener {
         void run(String action);
     }

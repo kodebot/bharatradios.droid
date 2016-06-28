@@ -20,6 +20,7 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -28,6 +29,7 @@
             android:name=".app.services.BackgroundAudioPlayerService"
             android:enabled="true" />
 
+        <activity android:name=".app.activities.LanguagesActivity"/>
     </application>
 
 </manifest>
