@@ -3,6 +3,7 @@ package uk.co.qubitssolutions.bharatradios.app.adapters;
 import android.app.Application;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,15 +43,20 @@ public class RadioListRecyclerAdapter extends RecyclerView.Adapter<RadioListItem
 
     @Override
     public RadioListItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = this.layoutInflater.inflate(R.layout.list_item_radio, parent, false);
-        return new RadioListItemViewHolder(view, application, viewHolderActionListener);
+        try {
+            View view = this.layoutInflater.inflate(R.layout.list_item_radio, parent, false);
+            return new RadioListItemViewHolder(view, application, viewHolderActionListener);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Override
     public void onBindViewHolder(RadioListItemViewHolder holder, final int position) {
         holder.setData(radios.get(position),
-                new SelectionChangeListener(){
-                    public void onChange(int position){
+                new SelectionChangeListener() {
+                    public void onChange(int position) {
                         selectedItem = position;
                     }
                 },
@@ -68,7 +74,7 @@ public class RadioListRecyclerAdapter extends RecyclerView.Adapter<RadioListItem
         return radios.size();
     }
 
-    public interface SelectionChangeListener{
+    public interface SelectionChangeListener {
         void onChange(int position);
     }
 }

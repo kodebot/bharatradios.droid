@@ -4,6 +4,7 @@ public class Language {
     private int id;
     private String name;
     private String radiosUrl;
+    private boolean favorite;
 
     public int getId() {
         return id;
@@ -27,5 +28,13 @@ public class Language {
 
     public void setRadiosUrl(String radiosUrl) {
         this.radiosUrl = radiosUrl;
+    }
+
+    public boolean getFavorite(){
+        return favorite;
+    }
+
+    public void setFavorite(boolean value){
+        favorite = value;
     }
 }

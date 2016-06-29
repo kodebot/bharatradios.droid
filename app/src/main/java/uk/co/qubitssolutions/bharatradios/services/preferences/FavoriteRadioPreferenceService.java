@@ -8,7 +8,7 @@ import java.util.List;
 
 import uk.co.qubitssolutions.bharatradios.model.FavoriteRadio;
 
-public class FavoriteRadioPreferenceService {
+public class FavoriteRadioPreferenceService{
     private static FavoriteRadioPreferenceService instance;
     private final String FAV_RADIOS_FILE = "bhr_fav_radios_file";
     private final String FAV_RADIOS_KEY = "bhr_fav_radios_key";
@@ -19,11 +19,10 @@ public class FavoriteRadioPreferenceService {
         if (instance == null) {
             instance = new FavoriteRadioPreferenceService(context);
         }
-
         return instance;
     }
 
-    public FavoriteRadioPreferenceService(Context context) {
+    private FavoriteRadioPreferenceService(Context context) {
         this.context = context;
         getAll();
     }
@@ -57,9 +56,7 @@ public class FavoriteRadioPreferenceService {
     }
 
     private List<FavoriteRadio> read() {
-
-        SharedPreferences preferences = this.context.getSharedPreferences(FAV_RADIOS_FILE, Context.MODE_PRIVATE);
-        String favRadios = preferences.getString(FAV_RADIOS_KEY, "");
+        String favRadios = PreferenceManager.read(this.context, FAV_RADIOS_FILE, FAV_RADIOS_KEY);
         favoriteRadios = new ArrayList<>();
         for (String favRadio : favRadios.split("¬")) {
             String[] favRadioParts = favRadio.split(",");
@@ -84,9 +81,7 @@ public class FavoriteRadioPreferenceService {
             favRadiosString.append("¬");
         }
 
-        SharedPreferences.Editor editor = this.context.getSharedPreferences(FAV_RADIOS_FILE, Context.MODE_PRIVATE).edit();
-        editor.putString(FAV_RADIOS_KEY, favRadiosString.toString());
-        editor.apply();
+        PreferenceManager.save(this.context, FAV_RADIOS_FILE, FAV_RADIOS_KEY, favRadiosString.toString());
     }
 
 }

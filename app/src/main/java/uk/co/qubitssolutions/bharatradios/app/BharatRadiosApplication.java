@@ -79,10 +79,6 @@ public class BharatRadiosApplication extends Application {
             return isCurrentlyPlaying;
         }
 
-        public int getCurrentRadioIndex() {
-            return currentRadioIndex;
-        }
-
         public Date getCloseTime() {
             return closeTime;
         }
@@ -148,7 +144,18 @@ public class BharatRadiosApplication extends Application {
         private Language currentLanguage;
 
         public List<Language> getLanguages(){
+
             return languages;
+        }
+
+        public List<Language> getFavLanguages(){
+            List<Language> favLanguages = new ArrayList<>();
+            for (Language language : getLanguages()) {
+                if(language.getFavorite()){
+                    favLanguages.add(language);
+                }
+            }
+            return favLanguages;
         }
 
         public Language getCurrentLanguage() {

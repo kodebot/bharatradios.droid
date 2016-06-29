@@ -10,16 +10,17 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@drawable/card_foreground">
 
         <CheckedTextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/activity_horizontal_margin"
             android:checkMark="?android:attr/listChoiceIndicatorMultiple"
             android:checked="@{viewModel.selected}"
             android:clickable="true"
-            android:text="@{viewModel.name}"
-            android:layout_margin="@dimen/activity_horizontal_margin"
-            android:onClick="@{viewModel::onClick}"/>
+            android:onClick="@{viewModel::onClick}"
+            android:text="@{viewModel.name}" />
     </FrameLayout>
 </layout>

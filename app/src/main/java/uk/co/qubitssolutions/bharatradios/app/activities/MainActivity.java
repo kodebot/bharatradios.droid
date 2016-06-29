@@ -178,14 +178,16 @@ public class MainActivity extends AppCompatActivity
 
     private void loadLanguages() {
         showProgressBar();
-        LanguageDataAsyncTask languageAsync = new LanguageDataAsyncTask(new LanguageDataAsyncTask.Callback() {
-            @Override
-            public void run(List<Language> languages) {
-                application.getLanguageData().setLanguages(languages);
-                hideProgressBar();
-                setupRadioListViewPager();
-            }
-        });
+        LanguageDataAsyncTask languageAsync = new LanguageDataAsyncTask(
+                getApplicationContext(),
+                new LanguageDataAsyncTask.Callback() {
+                    @Override
+                    public void run(List<Language> languages) {
+                        application.getLanguageData().setLanguages(languages);
+                        hideProgressBar();
+                        setupRadioListViewPager();
+                    }
+                });
 
         languageAsync.execute();
     }

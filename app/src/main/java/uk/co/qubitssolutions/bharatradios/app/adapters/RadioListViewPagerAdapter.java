@@ -19,18 +19,18 @@ public class RadioListViewPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        Language selectedLanguage = this.application.getLanguageData().getLanguages().get(position);
+        Language selectedLanguage = this.application.getLanguageData().getFavLanguages().get(position);
         return new ContentListRadioFragment(selectedLanguage);
     }
 
 
     @Override
     public int getCount() {
-        return this.application.getLanguageData().getLanguages().size();
+        return this.application.getLanguageData().getFavLanguages().size();
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return this.application.getLanguageData().getLanguages().get(position).getName();
+        return this.application.getLanguageData().getFavLanguages().get(position).getName();
     }
 }
