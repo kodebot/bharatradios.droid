@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -44,10 +45,24 @@ public class ContentListRadioFragment extends Fragment implements RadioListItemV
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+
+
         View view = inflater.inflate(R.layout.fragment_content_list_radio, container, false);
         progressBar = (ProgressBar) view.findViewById(R.id.radio_list_progress_bar);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_radio_list);
         application = (BharatRadiosApplication) getActivity().getApplication();
+
+        if(this.language == null){
+            int langId = savedInstanceState.getInt("CURRENT_LANG");
+            for(final Language lang:application.getLanguageData().getLanguages()){
+                if(lang.getId() == langId){
+                    this.language = lang;
+                    break;
+                }
+            }
+        }
+
         if(this.pendingLoading){
             this.pendingLoading = false;
             setupRadioList();
@@ -69,6 +84,12 @@ public class ContentListRadioFragment extends Fragment implements RadioListItemV
             }
         }
 
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putInt("CURRENT_LANG", this.language.getId());
+        super.onSaveInstanceState(outState);
     }
 
     /**********************************************************************************************/
@@ -97,6 +118,7 @@ public class ContentListRadioFragment extends Fragment implements RadioListItemV
                 setupRadioListView();
             }
         });
+
         asyncTask.execute(application.getLanguageData().getCurrentLanguage());
     }
 
