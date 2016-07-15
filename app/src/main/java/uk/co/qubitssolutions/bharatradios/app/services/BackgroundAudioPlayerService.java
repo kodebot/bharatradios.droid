@@ -311,7 +311,8 @@ public class BackgroundAudioPlayerService extends Service
                 0,
                 new Intent(getApplicationContext(), MainActivity.class),
                 PendingIntent.FLAG_UPDATE_CURRENT);
-        int largeIconId = getApplicationContext().getResources().getIdentifier("icon", "drawable", getApplicationContext().getPackageName());
+        int largeIconId = getApplicationContext().getResources()
+                .getIdentifier("icon", "drawable", getApplicationContext().getPackageName());
         Bitmap largeIcon = BitmapFactory.decodeResource(getApplicationContext().getResources(), largeIconId);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
         builder.setSmallIcon(android.R.drawable.ic_media_play)

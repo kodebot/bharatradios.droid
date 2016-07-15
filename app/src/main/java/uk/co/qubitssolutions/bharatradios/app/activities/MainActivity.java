@@ -98,8 +98,8 @@ public class MainActivity extends AppCompatActivity
             case R.id.menu_action_fav_toggle:
                 toggleFav(item);
                 return true;
-            case R.id.menu_action_off_timer:
-                return true;
+//            case R.id.menu_action_off_timer:
+//                return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -115,15 +115,13 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_language:
                 startActivity(new Intent(this, LanguagesActivity.class));
                 break;
-            case R.id.nav_preference:
-
-                break;
+//            case R.id.nav_preference:
+//                break;
             case R.id.nav_about:
 
                 break;
-            case R.id.nav_help:
-
-                break;
+//            case R.id.nav_help:
+//                break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
