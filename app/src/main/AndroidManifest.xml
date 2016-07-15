@@ -24,10 +24,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".app.activities.LanguagesActivity"
             android:label="Languages"
+            android:parentActivityName=".app.activities.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".app.activities.MainActivity" />
+        </activity>
+
+        <activity
+            android:name=".app.activities.AboutActivity"
+            android:label="About"
             android:parentActivityName=".app.activities.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

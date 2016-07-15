@@ -13,12 +13,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import uk.co.qubitssolutions.bharatradios.R;
 import uk.co.qubitssolutions.bharatradios.app.BharatRadiosApplication;
@@ -55,19 +57,22 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         setupDrawer(toolbar);
         setupNav();
-        loadLanguages();
-        setupPlayerControls();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (application.getLanguageData().getCurrentLanguage() != null) {
-            if (application.getRadioData().getIsCurrentlyPlaying()) {
-                showStopIcon();
-            } else {
-                showPlayIcon();
-            }
+        hideProgressBar();
+        if (application.getLanguageData().getLanguages().isEmpty()) {
+            loadLanguages(new Callable<Integer>() {
+                @Override
+                public Integer call() throws Exception {
+                    setupRadiosOrShowLanguagesActivity();
+                    return 0;
+                }
+            });
+        } else {
+            setupRadiosOrShowLanguagesActivity();
         }
     }
 
@@ -105,7 +110,6 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
@@ -118,7 +122,7 @@ public class MainActivity extends AppCompatActivity
 //            case R.id.nav_preference:
 //                break;
             case R.id.nav_about:
-
+                startActivity(new Intent(this, AboutActivity.class));
                 break;
 //            case R.id.nav_help:
 //                break;
@@ -174,7 +178,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-    private void loadLanguages() {
+    private void loadLanguages(final Callable<Integer> callable) {
         showProgressBar();
         LanguageDataAsyncTask languageAsync = new LanguageDataAsyncTask(
                 getApplicationContext(),
@@ -183,7 +187,11 @@ public class MainActivity extends AppCompatActivity
                     public void run(List<Language> languages) {
                         application.getLanguageData().setLanguages(languages);
                         hideProgressBar();
-                        setupRadioListViewPager();
+                        try {
+                            callable.call();
+                        } catch (Exception e) {
+                            Log.e(MainActivity.class.getName(), e.getMessage());
+                        }
                     }
                 });
 
@@ -276,6 +284,27 @@ public class MainActivity extends AppCompatActivity
             item.setIcon(R.drawable.ic_favorite_white_24dp_wrapped);
         } else {
             item.setIcon(R.drawable.ic_favorite_border_white_24dp_wrapped);
+        }
+    }
+
+    private void setupRadiosOrShowLanguagesActivity() {
+        if (application.getLanguageData().getFavLanguages().isEmpty()) {
+            // languages are not selected - send the user to languages activity
+            startActivity(new Intent(MainActivity.this, LanguagesActivity.class));
+        }else{
+            setupRadioListViewPager();
+            setupPlayerControls();
+            updatePlayerControlStatus();
+        }
+    }
+
+    private void updatePlayerControlStatus(){
+        if (application.getLanguageData().getCurrentLanguage() != null) {
+            if (application.getRadioData().getIsCurrentlyPlaying()) {
+                showStopIcon();
+            } else {
+                showPlayIcon();
+            }
         }
     }
 }

@@ -140,7 +140,7 @@ public class BharatRadiosApplication extends Application {
     }
 
     public class LanguageData{
-        private List<Language> languages;
+        private List<Language> languages = new ArrayList<>();
         private Language currentLanguage;
 
         public List<Language> getLanguages(){

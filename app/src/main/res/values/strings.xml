@@ -17,4 +17,16 @@
     <string name="message_radio_list_network_error">Unable to retrieve radios list. Please check your internet connection and try again.</string>
     <string name="message_title_radio_list_network_error">Error</string>
     <string name="text_retry_button">Retry</string>
+    <string name="about_text" >
+        BharatRadios is simple, super fast collection of Hindi, Kannada, Punjabi, Malayalam, Tamil and Telugu internet radios.\n\n
+
+        <b>Features:</b>\n
+        Fast buffering\n
+        Stopping when you receive incoming calls\n
+        Reducing volume when you receive any notifications\n
+        Playing nice with other applications\n
+        Favourite radios\n
+        Background playing\n
+        Stopping when you unplug head phone\n
+    </string>
 </resources>

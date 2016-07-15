@@ -101,6 +101,7 @@ public class ContentListRadioFragment extends Fragment implements RadioListItemV
         final RadioDataAsyncTask asyncTask = new RadioDataAsyncTask(new RadioDataAsyncTask.Callback() {
             @Override
             public void run(List<Radio> radios) {
+                hideProgressBar();
                 if (radios.isEmpty()) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(ContentListRadioFragment.this.getContext());
                     builder.setMessage(R.string.message_radio_list_network_error)
@@ -129,15 +130,16 @@ public class ContentListRadioFragment extends Fragment implements RadioListItemV
                 ContentListRadioFragment.this);
         recyclerView.setAdapter(recyclerAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext(), LinearLayoutManager.VERTICAL, false));
-        hideProgressBar();
     }
 
     private void showProgressBar() {
         progressBar.setVisibility(View.VISIBLE);
+        progressBar.refreshDrawableState();
     }
 
     private void hideProgressBar() {
         progressBar.setVisibility(View.INVISIBLE);
+        progressBar.refreshDrawableState();
     }
 
     @Override
