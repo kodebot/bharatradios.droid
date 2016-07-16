@@ -1,12 +1,34 @@
 {
-	"languages":[
-			{"id":1, "name":"Hindi", "radiosUrl":"https://raw.githubusercontent.com/vmanikandan001/bharatradios.droid/master/others/source/hindi.json"},
-			{"id":1, "name":"Kannada", "radiosUrl":"https://raw.githubusercontent.com/vmanikandan001/bharatradios.droid/master/others/source/kannada.json"},
-			{"id":1, "name":"Punjabi", "radiosUrl":"https://raw.githubusercontent.com/vmanikandan001/bharatradios.droid/master/others/source/punjabi.json"},
-			{"id":1, "name":"Malayalam", "radiosUrl":"https://raw.githubusercontent.com/vmanikandan001/bharatradios.droid/master/others/source/malayalam.json"},
-			{"id":1, "name":"Tamil", "radiosUrl":"https://raw.githubusercontent.com/vmanikandan001/bharatradios.droid/master/others/source/tamil.json"},
-			{"id":2, "name":"Telugu", "radiosUrl":"https://raw.githubusercontent.com/vmanikandan001/bharatradios.droid/master/others/source/telugu.json"}
+	"languages": [
+		{
+			"id": 1,
+			"name": "Hindi",
+			"radiosUrl": "https://raw.githubusercontent.com/vmanikandan001/bharatradios.droid/master/others/source/hindi.json"
+		},
+		{
+			"id": 2,
+			"name": "Kannada",
+			"radiosUrl": "https://raw.githubusercontent.com/vmanikandan001/bharatradios.droid/master/others/source/kannada.json"
+		},
+		{
+			"id": 3,
+			"name": "Punjabi",
+			"radiosUrl": "https://raw.githubusercontent.com/vmanikandan001/bharatradios.droid/master/others/source/punjabi.json"
+		},
+		{
+			"id": 4,
+			"name": "Malayalam",
+			"radiosUrl": "https://raw.githubusercontent.com/vmanikandan001/bharatradios.droid/master/others/source/malayalam.json"
+		},
+		{
+			"id": 5,
+			"name": "Tamil",
+			"radiosUrl": "https://raw.githubusercontent.com/vmanikandan001/bharatradios.droid/master/others/source/tamil.json"
+		},
+		{
+			"id": 6,
+			"name": "Telugu",
+			"radiosUrl": "https://raw.githubusercontent.com/vmanikandan001/bharatradios.droid/master/others/source/telugu.json"
+		}
 	]
 }
-}
-

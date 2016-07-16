@@ -5,10 +5,12 @@ import android.util.Xml;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,8 +22,9 @@ public class ShoutcastDataReader {
 
     public static List<ShoutcastStation> searchStation(String key, int bitRate) {
         try {
+            key = URLEncoder.encode(key, "UTF-8");
             String bitRateString = "";
-            if(bitRate != 0){
+            if (bitRate != 0) {
                 bitRateString = String.valueOf(bitRate);
             }
             String url = SHOUTCAST_SEARCH_URL
@@ -61,7 +64,11 @@ public class ShoutcastDataReader {
         if (tuneIn.equalsIgnoreCase("tunein")) {
             base = parser.getAttributeValue(null, "base");
         }
-        while (parser.next() != XmlPullParser.END_TAG) {
+
+        while (parser.next() != XmlPullParser.END_DOCUMENT) {
+            if (parser.getEventType() != XmlPullParser.START_TAG) {
+                continue;
+            }
             if (parser.getName().equalsIgnoreCase("station")) {
                 String name = parser.getAttributeValue(null, "name");
                 String id = parser.getAttributeValue(null, "id");
@@ -78,8 +85,9 @@ public class ShoutcastDataReader {
     private static InputStream downloadUrl(String urlString) throws IOException {
         URL url = new URL(urlString);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
         conn.connect();
-        return conn.getInputStream();
+        return new BufferedInputStream(conn.getInputStream());
     }
 
     public static class ShoutcastStation {

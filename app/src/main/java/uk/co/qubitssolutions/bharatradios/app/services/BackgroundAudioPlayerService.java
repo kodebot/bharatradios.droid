@@ -30,6 +30,7 @@ import uk.co.qubitssolutions.bharatradios.app.BharatRadiosApplication;
 import uk.co.qubitssolutions.bharatradios.app.activities.MainActivity;
 import uk.co.qubitssolutions.bharatradios.model.Constants;
 import uk.co.qubitssolutions.bharatradios.model.Stream;
+import uk.co.qubitssolutions.bharatradios.services.data.radio.PlsParser;
 import uk.co.qubitssolutions.bharatradios.services.data.radio.ShoutcastDataReader;
 import uk.co.qubitssolutions.bharatradios.services.player.AudioPlayer;
 import uk.co.qubitssolutions.bharatradios.services.player.MediaSessionCallback;
@@ -406,13 +407,17 @@ public class BackgroundAudioPlayerService extends Service
 
 
     private String resolveShoutcastUrl(Stream[] streams){
+        PlsParser  parser = new PlsParser();
         Stream stream = streams[0];
         if (stream.getSrc().equalsIgnoreCase("http://www.shoutcast.com/")) {
-            String shoutcastTuneInUrl =  "http://yp.shoutcast.com/<base>?id=<id>";
+            String shoutcastTuneInUrl =  stream.getUrl();
             List<ShoutcastDataReader.ShoutcastStation> stations =
                     ShoutcastDataReader.searchStation(stream.getSrcName(), stream.getBitRate());
-            return shoutcastTuneInUrl.replaceAll("<base>", stations.get(0).base)
+            String plsUrl = shoutcastTuneInUrl.replaceAll("<base>", stations.get(0).base)
                     .replaceAll("<id>", stations.get(0).id);
+
+            String url = parser.getUrls(plsUrl).get(0);
+            return url + "/;?icy=http";
         }else{
             return streams[0].getUrl();
         }
