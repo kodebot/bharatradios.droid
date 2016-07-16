@@ -28,7 +28,13 @@ public class BharatRadiosApplication extends Application {
     }
 
     public RadioData getRadioData(){
-        return getRadioData(getLanguageData().getCurrentLanguage());
+        Language currentLanguage = getLanguageData().getCurrentLanguage();
+        if(currentLanguage == null){
+            // set the first fav language as current language when no current language is set;
+            currentLanguage = getLanguageData().getFavLanguages().get(0);
+            getLanguageData().setCurrentLanguage(currentLanguage);
+        }
+        return getRadioData(currentLanguage);
     }
 
     public RadioData getRadioData(Language language) {

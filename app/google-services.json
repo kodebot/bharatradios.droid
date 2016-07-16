@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "219865929861",
+    "firebase_url": "https://bharatradios-35275.firebaseio.com",
+    "project_id": "bharatradios-35275",
+    "storage_bucket": "bharatradios-35275.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:219865929861:android:ad453d70f41c0e97",
+        "android_client_info": {
+          "package_name": "uk.co.qubitssolutions.bharatradios"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "219865929861-slbj8g3pmdl7pkt9huhofqo7cpj0c1ir.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBC0SPWKS_QB1ob2MbJS2UbnuPlKKfAdKY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
