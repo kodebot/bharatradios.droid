@@ -5,23 +5,18 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
-import java.io.InputStream;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.net.ssl.HttpsURLConnection;
-
 import uk.co.qubitssolutions.bharatradios.model.Language;
-import uk.co.qubitssolutions.bharatradios.model.Radio;
 
 public class LanguageDataService {
 
     public List<Language> getLanguages() {
         ArrayList<Language> languages = new ArrayList<>();
         try {
-            JSONObject radioData = HttpJsonReader.read("https://raw.githubusercontent.com/vmanikandan001/Vaanoli/master/lang.json");
+            String FEED_URL = "https://raw.githubusercontent.com/vmanikandan001/bharatradios.droid/master/others/source/lang.json";
+            JSONObject radioData = HttpJsonReader.read(FEED_URL);
             JSONArray radiosArray = radioData.getJSONArray("languages");
 
             int length = radiosArray.length();

@@ -3,9 +3,9 @@ package uk.co.qubitssolutions.bharatradios.model;
 public class Radio {
     private int id;
     private String name;
-    private String description;
-    private String subtext;
-    private String streamUrl;
+    private String desc;
+    private String genre;
+    private Stream[] streams;
     private int languageId;
     private boolean isFavorite;
 
@@ -17,17 +17,17 @@ public class Radio {
         return name;
     }
 
-    public String getSubtext() {
-        return subtext;
+    public String getGenre() {
+        return genre;
     }
 
-    public String getStreamUrl() {
-        return streamUrl;
+    public Stream[] getStreams() {
+        return streams;
     }
 
 
-    public String getDescription() {
-        return description;
+    public String getDesc() {
+        return desc;
     }
 
     public int getLanguageId(){
@@ -42,16 +42,12 @@ public class Radio {
         this.id = id;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 
-    public void setSubtext(String subtext) {
-        this.subtext = subtext;
-    }
-
-    public void setStreamUrl(String streamUrl) {
-        this.streamUrl = streamUrl;
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 
     public void setName(String name) {
@@ -66,4 +62,7 @@ public class Radio {
         this.isFavorite = isFavorite;
     }
 
+    public void setStreams(Stream[] streams) {
+        this.streams = streams;
+    }
 }

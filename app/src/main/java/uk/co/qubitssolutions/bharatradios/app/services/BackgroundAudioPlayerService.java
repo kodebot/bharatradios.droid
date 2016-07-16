@@ -19,14 +19,18 @@ import android.support.v4.media.session.PlaybackStateCompat;
 import android.util.Log;
 
 
+import java.net.HttpURLConnection;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import uk.co.qubitssolutions.bharatradios.app.BharatRadiosApplication;
 import uk.co.qubitssolutions.bharatradios.app.activities.MainActivity;
 import uk.co.qubitssolutions.bharatradios.model.Constants;
+import uk.co.qubitssolutions.bharatradios.model.Stream;
+import uk.co.qubitssolutions.bharatradios.services.data.radio.ShoutcastDataReader;
 import uk.co.qubitssolutions.bharatradios.services.player.AudioPlayer;
 import uk.co.qubitssolutions.bharatradios.services.player.MediaSessionCallback;
 import uk.co.qubitssolutions.bharatradios.services.player.RemoteControlReceiver;
@@ -115,7 +119,7 @@ public class BackgroundAudioPlayerService extends Service
             Log.v(Constants.LOG_TAG, "Processing run: " + action);
             switch (action) {
                 case Constants.ACTION_PLAY:
-                    currentlyPlayingUrl = application.getRadioData().getCurrentRadio().getStreamUrl();
+                    currentlyPlayingUrl = resolveShoutcastUrl(application.getRadioData().getCurrentRadio().getStreams());
                     currentRadioName = application.getRadioData().getCurrentRadio().getName();
                     actionPlay();
                     setupAsForeground();
@@ -398,5 +402,19 @@ public class BackgroundAudioPlayerService extends Service
     @Override
     public void onError(Exception ex) {
         Log.e(Constants.LOG_TAG, "Error reported", ex);
+    }
+
+
+    private String resolveShoutcastUrl(Stream[] streams){
+        Stream stream = streams[0];
+        if (stream.getSrc().equalsIgnoreCase("http://www.shoutcast.com/")) {
+            String shoutcastTuneInUrl =  "http://yp.shoutcast.com/<base>?id=<id>";
+            List<ShoutcastDataReader.ShoutcastStation> stations =
+                    ShoutcastDataReader.searchStation(stream.getSrcName(), stream.getBitRate());
+            return shoutcastTuneInUrl.replaceAll("<base>", stations.get(0).base)
+                    .replaceAll("<id>", stations.get(0).id);
+        }else{
+            return streams[0].getUrl();
+        }
     }
 }

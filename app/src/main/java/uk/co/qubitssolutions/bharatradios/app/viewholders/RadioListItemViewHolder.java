@@ -79,7 +79,7 @@ public class RadioListItemViewHolder extends RecyclerView.ViewHolder
         this.radio = radio;
         this.selectionChangeListener = selectionChangeListener;
         title.setText(radio.getName());
-        subtitle.setText(radio.getSubtext());
+        subtitle.setText(radio.getGenre());
         avatarText.setText(getInitials(radio.getName()));
         setupFavRadio();
         avatarImage.setImageResource(avatarImages.get(radio.getName().length() % avatarImages.size()));

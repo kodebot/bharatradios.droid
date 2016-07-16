@@ -27,7 +27,7 @@
                         "name": "Lankasri FM",
                         "desc": "Lankasri FM",
                         "genre": "Music",
-                        "streamUrls": [
+                        "streams": [
                                 {
                                         "src": "http://www.shoutcast.com/",
                                         "srcName": "Lankasri FM",

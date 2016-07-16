@@ -1,25 +1,14 @@
 package uk.co.qubitssolutions.bharatradios.services.data.radio;
 
-import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
-
-import javax.net.ssl.HttpsURLConnection;
 
 import uk.co.qubitssolutions.bharatradios.model.Language;
 import uk.co.qubitssolutions.bharatradios.model.Radio;
+import uk.co.qubitssolutions.bharatradios.model.Stream;
 
 public class RadioDataService {
 
@@ -36,9 +25,21 @@ public class RadioDataService {
                 JSONObject item = radiosArray.getJSONObject(i);
                 radio.setId(item.getInt("id"));
                 radio.setName(item.getString("name"));
-                radio.setDescription(item.getString("description"));
-                radio.setStreamUrl((item.getString("streamUrl")));
-                radio.setSubtext(item.getString("subtext"));
+                radio.setDesc(item.getString("desc"));
+                radio.setGenre(item.getString("genre"));
+                JSONArray streamArray = item.getJSONArray("streams");
+                int streamsCount = streamArray.length();
+                Stream[] streams = new Stream[streamsCount];
+                radio.setStreams(streams);
+                for(int j=0; j<streamsCount;j++){
+                    JSONObject streamJson = streamArray.getJSONObject(j);
+                    Stream stream = new Stream();
+                    streams[j] = stream;
+                    stream.setSrc(streamJson.getString("src"));
+                    stream.setSrcName(streamJson.getString("srcName"));
+                    stream.setBitRate(streamJson.getInt("br"));
+                    stream.setUrl(streamJson.getString("url"));
+                }
                 radio.setLanguageId(language.getId());
                 radios.add(radio);
             }
