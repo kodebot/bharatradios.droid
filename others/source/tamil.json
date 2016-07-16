@@ -1,0 +1,54 @@
+{
+        "radios": [
+                {
+                        "id": 1,
+                        "name": "Sooriyan FM Sri Lanka",
+                        "desc": "Sooriyan FM Sri Lanka",
+                        "genre": "Music",
+                        "streams": [
+                                {
+                                        "src": "http://www.sooriyanfm.lk/",
+                                        "srcName": "na",
+                                        "br": "64",
+                                        "url": "http://104.238.193.114:7077/;?1468675983387.mp3"
+                                },
+                                {
+                                        "src": "http://www.sooriyanfm.lk/",
+                                        "srcName": "na",
+                                        "br": "48",
+                                        "url": "http://104.238.193.114:7086/;?1468676137518.mp3"
+                                }
+                        ],
+                        "imgName": "suriyan-fm-srilanka",
+                        "priority": 1
+                },
+                {
+                        "id": 2,
+                        "name": "Lankasri FM",
+                        "desc": "Lankasri FM",
+                        "genre": "Music",
+                        "streamUrls": [
+                                {
+                                        "src": "http://www.shoutcast.com/",
+                                        "srcName": "Lankasri FM",
+                                        "br": "128",
+                                        "url": " http://yp.shoutcast.com/<base>?id=<id>"
+                                },
+                                {
+                                        "src": "http://www.shoutcast.com/",
+                                        "srcName": "Lankasri FM",
+                                        "br": "64",
+                                        "url": " http://yp.shoutcast.com/<base>?id=<id>"
+                                },
+                                {
+                                        "src": "http://www.shoutcast.com/",
+                                        "srcName": "Lankasri FM",
+                                        "br": "32",
+                                        "url": " http://yp.shoutcast.com/<base>?id=<id>"
+                                }
+                        ],
+                        "imgName": "lankasri-fm",
+                        "priority": 2
+                }
+        ]
+}
