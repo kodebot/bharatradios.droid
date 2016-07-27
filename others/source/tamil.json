@@ -31,12 +31,6 @@
                                 {
                                         "src": "http://www.shoutcast.com/",
                                         "srcName": "Lankasri FM",
-                                        "br": "128",
-                                        "url": " http://yp.shoutcast.com/<base>?id=<id>"
-                                },
-                                {
-                                        "src": "http://www.shoutcast.com/",
-                                        "srcName": "Lankasri FM",
                                         "br": "64",
                                         "url": " http://yp.shoutcast.com/<base>?id=<id>"
                                 },
