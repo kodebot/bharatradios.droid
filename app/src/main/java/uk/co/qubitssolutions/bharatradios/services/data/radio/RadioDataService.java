@@ -21,26 +21,24 @@ public class RadioDataService {
             int length = radiosArray.length();
 
             for (int i = 0; i < length; i++) {
-                Radio radio = new Radio();
                 JSONObject item = radiosArray.getJSONObject(i);
-                radio.setId(item.getInt("id"));
-                radio.setName(item.getString("name"));
-                radio.setDesc(item.getString("desc"));
-                radio.setGenre(item.getString("genre"));
+                Radio radio = new Radio(
+                        item.getInt("id"),
+                        item.getString("name"),
+                        item.getString("desc"),
+                        item.getString("genre"),
+                        language.getId());
+
                 JSONArray streamArray = item.getJSONArray("streams");
                 int streamsCount = streamArray.length();
-                Stream[] streams = new Stream[streamsCount];
-                radio.setStreams(streams);
-                for(int j=0; j<streamsCount;j++){
+                for (int j = 0; j < streamsCount; j++) {
                     JSONObject streamJson = streamArray.getJSONObject(j);
-                    Stream stream = new Stream();
-                    streams[j] = stream;
-                    stream.setSrc(streamJson.getString("src"));
-                    stream.setSrcName(streamJson.getString("srcName"));
-                    stream.setBitRate(streamJson.getInt("br"));
-                    stream.setUrl(streamJson.getString("url"));
+                    Stream stream = new Stream(streamJson.getString("src"),
+                    streamJson.getString("srcName"),
+                    streamJson.getInt("br"),
+                    streamJson.getString("url"));
+                    radio.addStream(stream);
                 }
-                radio.setLanguageId(language.getId());
                 radios.add(radio);
             }
         } catch (JSONException e) {

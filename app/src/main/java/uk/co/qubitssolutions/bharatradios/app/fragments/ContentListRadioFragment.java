@@ -25,7 +25,7 @@ import uk.co.qubitssolutions.bharatradios.model.Language;
 import uk.co.qubitssolutions.bharatradios.model.Radio;
 import uk.co.qubitssolutions.bharatradios.services.data.radio.RadioDataAsyncTask;
 
-public class ContentListRadioFragment extends Fragment implements RadioListItemViewHolder.ActionListener {
+public class ContentListRadioFragment extends Fragment {
 
     private BharatRadiosApplication application;
     private ProgressBar progressBar;
@@ -45,25 +45,22 @@ public class ContentListRadioFragment extends Fragment implements RadioListItemV
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-
-
         View view = inflater.inflate(R.layout.fragment_content_list_radio, container, false);
         progressBar = (ProgressBar) view.findViewById(R.id.radio_list_progress_bar);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_radio_list);
         application = (BharatRadiosApplication) getActivity().getApplication();
 
-        if(this.language == null){
+        if (this.language == null) {
             int langId = savedInstanceState.getInt("CURRENT_LANG");
-            for(final Language lang:application.getLanguageData().getLanguages()){
-                if(lang.getId() == langId){
+            for (final Language lang : application.getLanguages()) {
+                if (lang.getId() == langId) {
                     this.language = lang;
                     break;
                 }
             }
         }
 
-        if(this.pendingLoading){
+        if (this.pendingLoading) {
             this.pendingLoading = false;
             setupRadioList();
         }
@@ -74,12 +71,12 @@ public class ContentListRadioFragment extends Fragment implements RadioListItemV
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
 
-        if(isVisibleToUser) {
-            if(application!= null) {
-                application.getLanguageData().setCurrentLanguage(language);
+        if (isVisibleToUser) {
+            if (application != null) {
+                application.setCurrentLanguageId(language.getId());
                 setupRadioList();
                 this.pendingLoading = false;
-            }else{
+            } else {
                 this.pendingLoading = true;
             }
         }
@@ -97,7 +94,7 @@ public class ContentListRadioFragment extends Fragment implements RadioListItemV
     /**********************************************************************************************/
     private void setupRadioList() {
         showProgressBar();
-        application.getLanguageData().setCurrentLanguage(language);
+        application.setCurrentLanguageId(language.getId());
         final RadioDataAsyncTask asyncTask = new RadioDataAsyncTask(new RadioDataAsyncTask.Callback() {
             @Override
             public void run(List<Radio> radios) {
@@ -115,21 +112,22 @@ public class ContentListRadioFragment extends Fragment implements RadioListItemV
                             }).show();
                 }
 
-                application.getRadioData().setRadios(radios);
+                application.setRadios(application.getCurrentLanguageId(), radios);
                 setupRadioListView();
             }
         });
 
-        asyncTask.execute(application.getLanguageData().getCurrentLanguage());
+        asyncTask.execute(language);
     }
 
     private void setupRadioListView() {
-        RadioListRecyclerAdapter recyclerAdapter = new RadioListRecyclerAdapter(
-                application,
-                recyclerView.getContext(),
-                ContentListRadioFragment.this);
+        RadioListRecyclerAdapter recyclerAdapter = new RadioListRecyclerAdapter(application);
         recyclerView.setAdapter(recyclerAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext(), LinearLayoutManager.VERTICAL, false));
+        recyclerView.setLayoutManager(
+                new LinearLayoutManager(
+                        recyclerView.getContext(),
+                        LinearLayoutManager.VERTICAL,
+                        false));
     }
 
     private void showProgressBar() {
@@ -140,10 +138,5 @@ public class ContentListRadioFragment extends Fragment implements RadioListItemV
     private void hideProgressBar() {
         progressBar.setVisibility(View.INVISIBLE);
         progressBar.refreshDrawableState();
-    }
-
-    @Override
-    public void run(String action) {
-        ((MainActivity)getActivity()).run(action);
     }
 }

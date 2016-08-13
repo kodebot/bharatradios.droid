@@ -30,13 +30,14 @@ public class LanguageListAdapter extends RecyclerView.Adapter<LanguageListAdapte
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.viewDataBinding.setVariable(BR.viewModel, new LanguageViewModel(application.getLanguageData().getLanguages().get(position)));
+        holder.viewDataBinding.setVariable(BR.viewModel,
+                new LanguageViewModel(this.application, this.application.getLanguages().get(position)));
         holder.viewDataBinding.executePendingBindings();
     }
 
     @Override
     public int getItemCount() {
-        return application.getLanguageData().getLanguages().size();
+        return application.getLanguages().size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -45,10 +46,6 @@ public class LanguageListAdapter extends RecyclerView.Adapter<LanguageListAdapte
         public ViewHolder(View itemView) {
             super(itemView);
             viewDataBinding = DataBindingUtil.bind(itemView);
-        }
-
-        public ViewDataBinding getViewDataBinding() {
-            return viewDataBinding;
         }
     }
 

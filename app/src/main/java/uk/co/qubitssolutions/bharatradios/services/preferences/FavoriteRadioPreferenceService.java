@@ -1,14 +1,13 @@
 package uk.co.qubitssolutions.bharatradios.services.preferences;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import uk.co.qubitssolutions.bharatradios.model.FavoriteRadio;
 
-public class FavoriteRadioPreferenceService{
+public class FavoriteRadioPreferenceService {
     private static FavoriteRadioPreferenceService instance;
     private final String FAV_RADIOS_FILE = "bhr_fav_radios_file";
     private final String FAV_RADIOS_KEY = "bhr_fav_radios_key";
@@ -60,10 +59,10 @@ public class FavoriteRadioPreferenceService{
         favoriteRadios = new ArrayList<>();
         for (String favRadio : favRadios.split("¬")) {
             String[] favRadioParts = favRadio.split(",");
-            if(favRadioParts.length == 2) { // it is junk if the length is not 2
-                FavoriteRadio fav = new FavoriteRadio();
-                fav.setLanguageId(Integer.parseInt(favRadioParts[0]));
-                fav.setRadioId(Integer.parseInt(favRadioParts[1]));
+            if (favRadioParts.length == 2) { // it is junk if the length is not 2
+                FavoriteRadio fav = new FavoriteRadio(
+                        Integer.parseInt(favRadioParts[0]),
+                        Integer.parseInt(favRadioParts[1]));
                 favoriteRadios.add(fav);
             }
         }
@@ -80,7 +79,6 @@ public class FavoriteRadioPreferenceService{
             favRadiosString.append(favRadio.getRadioId());
             favRadiosString.append("¬");
         }
-
         PreferenceManager.save(this.context, FAV_RADIOS_FILE, FAV_RADIOS_KEY, favRadiosString.toString());
     }
 

@@ -22,16 +22,7 @@ public class LanguageDataAsyncTask extends AsyncTask<Void, Void, List<Language>>
 
     @Override
     protected List<Language> doInBackground(Void... params) {
-        List<Language> languages = languageDataService.getLanguages();
-        List<FavoriteLanguage> favoriteLanguages = FavoriteLanguagePreferenceService.getInstance(this.context).getAll();
-        for (Language language : languages) {
-            for (FavoriteLanguage favoriteLanguage : favoriteLanguages) {
-                if (language.getId() == favoriteLanguage.getLanguageId()) {
-                    language.setFavorite(favoriteLanguage.getIsFavorite());
-                }
-            }
-        }
-        return languages;
+        return languageDataService.getLanguages();
     }
 
     @Override

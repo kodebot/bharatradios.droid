@@ -1,10 +1,11 @@
 package uk.co.qubitssolutions.bharatradios.viewmodel;
 
-
+import android.content.Context;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.view.View;
-import android.widget.Toast;
+
+import java.util.List;
 
 import uk.co.qubitssolutions.bharatradios.BR;
 import uk.co.qubitssolutions.bharatradios.model.FavoriteLanguage;
@@ -12,38 +13,41 @@ import uk.co.qubitssolutions.bharatradios.model.Language;
 import uk.co.qubitssolutions.bharatradios.services.preferences.FavoriteLanguagePreferenceService;
 
 public class LanguageViewModel extends BaseObservable {
-
     private Language language;
+    private Context context;
+    private boolean favorite;
 
-    public LanguageViewModel(Language language) {
+    public LanguageViewModel(Context context, Language language) {
+        this.context = context;
         this.language = language;
+        this.favorite = readFavorite();
     }
 
-    @Bindable
     public String getName() {
         return this.language.getName();
     }
 
-    public void setName(String name) {
-        this.language.setName(name);
-        notifyPropertyChanged(BR.name);
-    }
-
     @Bindable
-    public boolean getSelected() {
-        return this.language.getFavorite();
+    public boolean isFavorite() {
+        return favorite;
     }
 
-    public void setSelected(boolean selected) {
-        this.language.setFavorite(selected);
-        notifyPropertyChanged(BR.selected);
-    }
-
-    public void onClick(View view) {
-        setSelected(!getSelected());
-        FavoriteLanguage fav = new FavoriteLanguage();
-        fav.setLanguageId(language.getId());
-        fav.setIsFavorite(language.getFavorite());
+    public void toggleFavorite(View view) {
+        FavoriteLanguage fav = new FavoriteLanguage(this.language.getId(), this.isFavorite());
         FavoriteLanguagePreferenceService.getInstance(view.getContext()).update(fav);
+        favorite = readFavorite();
+        notifyPropertyChanged(BR.favorite);
+    }
+
+    private boolean readFavorite() {
+        List<FavoriteLanguage> favoriteLanguages = FavoriteLanguagePreferenceService
+                .getInstance(context)
+                .getAll();
+        for (FavoriteLanguage favoriteLanguage : favoriteLanguages) {
+            if (favoriteLanguage.getLanguageId() == language.getId()) {
+                return true;
+            }
+        }
+        return false;
     }
 }

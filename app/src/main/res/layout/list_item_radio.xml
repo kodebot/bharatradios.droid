@@ -1,90 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/radio_item_card"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/card_view_medium_margin"
-    android:layout_marginLeft="@dimen/card_view_medium_margin"
-    android:layout_marginRight="@dimen/card_view_medium_margin"
-    android:focusableInTouchMode="true"
-    android:foreground="@drawable/card_foreground"
-    android:clickable="true"
-    app:cardCornerRadius="@dimen/card_radius">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:baselineAligned="false"
-        android:orientation="horizontal"
-        android:paddingLeft="@dimen/avatar_medium_padding">
+    <data>
 
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent">
+        <variable
+            name="viewModel"
+            type="uk.co.qubitssolutions.bharatradios.viewmodel.RadioViewModel" />
 
-            <android.support.v7.widget.AppCompatImageView
-                android:id="@+id/list_item_radio_avatar"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:background="@drawable/image_button_background"
-                android:contentDescription="@string/list_item_radio_avatar_desc" />
+        <import type="uk.co.qubitssolutions.bharatradios.R" />
 
-            <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/list_item_radio_avatar_text"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="A"
-                android:textColor="@color/colorTextLight"
-                android:textSize="@dimen/avatar_text_size" />
-        </FrameLayout>
+        <import type="uk.co.qubitssolutions.bharatradios.app.helpers.VectorDrawableProvider" />
+    </data>
 
         <LinearLayout
-            android:id="@+id/radio_item"
-            android:layout_width="0dp"
+            android:id="@+id/radio_item_card"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:baselineAligned="false"
             android:clickable="true"
+            android:minHeight="?android:attr/listPreferredItemHeight"
             android:foreground="@drawable/card_foreground"
-            android:orientation="vertical">
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/avatar_medium_padding">
 
-            <TextView
-                android:id="@+id/list_item_radio_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="7dp"
-                android:textSize="@dimen/text_size_medium"
-                android:textColor="@color/colorTextPrimary"/>
-
-            <TextView
-                android:id="@+id/list_item_radio_subtitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="7dp"
-                android:layout_marginRight="7dp"
-                android:textColor="@color/colorTextPrimary"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="top"
-            android:orientation="vertical"
-            android:paddingRight="@dimen/image_button_medium_padding"
-            android:paddingTop="@dimen/image_button_medium_padding">
-
-            <android.support.v7.widget.AppCompatImageButton
-                android:id="@+id/action_list_item_radio_fav"
+            <FrameLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/image_button_background"
+                android:layout_height="match_parent">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/list_item_radio_avatar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/list_item_radio_avatar_desc"
+                    android:src="@{viewModel.getAvatarImage()}" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/list_item_radio_avatar_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@{viewModel.initial}"
+                    android:textColor="@android:color/primary_text_dark"
+                    android:textSize="@dimen/avatar_text_size" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:id="@+id/radio_item"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:clickable="true"
-                android:contentDescription="@string/list_item_radio_fav_desc"
-                android:foreground="?android:selectableItemBackground"
-                android:src="@drawable/ic_favorite_border_black_24dp_wrapped"
-                android:tint="@color/colorAccent" />
+                android:foreground="@drawable/card_foreground"
+                android:onClick="@{viewModel::onClick}"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/list_item_radio_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="7dp"
+                    android:text="@{viewModel.name}"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="@dimen/text_size_medium" />
+
+                <TextView
+                    android:id="@+id/list_item_radio_subtitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginRight="7dp"
+                    android:text="@{viewModel.genre}"
+                    android:textColor="@android:color/secondary_text_dark" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="top"
+                android:orientation="vertical"
+                android:paddingRight="@dimen/image_button_medium_padding"
+                android:paddingTop="@dimen/image_button_medium_padding">
+
+                <android.support.v7.widget.AppCompatImageButton
+                    android:id="@+id/action_list_item_radio_fav"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:contentDescription="@string/list_item_radio_fav_desc"
+                    android:foreground="?android:selectableItemBackground"
+                    android:onClick="@{viewModel::toggleFavorite}"
+                    android:tint="@color/colorAccent"
+                    app:srcCompat="@{viewModel.favorite == true ? R.drawable.ic_favorite_white_24dp : R.drawable.ic_favorite_border_white_24dp}" />
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
-</android.support.v7.widget.CardView>
+</layout>

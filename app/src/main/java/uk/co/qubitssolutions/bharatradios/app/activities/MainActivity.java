@@ -1,6 +1,8 @@
 package uk.co.qubitssolutions.bharatradios.app.activities;
 
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -11,7 +13,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -26,17 +27,17 @@ import com.google.android.gms.ads.MobileAds;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import uk.co.qubitssolutions.bharatradios.BR;
 import uk.co.qubitssolutions.bharatradios.R;
 import uk.co.qubitssolutions.bharatradios.app.BharatRadiosApplication;
 import uk.co.qubitssolutions.bharatradios.app.adapters.RadioListViewPagerAdapter;
-import uk.co.qubitssolutions.bharatradios.app.services.BackgroundAudioPlayerService;
-import uk.co.qubitssolutions.bharatradios.model.Constants;
 import uk.co.qubitssolutions.bharatradios.model.Language;
 import uk.co.qubitssolutions.bharatradios.services.data.radio.LanguageDataAsyncTask;
+import uk.co.qubitssolutions.bharatradios.services.preferences.FavoriteLanguagePreferenceService;
+import uk.co.qubitssolutions.bharatradios.viewmodel.ToolbarViewModel;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,
-        View.OnClickListener {
+        implements NavigationView.OnNavigationItemSelectedListener {
 
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
@@ -44,19 +45,25 @@ public class MainActivity extends AppCompatActivity
 
     private BharatRadiosApplication application;
     private FloatingActionButton playStopToggleButton;
-    private CardView playerControls;
     private ViewPager viewPager;
     private ProgressBar progressBar;
+    private ToolbarViewModel toolbarViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        playerControls = (CardView) findViewById(R.id.radio_player_controls);
+        application = (BharatRadiosApplication) getApplication();
+
+        View playerControls = findViewById(R.id.radio_player_controls);
+        ViewDataBinding viewDataBinding = DataBindingUtil.bind(playerControls);
+        viewDataBinding.setVariable(BR.viewModel, application.getPlayerViewModel());
+
         progressBar = (ProgressBar) findViewById(R.id.activity_main_progress_bar);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        application = (BharatRadiosApplication) getApplication();
+
+        toolbarViewModel = this.application.getToolbarViewModel();
 
         setSupportActionBar(toolbar);
         setupDrawer(toolbar);
@@ -72,7 +79,7 @@ public class MainActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
         hideProgressBar();
-        if (application.getLanguageData().getLanguages().isEmpty()) {
+        if (application.getLanguages().isEmpty()) {
             loadLanguages(new Callable<Integer>() {
                 @Override
                 public Integer call() throws Exception {
@@ -144,30 +151,7 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    // @Override
-    public void run(String action) {
-        switch (action) {
-            case Constants.ACTION_PLAY:
-                sendActionIntent(Constants.ACTION_PLAY);
-                showStopIcon();
-                break;
-        }
-    }
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.action_radio_player_play_stop_toggle:
-                onPlayStopToggleClick();
-                break;
-            case R.id.action_radio_player_previous:
-                onPreviousClick();
-                break;
-            case R.id.action_radio_player_next:
-                onNextClick();
-                break;
-        }
-    }
 
 
     /**********************************************************************************************
@@ -194,7 +178,7 @@ public class MainActivity extends AppCompatActivity
                 new LanguageDataAsyncTask.Callback() {
                     @Override
                     public void run(List<Language> languages) {
-                        application.getLanguageData().setLanguages(languages);
+                        application.setLanguages(languages);
                         hideProgressBar();
                         try {
                             callable.call();
@@ -216,80 +200,19 @@ public class MainActivity extends AppCompatActivity
         tabLayout.setupWithViewPager(viewPager);
     }
 
-    private void setupPlayerControls() {
-        playStopToggleButton = (FloatingActionButton) findViewById(R.id.action_radio_player_play_stop_toggle);
-        FloatingActionButton previousButton = (FloatingActionButton) findViewById(R.id.action_radio_player_previous);
-        FloatingActionButton nextButton = (FloatingActionButton) findViewById(R.id.action_radio_player_next);
-
-        playStopToggleButton.setOnClickListener(this);
-        previousButton.setOnClickListener(this);
-        nextButton.setOnClickListener(this);
-    }
-
-    private void onPlayStopToggleClick() {
-        if (application.getRadioData().getIsCurrentlyPlaying()) {
-            stop();
-        } else {
-            play();
-        }
-    }
-
-    private void onPreviousClick() {
-        application.getRadioData().moveToPreviousRadio();
-        play();
-    }
-
-    private void onNextClick() {
-        application.getRadioData().moveToNextRadio();
-        play();
-    }
-
-    private void stop() {
-        sendActionIntent(Constants.ACTION_STOP);
-        showPlayIcon();
-    }
-
-    private void play() {
-//        Snackbar.make(
-//                mainContentContainer,
-//                application.getRadioData().getCurrentRadio().getName(),
-//                Snackbar.LENGTH_LONG).show();
-        sendActionIntent(Constants.ACTION_PLAY);
-        showStopIcon();
-    }
-
-    private void sendActionIntent(String action) {
-        Intent intent = new Intent(this, BackgroundAudioPlayerService.class);
-        intent.putExtra(Constants.EXTRA_ACTION, action);
-        startService(intent);
-    }
-
-    private void showPlayIcon() {
-        playStopToggleButton.setImageResource(R.drawable.ic_play_arrow_black_24dp_wrapped);
-        playStopToggleButton.refreshDrawableState();
-    }
-
-    private void showStopIcon() {
-        playStopToggleButton.setImageResource(R.drawable.ic_stop_black_24dp_wrapped);
-        playStopToggleButton.refreshDrawableState();
-    }
-
     private void showProgressBar() {
         progressBar.setVisibility(View.VISIBLE);
-        playerControls.setVisibility(View.INVISIBLE);
-        playerControls.refreshDrawableState();
     }
 
     private void hideProgressBar() {
         progressBar.setVisibility(View.INVISIBLE);
-        playerControls.setVisibility(View.VISIBLE);
-        playerControls.refreshDrawableState();
     }
 
+    // todo: move this to view model using binding
     private void toggleFav(MenuItem item) {
-        this.application.getToolBarData().setIsFavoriteOnly(!this.application.getToolBarData().getIsFavoriteOnly());
+        this.toolbarViewModel.setFavoriteOnly(!this.toolbarViewModel.isFavoriteOnly());
         setupRadioListViewPager();
-        if (this.application.getToolBarData().getIsFavoriteOnly()) {
+        if (this.toolbarViewModel.isFavoriteOnly()) {
             item.setIcon(R.drawable.ic_favorite_white_24dp_wrapped);
         } else {
             item.setIcon(R.drawable.ic_favorite_border_white_24dp_wrapped);
@@ -297,23 +220,11 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void setupRadiosOrShowLanguagesActivity() {
-        if (application.getLanguageData().getFavLanguages().isEmpty()) {
+        if (FavoriteLanguagePreferenceService.getInstance(this).getAll().isEmpty()) {
             // languages are not selected - send the user to languages activity
             startActivity(new Intent(MainActivity.this, LanguagesActivity.class));
         }else{
             setupRadioListViewPager();
-            setupPlayerControls();
-            updatePlayerControlStatus();
-        }
-    }
-
-    private void updatePlayerControlStatus(){
-        if (application.getLanguageData().getCurrentLanguage() != null) {
-            if (application.getRadioData().getIsCurrentlyPlaying()) {
-                showStopIcon();
-            } else {
-                showPlayIcon();
-            }
         }
     }
 }

@@ -4,9 +4,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import java.util.List;
+
 import uk.co.qubitssolutions.bharatradios.app.BharatRadiosApplication;
 import uk.co.qubitssolutions.bharatradios.app.fragments.ContentListRadioFragment;
 import uk.co.qubitssolutions.bharatradios.model.Language;
+import uk.co.qubitssolutions.bharatradios.services.data.favorite.FavoriteUtils;
 
 public class RadioListViewPagerAdapter extends FragmentPagerAdapter {
 
@@ -19,18 +22,23 @@ public class RadioListViewPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        Language selectedLanguage = this.application.getLanguageData().getFavLanguages().get(position);
+        List<Language> favLanguages = FavoriteUtils.getFavLanguages(
+                this.application,
+                this.application.getLanguages());
+        Language selectedLanguage = favLanguages.get(position);
         return new ContentListRadioFragment(selectedLanguage);
     }
 
-
     @Override
     public int getCount() {
-        return this.application.getLanguageData().getFavLanguages().size();
+        return FavoriteUtils.getFavLanguages(this.application, this.application.getLanguages())
+                .size();
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return this.application.getLanguageData().getFavLanguages().get(position).getName();
+        return FavoriteUtils.getFavLanguages(this.application, this.application.getLanguages())
+                .get(position)
+                .getName();
     }
 }

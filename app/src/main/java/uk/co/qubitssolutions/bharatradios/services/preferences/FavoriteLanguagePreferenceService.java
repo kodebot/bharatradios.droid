@@ -1,7 +1,6 @@
 package uk.co.qubitssolutions.bharatradios.services.preferences;
 
 import android.content.Context;
-import android.support.v4.text.TextUtilsCompat;
 import android.text.TextUtils;
 
 import java.util.ArrayList;
@@ -58,9 +57,7 @@ public class FavoriteLanguagePreferenceService {
         favoriteLanguages = new ArrayList<>();
         for (String favLang : favRadios.split("¬")) {
             if (!TextUtils.isEmpty(favLang)) {
-                FavoriteLanguage fav = new FavoriteLanguage();
-                fav.setLanguageId(Integer.parseInt(favLang));
-                fav.setIsFavorite(true);
+                FavoriteLanguage fav = new FavoriteLanguage(Integer.parseInt(favLang), true);
                 favoriteLanguages.add(fav);
             }
         }
@@ -77,5 +74,4 @@ public class FavoriteLanguagePreferenceService {
 
         PreferenceManager.save(this.context, FAV_LANG_FILE, FAV_LANG_KEY, favLanguagesString.toString());
     }
-
 }

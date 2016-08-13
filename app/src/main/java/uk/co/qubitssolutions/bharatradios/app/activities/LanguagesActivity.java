@@ -1,10 +1,10 @@
 package uk.co.qubitssolutions.bharatradios.app.activities;
 
 import android.databinding.DataBindingUtil;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 
 import uk.co.qubitssolutions.bharatradios.R;
 import uk.co.qubitssolutions.bharatradios.app.BharatRadiosApplication;
@@ -13,6 +13,9 @@ import uk.co.qubitssolutions.bharatradios.databinding.ActivityLanguagesBinding;
 
 public class LanguagesActivity extends AppCompatActivity {
 
+    static {
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

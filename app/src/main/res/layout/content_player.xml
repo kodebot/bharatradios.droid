@@ -1,74 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/radio_player_controls"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/card_view_medium_margin"
-    android:layout_marginLeft="@dimen/card_view_medium_margin"
-    android:layout_marginRight="@dimen/card_view_medium_margin"
-    android:focusableInTouchMode="true"
-    android:layout_gravity="bottom"
-    android:layout_weight="0"
-    app:cardCornerRadius="4dp">
+    xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
 
-    <LinearLayout
+        <import type="android.view.View" />
+
+        <import type="uk.co.qubitssolutions.bharatradios.R" />
+
+        <variable
+            name="viewModel"
+            type="uk.co.qubitssolutions.bharatradios.viewmodel.PlayerViewModel" />
+    </data>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/radio_player_controls"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:baselineAligned="false">
+        android:layout_height="wrap_content"
+        app:contentPaddingBottom="16dp"
+        app:contentPaddingLeft="16dp"
+        app:contentPaddingRight="16dp">
 
-              <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-                <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/action_radio_player_previous"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/fab_margin"
-                    app:srcCompat="@drawable/ic_skip_previous_black_24dp_wrapped"
-                    android:tint="#FFFFFFFF"
-                    app:fabSize="mini" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
+            <ProgressBar
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center">
-
-
-                <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/action_radio_player_play_stop_toggle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/fab_margin"
-                    android:src="@drawable/ic_play_arrow_black_36dp_wrapped"
-                    android:tint="#FFFFFFFF" />
-
-            </LinearLayout>
+                android:indeterminate="true"
+                android:visibility="@{viewModel.busy? View.VISIBLE:View.INVISIBLE}" />
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center">
+                android:layout_margin="0dp"
+                android:orientation="horizontal"
+                android:padding="0dp">
 
-                <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/action_radio_player_next"
+                <FrameLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/fab_margin"
-                    app:srcCompat="@drawable/ic_skip_next_black_24dp_wrapped"
-                    android:tint="#FFFFFFFF"
-                    app:fabSize="mini" />
+                    android:layout_height="match_parent">
+
+                    <android.support.v7.widget.AppCompatImageView
+                        android:id="@+id/list_item_radio_avatar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:contentDescription="@string/list_item_radio_avatar_desc"
+                        android:src="@drawable/radio_item_avatar_blue" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/list_item_radio_avatar_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="AB"
+                        android:textColor="@android:color/primary_text_dark"
+                        android:textSize="@dimen/avatar_text_size" />
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.radioName}"
+                        android:singleLine="true"
+                        android:ellipsize="end"
+                        android:selected="@{true}"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                        android:textSize="@dimen/text_size_medium"
+                        app:textAllCaps="true"
+                        tools:text="This is radio 1" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{viewModel.radioGenre}"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                            app:textAllCaps="true"
+                            tools:text="This is caption" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="4dp"
+                            android:paddingStart="4dp"
+                            android:text='@{viewModel.bitRate + " kbps"}'
+                            app:textAllCaps="true"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                            tools:text="bit rate" />
+
+                    </LinearLayout>
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text='Currently playing a beautiful song'
+                        android:singleLine="true"
+                        android:ellipsize="marquee"
+                        android:selected="@{true}"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        app:textAllCaps="true"
+                        tools:text="Currently playing a beautify song" />
+                </LinearLayout>
+
+                <android.support.v7.widget.AppCompatImageButton
+                    android:id="@+id/action_radio_player_play_stop_toggle"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"
+                    android:onClick="@{viewModel.togglePlay}"
+                    android:tint="@color/colorAccent"
+                    app:srcCompat="@{viewModel.playing? R.drawable.ic_stop_black_36dp_wrapped : R.drawable.ic_play_arrow_black_36dp_wrapped}"
+                    tools:srcCompat="@drawable/ic_stop_black_36dp_wrapped" />
 
             </LinearLayout>
-
 
         </LinearLayout>
-</android.support.v7.widget.CardView>
+    </android.support.v7.widget.CardView>
+</layout>

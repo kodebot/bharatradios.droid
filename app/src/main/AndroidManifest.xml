@@ -26,7 +26,7 @@
         </activity>
         <activity
             android:name=".app.activities.LanguagesActivity"
-            android:label="Languages"
+            android:label="Choose Languages"
             android:parentActivityName=".app.activities.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

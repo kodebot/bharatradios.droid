@@ -18,17 +18,16 @@ import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.util.Log;
 
-
-import java.net.HttpURLConnection;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
-import java.util.TimerTask;
 
+import rx.functions.Action1;
 import uk.co.qubitssolutions.bharatradios.app.BharatRadiosApplication;
 import uk.co.qubitssolutions.bharatradios.app.activities.MainActivity;
 import uk.co.qubitssolutions.bharatradios.model.Constants;
+import uk.co.qubitssolutions.bharatradios.model.PlayerStatusType;
+import uk.co.qubitssolutions.bharatradios.model.Radio;
 import uk.co.qubitssolutions.bharatradios.model.Stream;
 import uk.co.qubitssolutions.bharatradios.services.data.radio.PlsParser;
 import uk.co.qubitssolutions.bharatradios.services.data.radio.ShoutcastDataReader;
@@ -56,7 +55,7 @@ public class BackgroundAudioPlayerService extends Service
 
     public static MediaSessionCompat mediaSession;
 
-    public final int NOTIFICATION_ID = 12755;
+    public final int NOTIFICATION_ID = 12756;
     private BharatRadiosApplication application;
 
     public BackgroundAudioPlayerService() {
@@ -75,14 +74,15 @@ public class BackgroundAudioPlayerService extends Service
         // reset states
         isTransientAudioFocusLoss = false;
         isDucked = false;
-        application.getRadioData().setIsCurrentlyPlaying(false);
+        // todo: change this as callback
+        // application.getRadioData().setIsCurrentlyPlaying(false);
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
         Log.v(Constants.LOG_TAG, "Creating the background service");
-        application = (BharatRadiosApplication)getApplication();
+        application = (BharatRadiosApplication) getApplication();
         audioPlayer = AudioPlayer.getInstance(getApplicationContext(), this);
         setupPlayer();
     }
@@ -120,8 +120,8 @@ public class BackgroundAudioPlayerService extends Service
             Log.v(Constants.LOG_TAG, "Processing run: " + action);
             switch (action) {
                 case Constants.ACTION_PLAY:
-                    currentlyPlayingUrl = resolveShoutcastUrl(application.getRadioData().getCurrentRadio().getStreams());
-                    currentRadioName = application.getRadioData().getCurrentRadio().getName();
+                    currentlyPlayingUrl = resolveShoutcastUrl(application.getCurrentRadio().getStreams());
+                    currentRadioName = application.getCurrentRadio().getName();
                     actionPlay();
                     setupAsForeground();
                     break;
@@ -166,20 +166,21 @@ public class BackgroundAudioPlayerService extends Service
     }
 
     private void actionScheduleClose() {
-        actionCancelScheduledClose(); // cancel any previously scheduled close
-        long closeTimeInMillis = application.getRadioData().getCloseTime().getTime();
-        long currentTimeInMillis = Calendar.getInstance().get(Calendar.MILLISECOND);
-        long durationInMillis =  closeTimeInMillis - currentTimeInMillis;
-        stopTimer = new Timer();
-        stopTimer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                actionStop();
-                application.getRadioData().setCloseTime(null);
-                stopForeground(true);
-                fireActionCallback();
-            }
-        }, durationInMillis);
+        // // TODO: 24/07/2016
+//        actionCancelScheduledClose(); // cancel any previously scheduled close
+//        long closeTimeInMillis = application.getRadioData().getCloseTime().getTime();
+//        long currentTimeInMillis = Calendar.getInstance().get(Calendar.MILLISECOND);
+//        long durationInMillis = closeTimeInMillis - currentTimeInMillis;
+//        stopTimer = new Timer();
+//        stopTimer.schedule(new TimerTask() {
+//            @Override
+//            public void run() {
+//                actionStop();
+//                application.getRadioData().setCloseTime(null);
+//                stopForeground(true);
+//                fireActionCallback();
+//            }
+//        }, durationInMillis);
     }
 
     private void actionCancelScheduledClose() {
@@ -305,10 +306,6 @@ public class BackgroundAudioPlayerService extends Service
         Log.v(Constants.LOG_TAG, "Wifi lock released");
     }
 
-    private void fireActionCallback() {
-        // TODO: Send off timer notification
-    }
-
     private void setupAsForeground() {
         String contentText = "Tap to open";
         PendingIntent pi = PendingIntent.getActivity(
@@ -360,7 +357,7 @@ public class BackgroundAudioPlayerService extends Service
 
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
                 Log.v(Constants.LOG_TAG, "Audio focus transient lost");
-                if (application.getRadioData().getIsCurrentlyPlaying()) {
+                if (application.isPlaying()) {
                     isTransientAudioFocusLoss = true;
                 }
                 actionStop();
@@ -368,7 +365,7 @@ public class BackgroundAudioPlayerService extends Service
 
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
                 Log.v(Constants.LOG_TAG, "Audio focus loss transient can duck");
-                if (application.getRadioData().getIsCurrentlyPlaying()) {
+                if (application.isPlaying()) {
                     streamDuck();
                 }
                 break;
@@ -381,18 +378,20 @@ public class BackgroundAudioPlayerService extends Service
     @Override
     public void onPlaying() {
         Log.v(Constants.LOG_TAG, "Playing event fired");
-        application.getRadioData().setIsCurrentlyPlaying(true);
+        application.setPlayerStatus(PlayerStatusType.PLAYING);
     }
 
     @Override
     public void onStopped() {
         Log.v(Constants.LOG_TAG, "Stopped event fired");
-        application.getRadioData().setIsCurrentlyPlaying(false);
+        // TODO: 24/07/2016 use callback
+        application.setPlayerStatus(PlayerStatusType.STOPPED);
     }
 
     @Override
     public void onBuffering(int percent) {
         Log.v(Constants.LOG_TAG, "Buffering event fired " + percent);
+        application.setPlayerStatus(PlayerStatusType.BUFFERING);
     }
 
     @Override
@@ -403,23 +402,32 @@ public class BackgroundAudioPlayerService extends Service
     @Override
     public void onError(Exception ex) {
         Log.e(Constants.LOG_TAG, "Error reported", ex);
+        application.setPlayerStatus(PlayerStatusType.ERROR);
     }
 
+    private String resolveShoutcastUrl(ArrayList<Stream> streams) {
+        PlsParser parser = new PlsParser();
+        for (final Stream stream : streams) {
+            if (stream.getSrc().equalsIgnoreCase("http://www.shoutcast.com/")) {
+                String shoutcastTuneInUrl = stream.getUrl();
+                List<ShoutcastDataReader.ShoutcastStation> stations =
+                        ShoutcastDataReader.searchStation(stream.getSrcName(), stream.getBitRate());
+                if (!stations.isEmpty()) {
+                    String plsUrl = shoutcastTuneInUrl.replaceAll("<base>", stations.get(0).base)
+                            .replaceAll("<id>", stations.get(0).id);
 
-    private String resolveShoutcastUrl(Stream[] streams){
-        PlsParser  parser = new PlsParser();
-        Stream stream = streams[0];
-        if (stream.getSrc().equalsIgnoreCase("http://www.shoutcast.com/")) {
-            String shoutcastTuneInUrl =  stream.getUrl();
-            List<ShoutcastDataReader.ShoutcastStation> stations =
-                    ShoutcastDataReader.searchStation(stream.getSrcName(), stream.getBitRate());
-            String plsUrl = shoutcastTuneInUrl.replaceAll("<base>", stations.get(0).base)
-                    .replaceAll("<id>", stations.get(0).id);
+                    String url = parser.getUrls(plsUrl).get(0);
+                    application.setCurrentStream(stream);
+                    return url + "/;?icy=http";
+                }
 
-            String url = parser.getUrls(plsUrl).get(0);
-            return url + "/;?icy=http";
-        }else{
-            return streams[0].getUrl();
+            } else {
+                application.setCurrentStream(stream);
+                return stream.getUrl();
+            }
         }
+
+        return null;
     }
+
 }

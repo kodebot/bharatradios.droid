@@ -1,179 +1,126 @@
 package uk.co.qubitssolutions.bharatradios.app;
 
-
 import android.app.Application;
+import android.content.Context;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
-import uk.co.qubitssolutions.bharatradios.model.FavoriteRadio;
 import uk.co.qubitssolutions.bharatradios.model.Language;
+import uk.co.qubitssolutions.bharatradios.model.PlayerStatusType;
 import uk.co.qubitssolutions.bharatradios.model.Radio;
-import uk.co.qubitssolutions.bharatradios.services.preferences.FavoriteRadioPreferenceService;
+import uk.co.qubitssolutions.bharatradios.model.Stream;
+import uk.co.qubitssolutions.bharatradios.viewmodel.PlayerViewModel;
+import uk.co.qubitssolutions.bharatradios.viewmodel.ToolbarViewModel;
 
 public class BharatRadiosApplication extends Application {
-    private Map<Language,RadioData> radioDataMap;
-    private ToolBarData toolBarData;
-    private LanguageData languageData;
+
+    private static Context context;
+    private int currentLanguageId;
+    private Map<Integer, List<Radio>> languageRadioMap;
+    private List<Language> languages;
+    private ToolbarViewModel toolbarViewModel;
+    private PlayerViewModel playerViewModel;
+    private Radio currentRadio;
+    private PlayerStatusType playerStatus;
+    private Stream currentStream;
 
     public BharatRadiosApplication() {
         super();
-        radioDataMap = new Hashtable<>();
-        toolBarData = new ToolBarData();
-        languageData = new LanguageData();
+        languageRadioMap = new Hashtable<>();
+        languages = new ArrayList<>();
+        toolbarViewModel = new ToolbarViewModel();
+        playerViewModel = new PlayerViewModel();
+        playerStatus = PlayerStatusType.STOPPED;
     }
 
-    public RadioData getRadioData(){
-        Language currentLanguage = getLanguageData().getCurrentLanguage();
-        if(currentLanguage == null){
-            // set the first fav language as current language when no current language is set;
-            currentLanguage = getLanguageData().getFavLanguages().get(0);
-            getLanguageData().setCurrentLanguage(currentLanguage);
-        }
-        return getRadioData(currentLanguage);
+    public void onCreate(){
+        super.onCreate();
+        context = getApplicationContext();
     }
 
-    public RadioData getRadioData(Language language) {
-        RadioData radioData = radioDataMap.get(language);
-
-        if(radioData == null){
-            radioData = new RadioData();
-            radioDataMap.put(language, radioData);
-        }
-
-        return radioData;
+    public List<Radio> getRadios(int languageId) {
+        return languageRadioMap.get(languageId);
     }
 
-    public ToolBarData getToolBarData(){
-        return toolBarData;
+    public void setRadios(int languageId, List<Radio> radios) {
+        this.languageRadioMap.put(languageId, radios);
     }
 
-    public LanguageData getLanguageData() {
-        return languageData;
+    public List<Language> getLanguages() {
+        return languages;
     }
 
-    public class ToolBarData {
-        private boolean isFavoriteOnly;
-
-        public boolean getIsFavoriteOnly() {
-            return isFavoriteOnly;
-        }
-
-        public void setIsFavoriteOnly(boolean favoriteOnly) {
-            isFavoriteOnly = favoriteOnly;
-        }
+    public void setLanguages(List<Language> languages) {
+        this.languages = languages;
     }
 
-    public class RadioData {
-        private boolean isCurrentlyPlaying;
-        private int currentRadioIndex;
-        private Date closeTime;
-        private List<uk.co.qubitssolutions.bharatradios.model.Radio> radios;
-
-        public RadioData() {
-            isCurrentlyPlaying = false;
-            currentRadioIndex = 0;
-            closeTime = null;
-            radios = new ArrayList<>();
-        }
-
-        public boolean getIsCurrentlyPlaying() {
-            return isCurrentlyPlaying;
-        }
-
-        public Date getCloseTime() {
-            return closeTime;
-        }
-
-        public List<Radio> getRadios() {
-            return radios;
-        }
-
-        public List<Radio> getFavoriteRadios(){
-            List<Radio> favRadios = new ArrayList<>();
-            List<FavoriteRadio> favorites = FavoriteRadioPreferenceService.getInstance(BharatRadiosApplication.this)
-                    .getAll();
-
-            for(Radio radio:radios){
-                for(FavoriteRadio fav:favorites){
-                    if(radio.getId() == fav.getRadioId() &&
-                            radio.getLanguageId() == fav.getLanguageId()){
-                        radio.setIsFavorite(true);
-                        favRadios.add(radio);
-                    }
-                }
-            }
-
-            return favRadios;
-        }
-
-        public Radio getCurrentRadio() {
-            return radios.get(this.currentRadioIndex);
-        }
-
-
-        public void setIsCurrentlyPlaying(boolean currentlyPlaying) {
-            isCurrentlyPlaying = currentlyPlaying;
-        }
-
-        public void setCurrentRadioIndex(int currentRadioIndex) {
-            this.currentRadioIndex = currentRadioIndex;
-        }
-
-        public void setCloseTime(Date closeTime) {
-            this.closeTime = closeTime;
-        }
-
-        public void setRadios(List<Radio> radios) {
-            this.radios = radios;
-        }
-
-        public void moveToNextRadio() {
-            if (++this.currentRadioIndex >= this.radios.size()) {
-                this.currentRadioIndex = 0;
-            }
-        }
-
-        public void moveToPreviousRadio() {
-            if (--this.currentRadioIndex < 0) {
-                this.currentRadioIndex = this.radios.size() - 1;
-            }
-        }
+    public ToolbarViewModel getToolbarViewModel() {
+        return toolbarViewModel;
     }
 
-    public class LanguageData{
-        private List<Language> languages = new ArrayList<>();
-        private Language currentLanguage;
+    public PlayerViewModel getPlayerViewModel() {
+        return playerViewModel;
+    }
 
-        public List<Language> getLanguages(){
+    public int getCurrentLanguageId() {
+        return currentLanguageId;
+    }
 
-            return languages;
+    public void setCurrentLanguageId(int currentLanguageId) {
+        this.currentLanguageId = currentLanguageId;
+    }
+
+    public PlayerStatusType getPlayerStatus() {
+        return playerStatus;
+    }
+
+    public boolean isPlaying() {
+        return PlayerStatusType.PLAYING == playerStatus;
+    }
+
+    public void setPlayerStatus(PlayerStatusType playerStatus) {
+        this.playerStatus = playerStatus;
+        switch (playerStatus) {
+            case PLAYING:
+                this.playerViewModel.setPlaying(true);
+                this.playerViewModel.setBusy(false);
+                break;
+            case BUFFERING:
+                this.playerViewModel.setBusy(true);
+                break;
+            case STOPPED:
+                this.playerViewModel.setPlaying(false);
+                this.playerViewModel.setBusy(false);
         }
 
-        public List<Language> getFavLanguages(){
-            List<Language> favLanguages = new ArrayList<>();
-            for (Language language : getLanguages()) {
-                if(language.getFavorite()){
-                    favLanguages.add(language);
-                }
-            }
-            return favLanguages;
-        }
+    }
 
-        public Language getCurrentLanguage() {
-            return currentLanguage;
-        }
+    public Radio getCurrentRadio() {
+        return currentRadio;
+    }
 
-        public void setLanguages(List<Language> languages){
-            this.languages = languages;
-        }
+    public void setCurrentRadio(Radio radio) {
+        currentRadio = radio;
+        this.playerViewModel.setCurrentRadio(radio);
+    }
 
-        public void setCurrentLanguage(Language currentLanguage) {
-            this.currentLanguage = currentLanguage;
-        }
+    public Stream getCurrentStream() {
+        return currentStream;
+    }
+
+    public void setCurrentStream(Stream currentStream) {
+        this.currentStream = currentStream;
+        this.playerViewModel.setCurrentStream(currentStream);
+    }
+
+    public void updateCurrentlyPlaying(String currentlyPlaying) {
+        this.playerViewModel.setCurrentlyPlaying(currentlyPlaying);
+    }
+
+    public static Context getContext() {
+        return context;
     }
 }

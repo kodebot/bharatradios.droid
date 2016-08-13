@@ -6,36 +6,26 @@ public class Stream {
     private int bitRate;
     private String url;
 
+    public Stream(String src, String srcName, int bitRate, String url) {
+        this.src = src;
+        this.srcName = srcName;
+        this.bitRate = bitRate;
+        this.url = url;
+    }
 
     public String getSrc() {
         return src;
-    }
-
-    public void setSrc(String src) {
-        this.src = src;
     }
 
     public String getSrcName() {
         return srcName;
     }
 
-    public void setSrcName(String srcName) {
-        this.srcName = srcName;
-    }
-
     public int getBitRate() {
         return bitRate;
     }
 
-    public void setBitRate(int bitRate) {
-        this.bitRate = bitRate;
-    }
-
     public String getUrl() {
         return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 }

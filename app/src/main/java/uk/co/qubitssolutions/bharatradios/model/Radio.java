@@ -1,13 +1,23 @@
 package uk.co.qubitssolutions.bharatradios.model;
 
+import java.util.ArrayList;
+
 public class Radio {
     private int id;
     private String name;
     private String desc;
     private String genre;
-    private Stream[] streams;
+    private ArrayList<Stream> streams;
     private int languageId;
-    private boolean isFavorite;
+
+    public Radio(int id, String name, String desc, String genre, int languageId){
+        this.id = id;
+        this.name = name;
+        this.desc = desc;
+        this.genre = genre;
+        this.languageId = languageId;
+        streams = new ArrayList<>();
+    }
 
     public int getId() {
         return id;
@@ -21,48 +31,19 @@ public class Radio {
         return genre;
     }
 
-    public Stream[] getStreams() {
+    public ArrayList<Stream> getStreams() {
         return streams;
     }
 
+    public void addStream(Stream stream) {
+        this.streams.add(stream);
+    }
 
     public String getDesc() {
         return desc;
     }
 
-    public int getLanguageId(){
+    public int getLanguageId() {
         return languageId;
-    }
-
-    public boolean getIsFavorite() {
-        return isFavorite;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
-
-    public void setGenre(String genre) {
-        this.genre = genre;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setLanguageId(int languageId) {
-        this.languageId = languageId;
-    }
-
-    public void setIsFavorite(boolean isFavorite) {
-        this.isFavorite = isFavorite;
-    }
-
-    public void setStreams(Stream[] streams) {
-        this.streams = streams;
     }
 }

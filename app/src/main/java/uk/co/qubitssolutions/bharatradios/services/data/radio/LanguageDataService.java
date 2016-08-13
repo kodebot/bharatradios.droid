@@ -22,12 +22,11 @@ public class LanguageDataService {
             int length = radiosArray.length();
 
             for (int i = 0; i < length; i++) {
-                Language language = new Language();
                 JSONObject item = radiosArray.getJSONObject(i);
-                language.setId(item.getInt("id"));
-                language.setName(item.getString("name"));
-                language.setRadiosUrl((item.getString("radiosUrl")));
-
+                Language language = new Language(
+                        item.getInt("id"),
+                        item.getString("name"),
+                        item.getString("radiosUrl"));
                 languages.add(language);
             }
         } catch (JSONException e) {
