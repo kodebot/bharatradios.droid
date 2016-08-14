@@ -197,12 +197,6 @@
                                 {
                                         "src": "http://www.shoutcast.com/",
                                         "srcName": "vanavilfm",
-                                        "br": "48",
-                                        "url": " http://yp.shoutcast.com/<base>?id=<id>"
-                                },
-                                {
-                                        "src": "http://www.shoutcast.com/",
-                                        "srcName": "vanavilfm",
                                         "br": "128",
                                         "url": " http://yp.shoutcast.com/<base>?id=<id>"
                                 }
