@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import uk.co.qubitssolutions.bharatradios.R;
 import uk.co.qubitssolutions.bharatradios.app.BharatRadiosApplication;
 import uk.co.qubitssolutions.bharatradios.app.adapters.LanguageListAdapter;
+import uk.co.qubitssolutions.bharatradios.app.others.DividerItemDecoration;
 import uk.co.qubitssolutions.bharatradios.databinding.ActivityLanguagesBinding;
 
 public class LanguagesActivity extends AppCompatActivity {
@@ -24,6 +25,8 @@ public class LanguagesActivity extends AppCompatActivity {
 
         binding.languageListRecyclerView.setAdapter(adapter);
         binding.languageListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        binding.languageListRecyclerView.addItemDecoration(
+                new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
 
     }
 }

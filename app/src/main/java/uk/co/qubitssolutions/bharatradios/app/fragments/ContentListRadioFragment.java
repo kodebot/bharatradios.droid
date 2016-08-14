@@ -3,6 +3,7 @@ package uk.co.qubitssolutions.bharatradios.app.fragments;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -20,6 +21,7 @@ import uk.co.qubitssolutions.bharatradios.R;
 import uk.co.qubitssolutions.bharatradios.app.BharatRadiosApplication;
 import uk.co.qubitssolutions.bharatradios.app.activities.MainActivity;
 import uk.co.qubitssolutions.bharatradios.app.adapters.RadioListRecyclerAdapter;
+import uk.co.qubitssolutions.bharatradios.app.others.DividerItemDecoration;
 import uk.co.qubitssolutions.bharatradios.app.viewholders.RadioListItemViewHolder;
 import uk.co.qubitssolutions.bharatradios.model.Language;
 import uk.co.qubitssolutions.bharatradios.model.Radio;
@@ -128,6 +130,8 @@ public class ContentListRadioFragment extends Fragment {
                         recyclerView.getContext(),
                         LinearLayoutManager.VERTICAL,
                         false));
+
+        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
     }
 
     private void showProgressBar() {

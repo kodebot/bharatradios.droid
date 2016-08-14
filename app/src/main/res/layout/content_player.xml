@@ -18,9 +18,11 @@
         android:id="@+id/radio_player_controls"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
         app:contentPaddingBottom="16dp"
         app:contentPaddingLeft="16dp"
-        app:contentPaddingRight="16dp">
+        app:contentPaddingRight="16dp"
+        android:visibility="@{viewModel.radioName.isEmpty?View.GONE:View.VISIBLE}">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -74,13 +76,11 @@
                     <android.support.v7.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{viewModel.radioName}"
-                        android:singleLine="true"
                         android:ellipsize="end"
                         android:selected="@{true}"
+                        android:singleLine="true"
+                        android:text="@{viewModel.radioName}"
                         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                        android:textSize="@dimen/text_size_medium"
-                        app:textAllCaps="true"
                         tools:text="This is radio 1" />
 
                     <LinearLayout
@@ -93,7 +93,6 @@
                             android:layout_height="wrap_content"
                             android:text="@{viewModel.radioGenre}"
                             android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                            app:textAllCaps="true"
                             tools:text="This is caption" />
 
                         <android.support.v7.widget.AppCompatTextView
@@ -102,7 +101,6 @@
                             android:paddingLeft="4dp"
                             android:paddingStart="4dp"
                             android:text='@{viewModel.bitRate + " kbps"}'
-                            app:textAllCaps="true"
                             android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                             tools:text="bit rate" />
 
@@ -111,27 +109,41 @@
                     <android.support.v7.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text='Currently playing a beautiful song'
-                        android:singleLine="true"
                         android:ellipsize="marquee"
-                        android:selected="@{true}"
                         android:marqueeRepeatLimit="marquee_forever"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                        app:textAllCaps="true"
+                        android:selected="@{true}"
+                        android:singleLine="true"
+                        android:text='Currently playing a beautifully awesome song'
+                        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                         tools:text="Currently playing a beautify song" />
                 </LinearLayout>
 
-                <android.support.v7.widget.AppCompatImageButton
+                <android.support.design.widget.FloatingActionButton
                     android:id="@+id/action_radio_player_play_stop_toggle"
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginStart="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:onClick="@{viewModel.togglePlay}"
+                    app:playStopTransition="@{viewModel.isPlaying}"
                     android:tint="@color/colorAccent"
-                    app:srcCompat="@{viewModel.playing? R.drawable.ic_stop_black_36dp_wrapped : R.drawable.ic_play_arrow_black_36dp_wrapped}"
-                    tools:srcCompat="@drawable/ic_stop_black_36dp_wrapped" />
+                    app:backgroundTint="#fff"
+                    app:borderWidth="0dp"
+                    app:elevation="0dp"
+                    android:scaleType="center"
+                    app:pressedTranslationZ="0dp"/>
+
+
+                <!--android:src="@{viewModel.playing? @drawable/ic_stop_black_36dp_wrapped:@drawable/ic_play_arrow_black_36dp_wrapped}"-->
+                <!--<android.support.v7.widget.AppCompatImageButton-->
+                <!--android:id="@+id/action_radio_player_play_stop_toggle"-->
+                <!--android:layout_width="56dp"-->
+                <!--android:layout_height="56dp"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:layout_marginLeft="16dp"-->
+                <!--android:layout_marginStart="16dp"-->
+                <!--android:onClick="@{viewModel.togglePlay}"-->
+                <!--android:tint="@color/colorAccent"-->
+                <!--app:srcCompat="@{viewModel.playing? R.drawable.ic_stop_black_36dp_wrapped : R.drawable.ic_play_arrow_black_36dp_wrapped}"-->
+                <!--tools:srcCompat="@drawable/ic_stop_black_36dp_wrapped" />-->
 
             </LinearLayout>
 

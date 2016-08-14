@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -16,18 +17,19 @@
         <LinearLayout
             android:id="@+id/radio_item_card"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="72dp"
+            android:paddingTop="8dp"
             android:baselineAligned="false"
             android:clickable="true"
             android:minHeight="?android:attr/listPreferredItemHeight"
             android:foreground="@drawable/card_foreground"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/avatar_medium_padding">
+            android:orientation="horizontal">
 
             <FrameLayout
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent">
-
+                android:layout_height="match_parent"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp">
                 <android.support.v7.widget.AppCompatImageView
                     android:id="@+id/list_item_radio_avatar"
                     android:layout_width="wrap_content"
@@ -43,7 +45,8 @@
                     android:gravity="center"
                     android:text="@{viewModel.initial}"
                     android:textColor="@android:color/primary_text_dark"
-                    android:textSize="@dimen/avatar_text_size" />
+                    android:textSize="@dimen/avatar_text_size"
+                    />
             </FrameLayout>
 
             <LinearLayout
@@ -54,34 +57,39 @@
                 android:clickable="true"
                 android:foreground="@drawable/card_foreground"
                 android:onClick="@{viewModel::onClick}"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:gravity="center">
 
-                <TextView
+                <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/list_item_radio_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="7dp"
                     android:text="@{viewModel.name}"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="@dimen/text_size_medium" />
+                    android:textColor="#DD000000"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                    tools:text="this is test"
+                    />
 
-                <TextView
+                <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/list_item_radio_subtitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="7dp"
-                    android:layout_marginRight="7dp"
                     android:text="@{viewModel.genre}"
-                    android:textColor="@android:color/secondary_text_dark" />
+                    android:textColor="#60000000"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    tools:text="this si another test"/>
+
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:gravity="top"
+                android:gravity="center"
                 android:orientation="vertical"
-                android:paddingRight="@dimen/image_button_medium_padding"
-                android:paddingTop="@dimen/image_button_medium_padding">
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp">
 
                 <android.support.v7.widget.AppCompatImageButton
                     android:id="@+id/action_list_item_radio_fav"

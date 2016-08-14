@@ -29,6 +29,7 @@
         android:orientation="vertical"
         tools:context=".app.activities.MainActivity"
         android:layout_below="@id/toolbar_container"
+        android:animateLayoutChanges="true"
         android:id="@+id/tab_container">
 
         <android.support.design.widget.AppBarLayout
@@ -53,13 +54,15 @@
         </android.support.design.widget.AppBarLayout>
 
         <include layout="@layout/content_main"/>
-
+        <include
+            layout="@layout/content_player"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"/>
     </android.support.design.widget.CoordinatorLayout>
     <ProgressBar
         android:id="@+id/activity_main_progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true" />
-
-
 </RelativeLayout>

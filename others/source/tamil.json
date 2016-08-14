@@ -43,6 +43,135 @@
                         ],
                         "imgName": "lankasri-fm",
                         "priority": 2
+                },
+                {
+                        "id": 3,
+                        "name": "Mukil App",
+                        "desc": "Mukil App",
+                        "genre": "Music",
+                        "streams": [
+                                {
+                                        "src": "http://www.shoutcast.com/",
+                                        "srcName": "Mukil App",
+                                        "br": "64",
+                                        "url": " http://yp.shoutcast.com/<base>?id=<id>"
+                                }
+                        ],
+                        "imgName": "mukil-app",
+                        "priority": 3
+                },
+                {
+                        "id": 4,
+                        "name": "IBC Tamil",
+                        "desc": "IBC Tamil",
+                        "genre": "Music",
+                        "streams": [
+                                {
+                                        "src": "http://www.shoutcast.com/",
+                                        "srcName": "IBC Tamil",
+                                        "br": "128",
+                                        "url": " http://yp.shoutcast.com/<base>?id=<id>"
+                                }
+                        ],
+                        "imgName": "ibc-tamil",
+                        "priority": 4
+                },
+                {
+                        "id": 5,
+                        "name": "Tamil Flash",
+                        "desc": "Tamil Falsh",
+                        "genre": "Music",
+                        "streams": [
+                                {
+                                        "src": "http://www.shoutcast.com/",
+                                        "srcName": "Tamil Flash",
+                                        "br": "96",
+                                        "url": " http://yp.shoutcast.com/<base>?id=<id>"
+                                }
+                        ],
+                        "imgName": "tamil-flash",
+                        "priority": 5
+                },
+                {
+                        "id": 6,
+                        "name": "Puradsi Isaiyaruvi",
+                        "desc": "Puradsi Isaiyaruvi",
+                        "genre": "Music",
+                        "streams": [
+                                {
+                                        "src": "http://www.shoutcast.com/",
+                                        "srcName": "Puradsi Isaiyaruvi",
+                                        "br": "96",
+                                        "url": " http://yp.shoutcast.com/<base>?id=<id>"
+                                }
+                        ],
+                        "imgName": "puradsi-isaiyaruvi",
+                        "priority": 6
+                },
+                {
+                        "id": 7,
+                        "name": "TRT Tamil Olli",
+                        "desc": "TRT Tamil Olli",
+                        "genre": "Music",
+                        "streams": [
+                                {
+                                        "src": "http://www.shoutcast.com/",
+                                        "srcName": "TRT Tamil Olli",
+                                        "br": "320",
+                                        "url": " http://yp.shoutcast.com/<base>?id=<id>"
+                                }
+                        ],
+                        "imgName": "trt-tamil-olli",
+                        "priority": 7
+                },
+                {
+                        "id": 8,
+                        "name": "Chellam FM",
+                        "desc": "Chellam FM",
+                        "genre": "Music",
+                        "streams": [
+                                {
+                                        "src": "http://www.shoutcast.com/",
+                                        "srcName": "Chellam-FM",
+                                        "br": "64",
+                                        "url": " http://yp.shoutcast.com/<base>?id=<id>"
+                                }
+                        ],
+                        "imgName": "chellam-fm",
+                        "priority": 8
+                },
+                {
+                        "id": 9,
+                        "name": "CMR Tamil",
+                        "desc": "CMR Tamil",
+                        "genre": "Music",
+                        "streams": [
+                                {
+                                        "src": "http://www.shoutcast.com/",
+                                        "srcName": "CMR Tamil",
+                                        "br": "128",
+                                        "url": " http://yp.shoutcast.com/<base>?id=<id>"
+                                }
+                        ],
+                        "imgName": "cmr-tamil",
+                        "priority": 9
+                },
+                {
+                        "id": 10,
+                        "name": "Puthu Paadal Radio",
+                        "desc": "Puthu Paadal Radio",
+                        "genre": "Music",
+                        "streams": [
+                                {
+                                        "src": "http://www.shoutcast.com/",
+                                        "srcName": "Puthu Paadal Radio",
+                                        "br": "128",
+                                        "url": " http://yp.shoutcast.com/<base>?id=<id>"
+                                }
+                        ],
+                        "imgName": "puthu-paadal-radio",
+                        "priority": 10
                 }
+
         ]
 }

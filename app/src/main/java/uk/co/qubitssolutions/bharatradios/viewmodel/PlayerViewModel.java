@@ -1,11 +1,28 @@
 package uk.co.qubitssolutions.bharatradios.viewmodel;
 
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
+import android.databinding.BindingAdapter;
+import android.databinding.parser.BindingExpressionParser;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.TransitionDrawable;
+import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.FloatingActionButton;
+import android.support.graphics.drawable.VectorDrawableCompat;
+import android.support.v4.animation.ValueAnimatorCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
+import android.support.v7.widget.CardView;
 import android.view.View;
+import android.view.animation.CycleInterpolator;
+import android.view.animation.LinearInterpolator;
+import android.widget.LinearLayout;
 
 import uk.co.qubitssolutions.bharatradios.BR;
+import uk.co.qubitssolutions.bharatradios.R;
 import uk.co.qubitssolutions.bharatradios.app.services.BackgroundAudioPlayerService;
 import uk.co.qubitssolutions.bharatradios.model.Constants;
 import uk.co.qubitssolutions.bharatradios.model.Radio;
@@ -21,7 +38,7 @@ public class PlayerViewModel extends BaseObservable {
 
     public PlayerViewModel() {
         playing = false;
-        radioName = "Please select a radio to play";
+        radioName = "";
         radioGenre = "";
         currentlyPlaying = "";
         bitRate = "";
@@ -96,12 +113,31 @@ public class PlayerViewModel extends BaseObservable {
         setBitRate(String.valueOf(currentStream.getBitRate()));
     }
 
-    public void togglePlay(View view) {
+    public void togglePlay(final View view) {
         Intent intent = new Intent(view.getContext(), BackgroundAudioPlayerService.class);
         intent.putExtra(Constants.EXTRA_ACTION, playing ? Constants.ACTION_STOP : Constants.ACTION_PLAY);
         view.getContext().startService(intent);
-
     }
 
+    @BindingAdapter("playStopTransition")
+    public static void playStopTransition(View view, boolean playing) {
+
+        final Drawable[] icons;
+        if (!playing) {
+            icons = new Drawable[]{
+                    ContextCompat.getDrawable(view.getContext(), R.drawable.ic_stop_black_36dp_wrapped),
+                    ContextCompat.getDrawable(view.getContext(), R.drawable.ic_play_arrow_black_36dp_wrapped)};
+        } else {
+            icons = new Drawable[]{
+                    ContextCompat.getDrawable(view.getContext(), R.drawable.ic_play_arrow_black_36dp_wrapped),
+                    ContextCompat.getDrawable(view.getContext(), R.drawable.ic_stop_black_36dp_wrapped)};
+        }
+
+        TransitionDrawable trans = new TransitionDrawable(icons);
+        FloatingActionButton button = (FloatingActionButton) view;
+        button.setImageDrawable(trans);
+        trans.setCrossFadeEnabled(true);
+        trans.startTransition(500);
+    }
 }
 

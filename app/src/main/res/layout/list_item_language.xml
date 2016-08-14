@@ -11,7 +11,7 @@
     <LinearLayout
         android:id="@+id/radio_item_card"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="72dp"
         android:layout_marginBottom="@dimen/card_view_medium_margin"
         android:layout_marginLeft="@dimen/card_view_medium_margin"
         android:layout_marginRight="@dimen/card_view_medium_margin"
@@ -20,12 +20,15 @@
         android:background="@drawable/card_foreground">
             <CheckedTextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_margin="@dimen/activity_horizontal_margin"
                 android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                 android:checked="@{viewModel.favorite}"
                 android:clickable="true"
                 android:onClick="@{viewModel::toggleFavorite}"
-                android:text="@{viewModel.name}" />
+                android:text="@{viewModel.name}"
+                android:textColor="#DD000000"
+                android:gravity="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"/>
     </LinearLayout>
 </layout>
