@@ -132,7 +132,7 @@
                         "streams": [
                                 {
                                         "src": "http://www.shoutcast.com/",
-                                        "srcName": "Chellam-FM",
+                                        "srcName": "Chellam FM",
                                         "br": "64",
                                         "url": " http://yp.shoutcast.com/<base>?id=<id>"
                                 }
