@@ -171,7 +171,194 @@
                         ],
                         "imgName": "puthu-paadal-radio",
                         "priority": 10
-                }
-
+                },
+                {
+                        "id": 11,
+                        "name": "BTC Tamil FM",
+                        "desc": "BTC Tamil FM",
+                        "genre": "Music",
+                        "streams": [
+                                {
+                                        "src": "http://www.shoutcast.com/",
+                                        "srcName": "btc tamil fm",
+                                        "br": "64",
+                                        "url": " http://yp.shoutcast.com/<base>?id=<id>"
+                                }
+                        ],
+                        "imgName": "btc-tamil-fm",
+                        "priority": 11
+                },
+                {
+                        "id": 12,
+                        "name": "Vanavil FM",
+                        "desc": "Vanavil FM",
+                        "genre": "Music",
+                        "streams": [
+                                {
+                                        "src": "http://www.shoutcast.com/",
+                                        "srcName": "vanavilfm",
+                                        "br": "48",
+                                        "url": " http://yp.shoutcast.com/<base>?id=<id>"
+                                },
+                                {
+                                        "src": "http://www.shoutcast.com/",
+                                        "srcName": "vanavilfm",
+                                        "br": "128",
+                                        "url": " http://yp.shoutcast.com/<base>?id=<id>"
+                                }
+                        ],
+                        "imgName": "vanavil-fm",
+                        "priority": 12
+                },
+                {
+                        "id": 13,
+                        "name": "Radio City Tamil",
+                        "desc": "Radio City Tamil",
+                        "genre": "Music",
+                        "streams": [
+                                {
+                                        "src": "http://www.shoutcast.com/",
+                                        "srcName": "radio city tamil",
+                                        "br": "96",
+                                        "url": " http://yp.shoutcast.com/<base>?id=<id>"
+                                },
+                                {
+                                        "src": "http://www.shoutcast.com/",
+                                        "srcName": "radio city tamil",
+                                        "br": "128",
+                                        "url": " http://yp.shoutcast.com/<base>?id=<id>"
+                                }
+                        ],
+                        "imgName": "radio-city-tamil",
+                        "priority": 13
+                },
+                {
+                        "id": 14,
+                        "name": "ILC Tamil",
+                        "desc": "ILC Tamil",
+                        "genre": "Music",
+                        "streams": [
+                                {
+                                        "src": "http://www.shoutcast.com/",
+                                        "srcName": "ilc tamil",
+                                        "br": "64",
+                                        "url": " http://yp.shoutcast.com/<base>?id=<id>"
+                                }
+                        ],
+                        "imgName": "ilc-tamil",
+                        "priority": 14
+                },
+                {
+                        "id": 15,
+                        "name": "Paris Tamil FM",
+                        "desc": "Paris Tamil FM",
+                        "genre": "Music",
+                        "streams": [
+                                {
+                                        "src": "http://www.shoutcast.com/",
+                                        "srcName": "paristamilfm",
+                                        "br": "128",
+                                        "url": " http://yp.shoutcast.com/<base>?id=<id>"
+                                }
+                        ],
+                        "imgName": "paris-tamil-fm",
+                        "priority": 15
+                },
+                {
+                        "id": 16,
+                        "name": "Hungama Tamil Hits",
+                        "desc": "Hungama Tamil Hits",
+                        "genre": "Music",
+                        "streams": [
+                                {
+                                        "src": "http://www.shoutcast.com/",
+                                        "srcName": "hungama-tamil-hits",
+                                        "br": "56",
+                                        "url": " http://yp.shoutcast.com/<base>?id=<id>"
+                                }
+                        ],
+                        "imgName": "hungama-tamil-hits",
+                        "priority": 16
+                },
+                {
+                        "id": 17,
+                        "name": "Tamil Star Radio",
+                        "desc": "Tamil Star Radio",
+                        "genre": "Music",
+                        "streams": [
+                                {
+                                        "src": "http://www.shoutcast.com/",
+                                        "srcName": "tamil star radio",
+                                        "br": "64",
+                                        "url": " http://yp.shoutcast.com/<base>?id=<id>"
+                                }
+                        ],
+                        "imgName": "tamil-start-radio",
+                        "priority": 17
+                },
+                {
+                        "id": 18,
+                        "name": "Tamil Isai",
+                        "desc": "Tamil Isai",
+                        "genre": "Music",
+                        "streams": [
+                                {
+                                        "src": "http://www.shoutcast.com/",
+                                        "srcName": "tamilisai",
+                                        "br": "64",
+                                        "url": " http://yp.shoutcast.com/<base>?id=<id>"
+                                }
+                        ],
+                        "imgName": "tamil-isai",
+                        "priority": 18
+                },
+                {
+                        "id": 19,
+                        "name": "Bakthi Malargal",
+                        "desc": "Bakthi Malargal",
+                        "genre": "Spiritual",
+                        "streams": [
+                                {
+                                        "src": "http://www.shoutcast.com/",
+                                        "srcName": "paristamilfm",
+                                        "br": "32",
+                                        "url": " http://yp.shoutcast.com/<base>?id=<id>"
+                                }
+                        ],
+                        "imgName": "bakthi-malargal",
+                        "priority": 19
+                },
+                {
+                        "id": 20,
+                        "name": "Thenral World Radio",
+                        "desc": "Thenral World Radio",
+                        "genre": "Music",
+                        "streams": [
+                                {
+                                        "src": "http://www.shoutcast.com/",
+                                        "srcName": "thenralworldradio",
+                                        "br": "64",
+                                        "url": " http://yp.shoutcast.com/<base>?id=<id>"
+                                }
+                        ],
+                        "imgName": "thenral-world-radio",
+                        "priority": 20
+                },
+				{
+                        "id": 21,
+                        "name": "DJSiran Tamil FM",
+                        "desc": "DJSiran Tamil FM",
+                        "genre": "Music",
+                        "streams": [
+                                {
+                                        "src": "http://www.shoutcast.com/",
+                                        "srcName": "djsiran tamil fm",
+                                        "br": "128",
+                                        "url": " http://yp.shoutcast.com/<base>?id=<id>"
+                                }
+                        ],
+                        "imgName": "djsiran-tamil-fm",
+                        "priority": 21
+                },
         ]
 }
