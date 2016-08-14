@@ -1,0 +1,69 @@
+{
+        "radios": [
+                {
+                        "id": 1,
+                        "name": "Manasu Tho",
+                        "desc": "Manasu Tho",
+                        "genre": "Music",
+                        "streams": [
+                                {
+                                        "src": "http://www.shoutcast.com/",
+                                        "srcName": "manasu tho",
+                                        "br": "128",
+                                        "url": " http://yp.shoutcast.com/<base>?id=<id>"
+                                }
+                        ],
+                        "imgName": "manasu-tho",
+                        "priority": 1
+                },
+                {
+                        "id": 2,
+                        "name": "Hungama Telugu Hits",
+                        "desc": "Hungama Telugu Hits",
+                        "genre": "Music",
+                        "streams": [
+                                {
+                                        "src": "http://www.shoutcast.com/",
+                                        "srcName": "hungama-telugu-hits",
+                                        "br": "64",
+                                        "url": " http://yp.shoutcast.com/<base>?id=<id>"
+                                }
+                        ],
+                        "imgName": "hungama-telugu-hits",
+                        "priority": 2
+                },
+                {
+                        "id": 3,
+                        "name": "Radio9",
+                        "desc": "Radio9",
+                        "genre": "Music",
+                        "streams": [
+                                {
+                                        "src": "http://www.shoutcast.com/",
+                                        "srcName": "radio9 telugu",
+                                        "br": "64",
+                                        "url": " http://yp.shoutcast.com/<base>?id=<id>"
+                                }
+                        ],
+                        "imgName": "radio9-telugu",
+                        "priority": 3
+                },
+				{
+                        "id": 4,
+                        "name": "Radio City",
+                        "desc": "Radio City",
+                        "genre": "Music",
+                        "streams": [
+                                {
+                                        "src": "http://www.shoutcast.com/",
+                                        "srcName": "radio city telugu gold",
+                                        "br": "96",
+                                        "url": " http://yp.shoutcast.com/<base>?id=<id>"
+                                }
+                        ],
+                        "imgName": "radio-city-telugu",
+                        "priority": 4
+                },
+
+        ]
+}
