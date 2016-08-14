@@ -8,7 +8,7 @@
                         "streams": [
                                 {
                                         "src": "http://www.shoutcast.com/",
-                                        "srcName": "manasu tho",
+                                        "srcName": "manasutho",
                                         "br": "128",
                                         "url": " http://yp.shoutcast.com/<base>?id=<id>"
                                 }
@@ -40,7 +40,7 @@
                         "streams": [
                                 {
                                         "src": "http://www.shoutcast.com/",
-                                        "srcName": "radio9 telugu",
+                                        "srcName": "radio9 - telugu",
                                         "br": "64",
                                         "url": " http://yp.shoutcast.com/<base>?id=<id>"
                                 }
