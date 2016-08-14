@@ -84,7 +84,7 @@
                         "streams": [
                                 {
                                         "src": "http://www.shoutcast.com/",
-                                        "srcName": "Tamil Flash",
+                                        "srcName": "Tamilflash",
                                         "br": "96",
                                         "url": " http://yp.shoutcast.com/<base>?id=<id>"
                                 }
