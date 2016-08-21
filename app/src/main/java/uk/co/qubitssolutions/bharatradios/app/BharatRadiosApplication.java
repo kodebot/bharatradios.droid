@@ -8,6 +8,7 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
+import rx.subjects.BehaviorSubject;
 import uk.co.qubitssolutions.bharatradios.model.Language;
 import uk.co.qubitssolutions.bharatradios.model.PlayerStatusType;
 import uk.co.qubitssolutions.bharatradios.model.Radio;
@@ -26,6 +27,9 @@ public class BharatRadiosApplication extends Application {
     private Radio currentRadio;
     private PlayerStatusType playerStatus;
     private Stream currentStream;
+
+    public BehaviorSubject<byte[]> audioVisualizerData = BehaviorSubject.create();
+
 
     public BharatRadiosApplication() {
         super();

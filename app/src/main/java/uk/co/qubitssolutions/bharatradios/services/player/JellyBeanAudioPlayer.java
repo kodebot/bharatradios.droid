@@ -2,6 +2,7 @@ package uk.co.qubitssolutions.bharatradios.services.player;
 
 import android.content.Context;
 import android.media.AudioManager;
+import android.media.audiofx.Visualizer;
 import android.net.Uri;
 import android.util.Log;
 
@@ -16,6 +17,7 @@ import com.google.android.exoplayer.upstream.DataSource;
 import com.google.android.exoplayer.upstream.DefaultAllocator;
 import com.google.android.exoplayer.upstream.DefaultUriDataSource;
 
+import uk.co.qubitssolutions.bharatradios.app.BharatRadiosApplication;
 import uk.co.qubitssolutions.bharatradios.model.Constants;
 
 /**
@@ -33,6 +35,7 @@ public class JellyBeanAudioPlayer extends AudioPlayer {
     private ExoPlayer exoPlayer;
     private ExoPlayer.Listener exoPlayerListener;
     private MediaCodecAudioTrackRenderer audioTrackRenderer;
+    private Visualizer visualizer;
 
     public JellyBeanAudioPlayer(Context context, StateChangeListener stateChangeListener) {
         if (context == null)
@@ -53,6 +56,9 @@ public class JellyBeanAudioPlayer extends AudioPlayer {
 
     @Override
     public void releasePlayer() {
+        if (visualizer != null) {
+            visualizer.release();
+        }
         if (exoPlayer == null) return;
         Log.v(Constants.LOG_TAG, "Releasing player");
         exoPlayer.release();
@@ -76,7 +82,30 @@ public class JellyBeanAudioPlayer extends AudioPlayer {
                 allocator,
                 SEGMENT_COUNT * SEGMENT_SIZE, mp3Extractor);
         audioTrackRenderer = new MediaCodecAudioTrackRenderer(
-                sampleSource, MediaCodecSelector.DEFAULT, null, false, null, null, null, AudioManager.STREAM_MUSIC);
+                sampleSource, MediaCodecSelector.DEFAULT, null, false, null, null, null, AudioManager.STREAM_MUSIC) {
+            @Override
+            protected void onAudioSessionId(int audioSessionId) {
+                super.onAudioSessionId(audioSessionId);
+                if (visualizer != null) {
+                    visualizer.release();
+                }
+                visualizer = new Visualizer(audioSessionId);
+                visualizer.setCaptureSize(Visualizer.getCaptureSizeRange()[1]);
+                visualizer.setDataCaptureListener(
+                        new Visualizer.OnDataCaptureListener() {
+                            public void onWaveFormDataCapture(Visualizer visualizer,
+                                                              byte[] bytes, int samplingRate) {
+                                ((BharatRadiosApplication)context).audioVisualizerData.onNext(bytes);
+                            }
+
+                            public void onFftDataCapture(Visualizer visualizer,
+                                                         byte[] bytes, int samplingRate) {
+                            }
+                        }, Visualizer.getMaxCaptureRate() / 4, true, false);
+                visualizer.setEnabled(true);
+            }
+        };
+
         exoPlayer.prepare(audioTrackRenderer);
         exoPlayer.setPlayWhenReady(true);
         Log.v(Constants.LOG_TAG, "Player playing " + url);

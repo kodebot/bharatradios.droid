@@ -1,29 +1,21 @@
 package uk.co.qubitssolutions.bharatradios.viewmodel;
 
-import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.databinding.BindingAdapter;
-import android.databinding.parser.BindingExpressionParser;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.TransitionDrawable;
-import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
-import android.support.graphics.drawable.VectorDrawableCompat;
-import android.support.v4.animation.ValueAnimatorCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.res.ResourcesCompat;
-import android.support.v7.widget.CardView;
 import android.view.View;
-import android.view.animation.CycleInterpolator;
-import android.view.animation.LinearInterpolator;
-import android.widget.LinearLayout;
 
+import rx.functions.Action1;
 import uk.co.qubitssolutions.bharatradios.BR;
 import uk.co.qubitssolutions.bharatradios.R;
+import uk.co.qubitssolutions.bharatradios.app.BharatRadiosApplication;
 import uk.co.qubitssolutions.bharatradios.app.services.BackgroundAudioPlayerService;
+import uk.co.qubitssolutions.bharatradios.app.views.WaveVisualizerView;
 import uk.co.qubitssolutions.bharatradios.model.Constants;
 import uk.co.qubitssolutions.bharatradios.model.Radio;
 import uk.co.qubitssolutions.bharatradios.model.Stream;
@@ -35,6 +27,7 @@ public class PlayerViewModel extends BaseObservable {
     private String radioGenre;
     private String currentlyPlaying;
     private String bitRate;
+    private byte[] visualizerData;
 
     public PlayerViewModel() {
         playing = false;
@@ -50,6 +43,16 @@ public class PlayerViewModel extends BaseObservable {
     }
 
     public void setPlaying(boolean playing) {
+
+        if (playing) {
+            ((BharatRadiosApplication) BharatRadiosApplication.getContext()).audioVisualizerData.subscribe(new Action1<byte[]>() {
+                @Override
+                public void call(byte[] bytes) {
+                    setVisualizerData(bytes);
+                }
+            });
+        }
+
         this.playing = playing;
         notifyPropertyChanged(BR.playing);
     }
@@ -104,6 +107,16 @@ public class PlayerViewModel extends BaseObservable {
         notifyPropertyChanged(BR.bitRate);
     }
 
+    @Bindable
+    public byte[] getVisualizerData() {
+        return visualizerData;
+    }
+
+    public void setVisualizerData(byte[] visualizerData) {
+        this.visualizerData = visualizerData;
+        notifyPropertyChanged(BR.visualizerData);
+    }
+
     public void setCurrentRadio(Radio currentRadio) {
         setRadioName(currentRadio.getName());
         setRadioGenre(currentRadio.getGenre());
@@ -138,6 +151,13 @@ public class PlayerViewModel extends BaseObservable {
         button.setImageDrawable(trans);
         trans.setCrossFadeEnabled(true);
         trans.startTransition(500);
+    }
+
+    @BindingAdapter("bind:updateVisualizer")
+    public static void updateVisualizer(View view, byte[] visualizerData) {
+
+        WaveVisualizerView visualizerView = (WaveVisualizerView) view;
+        visualizerView.updateVisualizer(visualizerData);
     }
 }
 
