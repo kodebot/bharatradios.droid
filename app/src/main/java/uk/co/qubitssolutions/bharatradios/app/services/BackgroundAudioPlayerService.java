@@ -29,6 +29,7 @@ import uk.co.qubitssolutions.bharatradios.model.Constants;
 import uk.co.qubitssolutions.bharatradios.model.PlayerStatusType;
 import uk.co.qubitssolutions.bharatradios.model.Radio;
 import uk.co.qubitssolutions.bharatradios.model.Stream;
+import uk.co.qubitssolutions.bharatradios.services.data.radio.CurrentlyPlayingInfoHtmlScrapper;
 import uk.co.qubitssolutions.bharatradios.services.data.radio.PlsParser;
 import uk.co.qubitssolutions.bharatradios.services.data.radio.ShoutcastDataReader;
 import uk.co.qubitssolutions.bharatradios.services.player.AudioPlayer;
@@ -150,6 +151,7 @@ public class BackgroundAudioPlayerService extends Service
             Log.v(Constants.LOG_TAG, "Playing beginning");
             audioPlayer.play(currentlyPlayingUrl);
             Log.v(Constants.LOG_TAG, "Playing begun successfully");
+            application.updateCurrentlyPlaying(CurrentlyPlayingInfoHtmlScrapper.getCurrentlyPlaying(currentlyPlayingUrl));
         }
     }
 
@@ -417,6 +419,7 @@ public class BackgroundAudioPlayerService extends Service
                             .replaceAll("<id>", stations.get(0).id);
 
                     String url = parser.getUrls(plsUrl).get(0);
+                    stream.setUrl(url);
                     application.setCurrentStream(stream);
                     return url + "/;?icy=http";
                 }

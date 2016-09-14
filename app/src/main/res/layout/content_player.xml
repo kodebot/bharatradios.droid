@@ -112,7 +112,7 @@
                         android:marqueeRepeatLimit="marquee_forever"
                         android:selected="@{true}"
                         android:singleLine="true"
-                        android:text='Currently playing a beautifully awesome song'
+                        android:text="@{viewModel.currentlyPlaying}"
                         android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                         tools:text="Currently playing a beautify song" />
 

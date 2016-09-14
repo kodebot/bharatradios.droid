@@ -10,7 +10,13 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 
+import java.util.concurrent.TimeUnit;
+
+import rx.Observable;
 import rx.functions.Action1;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
+import rx.subjects.BehaviorSubject;
 import uk.co.qubitssolutions.bharatradios.BR;
 import uk.co.qubitssolutions.bharatradios.R;
 import uk.co.qubitssolutions.bharatradios.app.BharatRadiosApplication;
@@ -19,6 +25,7 @@ import uk.co.qubitssolutions.bharatradios.app.views.WaveVisualizerView;
 import uk.co.qubitssolutions.bharatradios.model.Constants;
 import uk.co.qubitssolutions.bharatradios.model.Radio;
 import uk.co.qubitssolutions.bharatradios.model.Stream;
+import uk.co.qubitssolutions.bharatradios.services.data.radio.CurrentlyPlayingInfoHtmlScrapper;
 
 public class PlayerViewModel extends BaseObservable {
     private boolean playing;
@@ -28,6 +35,7 @@ public class PlayerViewModel extends BaseObservable {
     private String currentlyPlaying;
     private String bitRate;
     private byte[] visualizerData;
+    private String currentlyPlayingUrl;
 
     public PlayerViewModel() {
         playing = false;
@@ -35,6 +43,23 @@ public class PlayerViewModel extends BaseObservable {
         radioGenre = "";
         currentlyPlaying = "";
         bitRate = "";
+        this.currentlyPlayingUrl = "";
+        Observable.interval(60, TimeUnit.SECONDS, Schedulers.io())
+                .map(new Func1<Long, Object>() {
+                    @Override
+                    public Object call(Long aLong) {
+                        if (!PlayerViewModel.this.currentlyPlayingUrl.isEmpty()) {
+                            return CurrentlyPlayingInfoHtmlScrapper.getCurrentlyPlaying(PlayerViewModel.this.currentlyPlayingUrl);
+                        }
+                        return "";
+                    }
+                }).subscribe(new Action1<Object>() {
+            @Override
+            public void call(Object o) {
+                String info = (String) o;
+                PlayerViewModel.this.setCurrentlyPlaying(info);
+            }
+        });
     }
 
     @Bindable
@@ -124,12 +149,17 @@ public class PlayerViewModel extends BaseObservable {
 
     public void setCurrentStream(Stream currentStream) {
         setBitRate(String.valueOf(currentStream.getBitRate()));
+        setCurrentlyPlayingUrl(currentStream.getUrl());
     }
 
     public void togglePlay(final View view) {
         Intent intent = new Intent(view.getContext(), BackgroundAudioPlayerService.class);
         intent.putExtra(Constants.EXTRA_ACTION, playing ? Constants.ACTION_STOP : Constants.ACTION_PLAY);
         view.getContext().startService(intent);
+    }
+
+    public void setCurrentlyPlayingUrl(String url) {
+        this.currentlyPlayingUrl= url;
     }
 
     @BindingAdapter("playStopTransition")
