@@ -86,23 +86,27 @@ public class JellyBeanAudioPlayer extends AudioPlayer {
             @Override
             protected void onAudioSessionId(int audioSessionId) {
                 super.onAudioSessionId(audioSessionId);
-                if (visualizer != null) {
-                    visualizer.release();
-                }
-                visualizer = new Visualizer(audioSessionId);
-                visualizer.setCaptureSize(Visualizer.getCaptureSizeRange()[1]);
-                visualizer.setDataCaptureListener(
-                        new Visualizer.OnDataCaptureListener() {
-                            public void onWaveFormDataCapture(Visualizer visualizer,
-                                                              byte[] bytes, int samplingRate) {
-                                ((BharatRadiosApplication)context).audioVisualizerData.onNext(bytes);
-                            }
 
-                            public void onFftDataCapture(Visualizer visualizer,
-                                                         byte[] bytes, int samplingRate) {
-                            }
-                        }, Visualizer.getMaxCaptureRate() / 4, true, false);
-                visualizer.setEnabled(true);
+                if (((BharatRadiosApplication) context).hasRecordAudioPermisssion()) {
+
+                    if (visualizer != null) {
+                        visualizer.release();
+                    }
+                    visualizer = new Visualizer(audioSessionId);
+                    visualizer.setCaptureSize(Visualizer.getCaptureSizeRange()[1]);
+                    visualizer.setDataCaptureListener(
+                            new Visualizer.OnDataCaptureListener() {
+                                public void onWaveFormDataCapture(Visualizer visualizer,
+                                                                  byte[] bytes, int samplingRate) {
+                                    ((BharatRadiosApplication) context).audioVisualizerData.onNext(bytes);
+                                }
+
+                                public void onFftDataCapture(Visualizer visualizer,
+                                                             byte[] bytes, int samplingRate) {
+                                }
+                            }, Visualizer.getMaxCaptureRate() / 4, true, false);
+                    visualizer.setEnabled(true);
+                }
             }
         };
 

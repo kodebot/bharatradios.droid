@@ -1,12 +1,19 @@
 package uk.co.qubitssolutions.bharatradios.app.activities;
 
+import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -38,6 +45,8 @@ import uk.co.qubitssolutions.bharatradios.viewmodel.ToolbarViewModel;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private final int MAIN_RECORD_AUDIO_PERMISSION_REF = 1234;
 
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
@@ -73,6 +82,7 @@ public class MainActivity extends AppCompatActivity
         AdView mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
+        requestMicroPhonePermission();
     }
 
     @Override
@@ -152,8 +162,6 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-
-
     /**********************************************************************************************
      * ******************************* PRIVATE METHODS*********************************************
      **********************************************************************************************/
@@ -223,8 +231,51 @@ public class MainActivity extends AppCompatActivity
         if (FavoriteLanguagePreferenceService.getInstance(this).getAll().isEmpty()) {
             // languages are not selected - send the user to languages activity
             startActivity(new Intent(MainActivity.this, LanguagesActivity.class));
-        }else{
+        } else {
             setupRadioListViewPager();
+        }
+    }
+
+    private void requestMicroPhonePermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_DENIED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.RECORD_AUDIO)) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage("Please grant Record Audio permission to see audio visualizer.")
+                        .setTitle("Record Audio Permission")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                                ActivityCompat.requestPermissions(MainActivity.this,
+                                        new String[]{Manifest.permission.RECORD_AUDIO},
+                                        MAIN_RECORD_AUDIO_PERMISSION_REF);
+                            }
+                        }).show();
+            } else {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.RECORD_AUDIO},
+                        MAIN_RECORD_AUDIO_PERMISSION_REF);
+            }
+        }else{
+            application.setRecordAudioPermisssion(true);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case MAIN_RECORD_AUDIO_PERMISSION_REF: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    application.setRecordAudioPermisssion(true);
+                } else {
+
+                    application.setRecordAudioPermisssion(false);
+                }
+            }
         }
     }
 }
