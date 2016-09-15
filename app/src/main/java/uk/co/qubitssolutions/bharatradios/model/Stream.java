@@ -17,6 +17,10 @@ public class Stream {
         return src;
     }
 
+    public void setSrc(String value){
+        src = value;
+    }
+
     public String getSrcName() {
         return srcName;
     }
@@ -32,4 +36,6 @@ public class Stream {
     public void setUrl(String url){
         this.url = url;
     }
+
+
 }
