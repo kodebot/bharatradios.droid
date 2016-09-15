@@ -27,6 +27,7 @@ public class BharatRadiosApplication extends Application {
     private Radio currentRadio;
     private PlayerStatusType playerStatus;
     private Stream currentStream;
+    private boolean recordAudioPermisssion;
 
     public BehaviorSubject<byte[]> audioVisualizerData = BehaviorSubject.create();
 
@@ -126,5 +127,13 @@ public class BharatRadiosApplication extends Application {
 
     public static Context getContext() {
         return context;
+    }
+
+    public boolean hasRecordAudioPermisssion() {
+        return recordAudioPermisssion;
+    }
+
+    public void setRecordAudioPermisssion(boolean recordAudioPermisssion) {
+        this.recordAudioPermisssion = recordAudioPermisssion;
     }
 }

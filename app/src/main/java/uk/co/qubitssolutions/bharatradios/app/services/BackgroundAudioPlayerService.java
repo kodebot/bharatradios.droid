@@ -422,8 +422,8 @@ public class BackgroundAudioPlayerService extends Service
                     url = url + "/;?icy=http";
                     stream.setUrl(url);
 
-// this is to ensure the updated url is not resolved as shoutcast stream again
-// when user click the same radio again
+                    // this is to ensure the updated url is not resolved as shoutcast stream again
+                    // when user click the same radio again
                     stream.setSrc("Direct");
                     application.setCurrentStream(stream);
                     return url;
