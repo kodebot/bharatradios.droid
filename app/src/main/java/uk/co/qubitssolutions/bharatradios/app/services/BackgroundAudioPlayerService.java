@@ -17,17 +17,17 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.util.Log;
+import android.widget.RemoteViews;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 
-import rx.functions.Action1;
+import uk.co.qubitssolutions.bharatradios.R;
 import uk.co.qubitssolutions.bharatradios.app.BharatRadiosApplication;
 import uk.co.qubitssolutions.bharatradios.app.activities.MainActivity;
 import uk.co.qubitssolutions.bharatradios.model.Constants;
 import uk.co.qubitssolutions.bharatradios.model.PlayerStatusType;
-import uk.co.qubitssolutions.bharatradios.model.Radio;
 import uk.co.qubitssolutions.bharatradios.model.Stream;
 import uk.co.qubitssolutions.bharatradios.services.data.radio.CurrentlyPlayingInfoHtmlScrapper;
 import uk.co.qubitssolutions.bharatradios.services.data.radio.PlsParser;
@@ -56,7 +56,7 @@ public class BackgroundAudioPlayerService extends Service
 
     public static MediaSessionCompat mediaSession;
 
-    public final int NOTIFICATION_ID = 12756;
+    public final int NOTIFICATION_ID = 17546;
     private BharatRadiosApplication application;
 
     public BackgroundAudioPlayerService() {
@@ -200,7 +200,7 @@ public class BackgroundAudioPlayerService extends Service
         acquireWakeLock();
         acquireWifiLock();
         setupAudioFocus();
-        setupMediaSession();
+        //setupMediaSession();
         Log.v(Constants.LOG_TAG, "Player setup successfully");
 
     }
@@ -217,31 +217,31 @@ public class BackgroundAudioPlayerService extends Service
 
     }
 
-    private void setupMediaSession() {
-        ComponentName remoteControlReceiver = new ComponentName(
-                getPackageName(),
-                RemoteControlReceiver.class.getName());
-        mediaSession = new MediaSessionCompat(
-                getApplicationContext(),
-                Constants.LOG_TAG,
-                remoteControlReceiver, null);
-        mediaSession.setFlags(
-                MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS |
-                        MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS);
-
-        mediaSession.setCallback(new MediaSessionCallback());
-
-        PlaybackStateCompat state = new PlaybackStateCompat.Builder()
-                .setActions(
-                        PlaybackStateCompat.ACTION_PLAY |
-                                PlaybackStateCompat.ACTION_PAUSE |
-                                PlaybackStateCompat.ACTION_STOP)
-                .setState(PlaybackStateCompat.STATE_PAUSED, PlaybackStateCompat.PLAYBACK_POSITION_UNKNOWN, SystemClock.elapsedRealtime())
-                .build();
-
-        mediaSession.setPlaybackState(state);
-        mediaSession.setActive(true);
-    }
+//    private void setupMediaSession() {
+//        ComponentName remoteControlReceiver = new ComponentName(
+//                getPackageName(),
+//                RemoteControlReceiver.class.getName());
+//        mediaSession = new MediaSessionCompat(
+//                getApplicationContext(),
+//                Constants.LOG_TAG,
+//                remoteControlReceiver, null);
+//        mediaSession.setFlags(
+//                MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS |
+//                        MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS);
+//
+//        mediaSession.setCallback(new MediaSessionCallback());
+//
+//        PlaybackStateCompat state = new PlaybackStateCompat.Builder()
+//                .setActions(
+//                        PlaybackStateCompat.ACTION_PLAY |
+//                                PlaybackStateCompat.ACTION_PAUSE |
+//                                PlaybackStateCompat.ACTION_STOP)
+//                .setState(PlaybackStateCompat.STATE_PAUSED, PlaybackStateCompat.PLAYBACK_POSITION_UNKNOWN, SystemClock.elapsedRealtime())
+//                .build();
+//
+//        mediaSession.setPlaybackState(state);
+//        mediaSession.setActive(true);
+//    }
 
     private void setupAudioFocus() {
         Log.v(Constants.LOG_TAG, "Trying to gain stream music audio focus.");
@@ -316,8 +316,10 @@ public class BackgroundAudioPlayerService extends Service
                 new Intent(getApplicationContext(), MainActivity.class),
                 PendingIntent.FLAG_UPDATE_CURRENT);
         int largeIconId = getApplicationContext().getResources()
-                .getIdentifier("icon", "drawable", getApplicationContext().getPackageName());
+                .getIdentifier("ic_launcher", "mipmap", getApplicationContext().getPackageName());
         Bitmap largeIcon = BitmapFactory.decodeResource(getApplicationContext().getResources(), largeIconId);
+
+
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
         builder.setSmallIcon(android.R.drawable.ic_media_play)
                 .setLargeIcon(largeIcon)
@@ -325,6 +327,16 @@ public class BackgroundAudioPlayerService extends Service
                 .setContentText(contentText)
                 .setContentIntent(pi);
 
+        RemoteViews notificationView = new RemoteViews(getPackageName(),
+                R.layout.activity_player_notification);
+
+        Intent playIntent = new Intent(this, BackgroundAudioPlayerService.class);
+        playIntent.setAction(Constants.ACTION_PLAY);
+        PendingIntent pendingPlayIntent = PendingIntent.getService(this, 0, playIntent, 0);
+
+        notificationView.setOnClickPendingIntent(R.id.player_notification_play, pendingPlayIntent);
+
+        builder.setContent(notificationView);
         startForeground(NOTIFICATION_ID, builder.build());
     }
 
