@@ -322,21 +322,21 @@ public class BackgroundAudioPlayerService extends Service
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
         builder.setSmallIcon(android.R.drawable.ic_media_play)
-                .setLargeIcon(largeIcon)
+              .setLargeIcon(largeIcon)
                 .setContentTitle("Playing " + currentRadioName)
                 .setContentText(contentText)
                 .setContentIntent(pi);
 
-        RemoteViews notificationView = new RemoteViews(getPackageName(),
-                R.layout.activity_player_notification);
+//        RemoteViews notificationView = new RemoteViews(getPackageName(),
+//                R.layout.activity_player_notification);
+//
+//        Intent playIntent = new Intent(this, BackgroundAudioPlayerService.class);
+//        playIntent.putExtra(Constants.EXTRA_ACTION, Constants.ACTION_PLAY);
+//        PendingIntent pendingPlayIntent = PendingIntent.getService(this, 0, playIntent, 0);
 
-        Intent playIntent = new Intent(this, BackgroundAudioPlayerService.class);
-        playIntent.setAction(Constants.ACTION_PLAY);
-        PendingIntent pendingPlayIntent = PendingIntent.getService(this, 0, playIntent, 0);
+      //  notificationView.setOnClickPendingIntent(R.id.action_radio_player_play_stop_toggle, pendingPlayIntent);
 
-        notificationView.setOnClickPendingIntent(R.id.player_notification_play, pendingPlayIntent);
-
-        builder.setContent(notificationView);
+//        builder.setContent(notificationView);
         startForeground(NOTIFICATION_ID, builder.build());
     }
 
