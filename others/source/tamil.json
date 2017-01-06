@@ -19,7 +19,7 @@
                                         "url": "http://104.238.193.114:7086/;?1468676137518.mp3"
                                 }
                         ],
-                        "imgName": "suriyan-fm-srilanka",
+                        "website": "http://www.sooriyanfm.lk/",
                         "priority": 1
                 },
                 {
@@ -41,7 +41,7 @@
                                         "url": " http://yp.shoutcast.com/<base>?id=<id>"
                                 }
                         ],
-                        "imgName": "lankasri-fm",
+                        "website": "http://www.lankasri.fm/",
                         "priority": 2
                 },
                 {
@@ -57,7 +57,7 @@
                                         "url": " http://yp.shoutcast.com/<base>?id=<id>"
                                 }
                         ],
-                        "imgName": "mukil-app",
+                        "website": "http://mukilwrongtest.com",
                         "priority": 3
                 },
                 {
