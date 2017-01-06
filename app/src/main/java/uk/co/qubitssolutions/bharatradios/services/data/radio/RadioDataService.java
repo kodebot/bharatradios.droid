@@ -27,6 +27,7 @@ public class RadioDataService {
                         item.getString("name"),
                         item.getString("desc"),
                         item.getString("genre"),
+                        item.getString("imageUrl"),
                         language.getId());
 
                 JSONArray streamArray = item.getJSONArray("streams");

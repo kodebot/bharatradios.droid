@@ -29,27 +29,10 @@ import uk.co.qubitssolutions.bharatradios.services.preferences.FavoriteRadioPref
                 method = "setImageResource") })
 public class RadioViewModel extends BaseObservable {
 
-    private final static List<Integer> avatarImages;
-
-    static {
-        avatarImages = new ArrayList<>();
-        avatarImages.add(R.drawable.radio_item_avatar_blue);
-        avatarImages.add(R.drawable.radio_item_avatar_blue_grey);
-        avatarImages.add(R.drawable.radio_item_avatar_brown);
-        avatarImages.add(R.drawable.radio_item_avatar_dark_purple);
-        avatarImages.add(R.drawable.radio_item_avatar_deep_orange);
-        avatarImages.add(R.drawable.radio_item_avatar_green);
-        avatarImages.add(R.drawable.radio_item_avatar_indigo);
-        avatarImages.add(R.drawable.radio_item_avatar_orange);
-        avatarImages.add(R.drawable.radio_item_avatar_pink);
-        avatarImages.add(R.drawable.radio_item_avatar_purple);
-        avatarImages.add(R.drawable.radio_item_avatar_red);
-        avatarImages.add(R.drawable.radio_item_avatar_teal);
-    }
-
     private Radio radio;
     private String name;
     private String genre;
+    private String imageUrl;
     private BharatRadiosApplication application;
 
     public RadioViewModel(BharatRadiosApplication application, Radio radio) {
@@ -67,6 +50,10 @@ public class RadioViewModel extends BaseObservable {
         return genre;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
     @Bindable
     public boolean isFavorite() {
         List<FavoriteRadio> favRadios = FavoriteRadioPreferenceService
@@ -81,24 +68,6 @@ public class RadioViewModel extends BaseObservable {
         return false;
     }
 
-    public String getInitial() {
-        String result = "";
-        String[] textParts = name.split(" ");
-        for (String textPart : textParts) {
-            result = result + textPart.charAt(0);
-            if (result.length() == 2) {
-                break;
-            }
-        }
-        return result;
-    }
-
-    public Drawable getAvatarImage() {
-        return ResourcesCompat.getDrawable(
-                application.getResources(),
-                avatarImages.get(getName().length() % avatarImages.size()),
-                null);
-    }
 
     public void toggleFavorite(View view) {
         FavoriteRadio favRadio = new FavoriteRadio(this.radio.getLanguageId(), this.radio.getId());

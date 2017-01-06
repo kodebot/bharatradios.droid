@@ -19,7 +19,7 @@
                                         "url": "http://104.238.193.114:7086/;?1468676137518.mp3"
                                 }
                         ],
-                        "website": "http://www.sooriyanfm.lk/",
+                        "imageUrl": "http://www.sooriyanfm.lk/images/listenlivelogo.jpg",
                         "priority": 1
                 },
                 {
@@ -41,7 +41,7 @@
                                         "url": " http://yp.shoutcast.com/<base>?id=<id>"
                                 }
                         ],
-                        "website": "http://www.lankasri.fm/",
+                        "imageUrl": "http://assets.zoftcdn.com/branding/lankasrifm/f_fm_200_b.png",
                         "priority": 2
                 },
                 {
@@ -57,7 +57,7 @@
                                         "url": " http://yp.shoutcast.com/<base>?id=<id>"
                                 }
                         ],
-                        "website": "http://mukilwrongtest.com",
+                        "imageUrl": "http://mukilwrongtest.com",
                         "priority": 3
                 },
                 {
@@ -73,7 +73,7 @@
                                         "url": " http://yp.shoutcast.com/<base>?id=<id>"
                                 }
                         ],
-                        "imgName": "ibc-tamil",
+                        "imageUrl": "ibc-tamil",
                         "priority": 4
                 },
                 {
@@ -89,7 +89,7 @@
                                         "url": " http://yp.shoutcast.com/<base>?id=<id>"
                                 }
                         ],
-                        "imgName": "tamil-flash",
+                        "imageUrl": "tamil-flash",
                         "priority": 5
                 },
                 {
@@ -105,7 +105,7 @@
                                         "url": " http://yp.shoutcast.com/<base>?id=<id>"
                                 }
                         ],
-                        "imgName": "puradsi-isaiyaruvi",
+                        "imageUrl": "puradsi-isaiyaruvi",
                         "priority": 6
                 },
                 {
@@ -121,7 +121,7 @@
                                         "url": " http://yp.shoutcast.com/<base>?id=<id>"
                                 }
                         ],
-                        "imgName": "trt-tamil-olli",
+                        "imageUrl": "trt-tamil-olli",
                         "priority": 7
                 },
                 {
@@ -137,7 +137,7 @@
                                         "url": " http://yp.shoutcast.com/<base>?id=<id>"
                                 }
                         ],
-                        "imgName": "chellam-fm",
+                        "imageUrl": "chellam-fm",
                         "priority": 8
                 },
                 {
@@ -153,7 +153,7 @@
                                         "url": " http://yp.shoutcast.com/<base>?id=<id>"
                                 }
                         ],
-                        "imgName": "cmr-tamil",
+                        "imageUrl": "cmr-tamil",
                         "priority": 9
                 },
                 {
@@ -169,7 +169,7 @@
                                         "url": " http://yp.shoutcast.com/<base>?id=<id>"
                                 }
                         ],
-                        "imgName": "puthu-paadal-radio",
+                        "imageUrl": "puthu-paadal-radio",
                         "priority": 10
                 },
                 {
@@ -185,7 +185,7 @@
                                         "url": " http://yp.shoutcast.com/<base>?id=<id>"
                                 }
                         ],
-                        "imgName": "btc-tamil-fm",
+                        "imageUrl": "btc-tamil-fm",
                         "priority": 11
                 },
                 {
@@ -201,7 +201,7 @@
                                         "url": " http://yp.shoutcast.com/<base>?id=<id>"
                                 }
                         ],
-                        "imgName": "vanavil-fm",
+                        "imageUrl": "vanavil-fm",
                         "priority": 12
                 },
                 {
@@ -223,7 +223,7 @@
                                         "url": " http://yp.shoutcast.com/<base>?id=<id>"
                                 }
                         ],
-                        "imgName": "radio-city-tamil",
+                        "imageUrl": "radio-city-tamil",
                         "priority": 13
                 },
                 {
@@ -239,7 +239,7 @@
                                         "url": " http://yp.shoutcast.com/<base>?id=<id>"
                                 }
                         ],
-                        "imgName": "ilc-tamil",
+                        "imageUrl": "ilc-tamil",
                         "priority": 14
                 },
                 {
@@ -255,7 +255,7 @@
                                         "url": " http://yp.shoutcast.com/<base>?id=<id>"
                                 }
                         ],
-                        "imgName": "paris-tamil-fm",
+                        "imageUrl": "paris-tamil-fm",
                         "priority": 15
                 },
                 {
@@ -271,7 +271,7 @@
                                         "url": " http://yp.shoutcast.com/<base>?id=<id>"
                                 }
                         ],
-                        "imgName": "hungama-tamil-hits",
+                        "imageUrl": "hungama-tamil-hits",
                         "priority": 16
                 },
                 {
@@ -287,7 +287,7 @@
                                         "url": " http://yp.shoutcast.com/<base>?id=<id>"
                                 }
                         ],
-                        "imgName": "tamil-start-radio",
+                        "imageUrl": "tamil-start-radio",
                         "priority": 17
                 },
                 {
@@ -303,7 +303,7 @@
                                         "url": " http://yp.shoutcast.com/<base>?id=<id>"
                                 }
                         ],
-                        "imgName": "tamil-isai",
+                        "imageUrl": "tamil-isai",
                         "priority": 18
                 },
                 {
@@ -319,7 +319,7 @@
                                         "url": " http://yp.shoutcast.com/<base>?id=<id>"
                                 }
                         ],
-                        "imgName": "bakthi-malargal",
+                        "imageUrl": "bakthi-malargal",
                         "priority": 19
                 },
                 {
@@ -335,7 +335,7 @@
                                         "url": " http://yp.shoutcast.com/<base>?id=<id>"
                                 }
                         ],
-                        "imgName": "thenral-world-radio",
+                        "imageUrl": "thenral-world-radio",
                         "priority": 20
                 },
 				{
@@ -351,7 +351,7 @@
                                         "url": " http://yp.shoutcast.com/<base>?id=<id>"
                                 }
                         ],
-                        "imgName": "djsiran-tamil-fm",
+                        "imageUrl": "djsiran-tamil-fm",
                         "priority": 21
                 },
                 {
@@ -367,7 +367,7 @@
                                         "url": " http://yp.shoutcast.com/<base>?id=<id>"
                                 }
                         ],
-                        "imgName": "kalasam-fm",
+                        "imageUrl": "kalasam-fm",
                         "priority": 22
                 },
                 {
@@ -383,7 +383,7 @@
                                         "url": " http://yp.shoutcast.com/<base>?id=<id>"
                                 }
                         ],
-                        "imgName": "etr-fm",
+                        "imageUrl": "etr-fm",
                         "priority": 23
                 },
                 {
@@ -399,7 +399,7 @@
                                         "url": " http://yp.shoutcast.com/<base>?id=<id>"
                                 }
                         ],
-                        "imgName": "gtbc-fm",
+                        "imageUrl": "gtbc-fm",
                         "priority": 24
                 },
                 {
@@ -415,7 +415,7 @@
                                         "url": " http://yp.shoutcast.com/<base>?id=<id>"
                                 }
                         ],
-                        "imgName": "ezhisai-fm",
+                        "imageUrl": "ezhisai-fm",
                         "priority": 25
                 },
                 {
@@ -431,7 +431,7 @@
                                         "url": " http://yp.shoutcast.com/<base>?id=<id>"
                                 }
                         ],
-                        "imgName": "likexa-fm",
+                        "imageUrl": "likexa-fm",
                         "priority": 26
                 },
                 {
@@ -447,7 +447,7 @@
                                         "url": " http://yp.shoutcast.com/<base>?id=<id>"
                                 }
                         ],
-                        "imgName": "gtr-fm",
+                        "imageUrl": "gtr-fm",
                         "priority": 27
                 },
                 {
@@ -463,7 +463,7 @@
                                         "url": " http://yp.shoutcast.com/<base>?id=<id>"
                                 }
                         ],
-                        "imgName": "tamil-2-fm",
+                        "imageUrl": "tamil-2-fm",
                         "priority": 28
                 },
                 {
@@ -479,7 +479,7 @@
                                         "url": " http://yp.shoutcast.com/<base>?id=<id>"
                                 }
                         ],
-                        "imgName": "tamilar-kural-radio",
+                        "imageUrl": "tamilar-kural-radio",
                         "priority": 29
                 },
                 {
@@ -495,7 +495,7 @@
                                         "url": " http://yp.shoutcast.com/<base>?id=<id>"
                                 }
                         ],
-                        "imgName": "harris-jayaraj-radio",
+                        "imageUrl": "harris-jayaraj-radio",
                         "priority": 30
                 },
                 {
@@ -511,7 +511,7 @@
                                         "url": " http://yp.shoutcast.com/<base>?id=<id>"
                                 }
                         ],
-                        "imgName": "ttr-radio",
+                        "imageUrl": "ttr-radio",
                         "priority": 31
                 },
                 {
@@ -527,7 +527,7 @@
                                         "url": " http://yp.shoutcast.com/<base>?id=<id>"
                                 }
                         ],
-                        "imgName": "abc-tamil",
+                        "imageUrl": "abc-tamil",
                         "priority": 32
                 },
                 {
@@ -543,7 +543,7 @@
                                         "url": " http://yp.shoutcast.com/<base>?id=<id>"
                                 }
                         ],
-                        "imgName": "hungama-tamil-classics",
+                        "imageUrl": "hungama-tamil-classics",
                         "priority": 33
                 },
                 {
@@ -559,7 +559,7 @@
                                         "url": " http://yp.shoutcast.com/<base>?id=<id>"
                                 }
                         ],
-                        "imgName": "tsrlive-tamil-radio",
+                        "imageUrl": "tsrlive-tamil-radio",
                         "priority": 34
                 },
                 {
@@ -575,7 +575,7 @@
                                         "url": " http://yp.shoutcast.com/<base>?id=<id>"
                                 }
                         ],
-                        "imgName": "tamil-mirror-radio",
+                        "imageUrl": "tamil-mirror-radio",
                         "priority": 35
                 },
         ]

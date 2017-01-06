@@ -9,13 +9,15 @@ public class Radio {
     private String genre;
     private ArrayList<Stream> streams;
     private int languageId;
+    private String imageUrl;
 
-    public Radio(int id, String name, String desc, String genre, int languageId){
+    public Radio(int id, String name, String desc, String genre, String imageUrl, int languageId) {
         this.id = id;
         this.name = name;
         this.desc = desc;
         this.genre = genre;
         this.languageId = languageId;
+        this.imageUrl = imageUrl;
         streams = new ArrayList<>();
     }
 
@@ -41,6 +43,10 @@ public class Radio {
 
     public String getDesc() {
         return desc;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
     }
 
     public int getLanguageId() {

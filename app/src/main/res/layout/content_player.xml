@@ -52,17 +52,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:contentDescription="@string/list_item_radio_avatar_desc"
-                        android:src="@drawable/radio_item_avatar_blue" />
+                        android:src="@drawable/radio_item_avatar_blue"
+                        app:loadImage="@{viewModel.imageUrl}"/>
 
-                    <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/list_item_radio_avatar_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:text="AB"
-                        android:textColor="@android:color/primary_text_dark"
-                        android:textSize="@dimen/avatar_text_size" />
+                    <!--<android.support.v7.widget.AppCompatTextView-->
+                        <!--android:id="@+id/list_item_radio_avatar_text"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:layout_gravity="center"-->
+                        <!--android:gravity="center"-->
+                        <!--android:text="AB"-->
+                        <!--android:textColor="@android:color/primary_text_dark"-->
+                        <!--android:textSize="@dimen/avatar_text_size" />-->
                 </FrameLayout>
 
                 <LinearLayout
