@@ -11,14 +11,12 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 
+import uk.co.qubitssolutions.bharatradios.app.helpers.HttpHelper;
+
 public class CurrentlyPlayingInfoHtmlScrapper {
     public static String getCurrentlyPlaying(String url) {
         try {
-            if(!url.endsWith("/")){
-                url = url + "/";
-            }
-            int slashslash = url.indexOf("//") + 2;
-            url = url.substring(0, slashslash) + url.substring(slashslash, url.indexOf('/', slashslash));
+           url = HttpHelper.sanitizeUrl(url);
 
             Document document = Jsoup.connect(url)
                     .ignoreContentType(true)

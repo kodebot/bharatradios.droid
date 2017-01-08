@@ -34,8 +34,7 @@ public class RadioDataService {
                 int streamsCount = streamArray.length();
                 for (int j = 0; j < streamsCount; j++) {
                     JSONObject streamJson = streamArray.getJSONObject(j);
-                    Stream stream = new Stream(streamJson.getString("src"),
-                    streamJson.getString("srcName"),
+                    Stream stream = new Stream(
                     streamJson.getInt("br"),
                     streamJson.getString("url"));
                     radio.addStream(stream);

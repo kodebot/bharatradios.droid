@@ -29,6 +29,7 @@ import java.util.Timer;
 import uk.co.qubitssolutions.bharatradios.R;
 import uk.co.qubitssolutions.bharatradios.app.BharatRadiosApplication;
 import uk.co.qubitssolutions.bharatradios.app.activities.MainActivity;
+import uk.co.qubitssolutions.bharatradios.app.helpers.HttpHelper;
 import uk.co.qubitssolutions.bharatradios.app.helpers.ImageHelper;
 import uk.co.qubitssolutions.bharatradios.model.Constants;
 import uk.co.qubitssolutions.bharatradios.model.PlayerStatusType;
@@ -125,7 +126,7 @@ public class BackgroundAudioPlayerService extends Service
             Log.v(Constants.LOG_TAG, "Processing run: " + action);
             switch (action) {
                 case Constants.ACTION_PLAY:
-                    currentlyPlayingUrl = resolveShoutcastUrl(application.getCurrentRadio().getStreams());
+                    currentlyPlayingUrl = chooseStreamUrl(application.getCurrentRadio().getStreams());
                     currentRadioName = application.getCurrentRadio().getName();
                     currentRadioImageUrl = application.getCurrentRadio().getImageUrl();
                     actionPlay();
@@ -484,35 +485,46 @@ public class BackgroundAudioPlayerService extends Service
         application.setPlayerStatus(PlayerStatusType.ERROR);
     }
 
-    private String resolveShoutcastUrl(ArrayList<Stream> streams) {
-        PlsParser parser = new PlsParser();
+    private String chooseStreamUrl(ArrayList<Stream> streams) {
         for (final Stream stream : streams) {
-            if (stream.getSrc().equalsIgnoreCase("http://www.shoutcast.com/")) {
-                String shoutcastTuneInUrl = stream.getUrl();
-                List<ShoutcastDataReader.ShoutcastStation> stations =
-                        ShoutcastDataReader.searchStation(stream.getSrcName(), stream.getBitRate());
-                if (!stations.isEmpty()) {
-                    String plsUrl = shoutcastTuneInUrl.replaceAll("<base>", stations.get(0).base)
-                            .replaceAll("<id>", stations.get(0).id);
-
-                    String url = parser.getUrls(plsUrl).get(0);
-                    url = url + "/;?icy=http";
-                    stream.setUrl(url);
-
-                    // this is to ensure the updated url is not resolved as shoutcast stream again
-                    // when user click the same radio again
-                    stream.setSrc("Direct");
-                    application.setCurrentStream(stream);
-                    return url;
-                }
-
-            } else {
+            if (HttpHelper.isAlive(stream.getUrl())) {
                 application.setCurrentStream(stream);
                 return stream.getUrl();
             }
         }
 
-        return null;
+        return null; // todo: show message when no playable url
     }
+
+//    private String resolveShoutcastUrl(ArrayList<Stream> streams) {
+//        PlsParser parser = new PlsParser();
+//        for (final Stream stream : streams) {
+//            if (stream.getSrc().equalsIgnoreCase("http://www.shoutcast.com/")) {
+//                String shoutcastTuneInUrl = stream.getUrl();
+//                List<ShoutcastDataReader.ShoutcastStation> stations =
+//                        ShoutcastDataReader.searchStation(stream.getSrcName(), stream.getBitRate());
+//                if (!stations.isEmpty()) {
+//                    String plsUrl = shoutcastTuneInUrl.replaceAll("<base>", stations.get(0).base)
+//                            .replaceAll("<id>", stations.get(0).id);
+//
+//                    String url = parser.getUrls(plsUrl).get(0);
+//                    url = url + "/;?icy=http";
+//                    stream.setUrl(url);
+//
+//                    // this is to ensure the updated url is not resolved as shoutcast stream again
+//                    // when user click the same radio again
+//                    stream.setSrc("Direct");
+//                    application.setCurrentStream(stream);
+//                    return url;
+//                }
+//
+//            } else {
+//                application.setCurrentStream(stream);
+//                return stream.getUrl();
+//            }
+//        }
+//
+//        return null;
+//    }
 
 }

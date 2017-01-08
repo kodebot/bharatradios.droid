@@ -6,6 +6,7 @@ import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.support.design.widget.Snackbar;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -20,21 +21,25 @@ public class LanguagesViewModel extends BaseObservable {
 
     private final Context context;
 
-    public LanguagesViewModel(Context context){
+    public LanguagesViewModel(Context context) {
         this.context = context;
     }
 
-    public void onDone(View view){
-        if(hasFavorite()){
+    public void onDone(View view) {
+        if (hasFavorite()) {
             view.getContext().startActivity(new Intent(view.getContext(), MainActivity.class));
             return;
         }
 
-        Snackbar.make(view, "Please choose your favorite languages", Snackbar.LENGTH_SHORT).show();
+        Toast.makeText(
+                view.getContext(),
+                "Please choose your favorite languages",
+                Toast.LENGTH_SHORT)
+                .show();
     }
 
     private boolean hasFavorite() {
-       return FavoriteLanguagePreferenceService
+        return FavoriteLanguagePreferenceService
                 .getInstance(context)
                 .getAll().size() > 0;
     }

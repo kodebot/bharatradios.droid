@@ -230,7 +230,9 @@ public class MainActivity extends AppCompatActivity
     private void setupRadiosOrShowLanguagesActivity() {
         if (FavoriteLanguagePreferenceService.getInstance(this).getAll().isEmpty()) {
             // languages are not selected - send the user to languages activity
-            startActivity(new Intent(MainActivity.this, LanguagesActivity.class));
+            Intent languagesIntent = new Intent(MainActivity.this, LanguagesActivity.class);
+            languagesIntent.setFlags(languagesIntent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
+            startActivity(languagesIntent);
         } else {
             setupRadioListViewPager();
         }

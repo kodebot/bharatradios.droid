@@ -74,7 +74,7 @@ public class ContentListRadioFragment extends Fragment {
         super.setUserVisibleHint(isVisibleToUser);
 
         if (isVisibleToUser) {
-            if (application != null) {
+            if (application != null && language !=null) {
                 application.setCurrentLanguageId(language.getId());
                 setupRadioList();
                 this.pendingLoading = false;
