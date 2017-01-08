@@ -1,0 +1,20 @@
+{
+        "radios": [
+                {
+                        "id": 1,
+                        "name": "Punjabi Radio",
+                        "desc": "Manasu Tho",
+                        "genre": "Music",
+                        "streams": [
+                                {
+                                        "src": "http://www.shoutcast.com/",
+                                        "srcName": "manasutho",
+                                        "br": "128",
+                                        "url": " http://yp.shoutcast.com/<base>?id=<id>"
+                                }
+                        ],
+                        "imageUrl": "manasu-tho",
+                        "priority": 1
+                }
+        ]
+}

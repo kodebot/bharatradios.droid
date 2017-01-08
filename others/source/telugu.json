@@ -13,7 +13,7 @@
                                         "url": " http://yp.shoutcast.com/<base>?id=<id>"
                                 }
                         ],
-                        "imgName": "manasu-tho",
+                        "imageUrl": "manasu-tho",
                         "priority": 1
                 },
                 {
@@ -29,7 +29,7 @@
                                         "url": " http://yp.shoutcast.com/<base>?id=<id>"
                                 }
                         ],
-                        "imgName": "hungama-telugu-hits",
+                        "imageUrl": "hungama-telugu-hits",
                         "priority": 2
                 },
                 {
@@ -45,7 +45,7 @@
                                         "url": " http://yp.shoutcast.com/<base>?id=<id>"
                                 }
                         ],
-                        "imgName": "radio9-telugu",
+                        "imageUrl": "radio9-telugu",
                         "priority": 3
                 },
 				{
@@ -61,9 +61,9 @@
                                         "url": " http://yp.shoutcast.com/<base>?id=<id>"
                                 }
                         ],
-                        "imgName": "radio-city-telugu",
+                        "imageUrl": "radio-city-telugu",
                         "priority": 4
-                },
+                }
 
         ]
 }
