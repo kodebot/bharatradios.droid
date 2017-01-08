@@ -20,7 +20,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:visibility="@{viewModel.radioName.isEmpty?View.GONE:View.VISIBLE}"
-        app:contentPaddingBottom="16dp"
+        app:cardBackgroundColor="@color/cardview_dark_background"
+        app:contentPaddingBottom="2dp"
         app:contentPaddingLeft="16dp"
         app:contentPaddingRight="16dp">
 
@@ -43,14 +44,15 @@
                 android:orientation="horizontal"
                 android:padding="0dp">
 
-                    <android.support.v7.widget.AppCompatImageView
-                        android:id="@+id/list_item_radio_avatar"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:contentDescription="@string/list_item_radio_avatar_desc"
-                        android:src="@drawable/radio_item_avatar_blue"
-                        app:loadImage="@{viewModel.imageUrl}"
-                        app:errorInitialText="@{viewModel.radioName}"/>
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/list_item_radio_avatar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/list_item_radio_avatar_desc"
+                    android:src="@drawable/radio_item_avatar_blue"
+                    app:errorInitialText="@{viewModel.radioName}"
+                    app:loadImage="@{viewModel.imageUrl}" />
+
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -67,42 +69,65 @@
                         android:singleLine="true"
                         android:text="@{viewModel.radioName}"
                         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                        android:textColor="#ffffffff"
                         tools:text="This is radio 1" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:layout_height="wrap_content">
 
-                        <android.support.v7.widget.AppCompatTextView
+                        <uk.co.qubitssolutions.bharatradios.app.views.StepVisualizerView
+                            android:layout_width="30dp"
+                            android:layout_height="wrap_content"
+                            android:minHeight="2dp"
+                            app:updateVisualizer="@{viewModel.visualizerData}" />
+
+                        <LinearLayout
+                            android:layout_gravity="bottom"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{viewModel.radioGenre}"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                            tools:text="This is caption" />
+                            android:orientation="vertical">
 
-                        <android.support.v7.widget.AppCompatTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="4dp"
-                            android:paddingStart="4dp"
-                            android:text='@{viewModel.bitRate + " kbps"}'
-                            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                            tools:text="bit rate" />
 
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <android.support.v7.widget.AppCompatTextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@{viewModel.radioGenre}"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                                    android:textColor="#ffffffff"
+                                    tools:text="This is caption" />
+
+                                <android.support.v7.widget.AppCompatTextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingLeft="4dp"
+                                    android:paddingStart="4dp"
+                                    android:text='@{viewModel.bitRate + " kbps"}'
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                                    android:textColor="#ffffffff"
+                                    tools:text="bit rate" />
+
+                            </LinearLayout>
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="marquee"
+                                android:marqueeRepeatLimit="marquee_forever"
+                                android:selected="@{true}"
+                                android:singleLine="true"
+                                android:text="@{viewModel.currentlyPlaying}"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                                android:textColor="#ffffffff"
+                                tools:text="Currently playing a beautify song" />
+
+                        </LinearLayout>
                     </LinearLayout>
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="marquee"
-                        android:marqueeRepeatLimit="marquee_forever"
-                        android:selected="@{true}"
-                        android:singleLine="true"
-                        android:text="@{viewModel.currentlyPlaying}"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                        tools:text="Currently playing a beautify song" />
-
 
                 </LinearLayout>
 
@@ -113,7 +138,7 @@
                     android:onClick="@{viewModel.togglePlay}"
                     android:scaleType="center"
                     android:tint="@color/colorAccent"
-                    app:backgroundTint="#fff"
+                    app:backgroundTint="@color/cardview_dark_background"
                     app:borderWidth="0dp"
                     app:elevation="0dp"
                     app:playStopTransition="@{viewModel.isPlaying}"
@@ -121,11 +146,7 @@
 
             </LinearLayout>
 
-            <uk.co.qubitssolutions.bharatradios.app.views.WaveVisualizerView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="2dp"
-                app:updateVisualizer="@{viewModel.visualizerData}" />
+
         </LinearLayout>
     </android.support.v7.widget.CardView>
 </layout>
