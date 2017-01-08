@@ -8,12 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.res.ResourcesCompat;
-import android.support.v7.widget.AppCompatImageView;
 import android.view.View;
-import android.widget.ImageView;
-
-import com.bumptech.glide.Glide;
 
 import java.util.concurrent.TimeUnit;
 
@@ -21,13 +16,10 @@ import rx.Observable;
 import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
-import rx.subjects.BehaviorSubject;
 import uk.co.qubitssolutions.bharatradios.BR;
 import uk.co.qubitssolutions.bharatradios.R;
 import uk.co.qubitssolutions.bharatradios.app.BharatRadiosApplication;
-import uk.co.qubitssolutions.bharatradios.app.helpers.PlaceholderImageDataProvider;
 import uk.co.qubitssolutions.bharatradios.app.services.BackgroundAudioPlayerService;
-import uk.co.qubitssolutions.bharatradios.app.views.WaveVisualizerView;
 import uk.co.qubitssolutions.bharatradios.model.Constants;
 import uk.co.qubitssolutions.bharatradios.model.Radio;
 import uk.co.qubitssolutions.bharatradios.model.Stream;
@@ -162,6 +154,7 @@ public class PlayerViewModel extends BaseObservable {
     public void setCurrentRadio(Radio currentRadio) {
         setRadioName(currentRadio.getName());
         setRadioGenre(currentRadio.getGenre());
+        setImageUrl(currentRadio.getImageUrl());
     }
 
     public void setCurrentStream(Stream currentStream) {
@@ -200,41 +193,6 @@ public class PlayerViewModel extends BaseObservable {
         trans.startTransition(500);
     }
 
-    @BindingAdapter("bind:updateVisualizer")
-    public static void updateVisualizer(View view, byte[] visualizerData) {
 
-        WaveVisualizerView visualizerView = (WaveVisualizerView) view;
-        visualizerView.updateVisualizer(visualizerData);
-    }
-
-    @BindingAdapter("bind:loadImage")
-    public static void loadImage(View view, String url) {
-ImageView imageView = (ImageView) view;
-        if(imageView == null){
-            return;
-        }
-        /**
-         * Glide
-         .with(myFragment)
-         .load(url)
-         .centerCrop()
-         .placeholder(R.drawable.loading_spinner)
-         .crossFade()
-         .into(myImageView);
-
-         *
-         */
-        Glide.with(view.getContext())
-
-                .load(url)
-                .error(PlaceholderImageDataProvider.getAvatarImage("test"))
-            //    .load("http://assets.zoftcdn.com/branding/lankasrifm/f_fm_200_b.png")
-.override(200,200)
-                .into(imageView);
-//        return ResourcesCompat.getDrawable(
-//                application.getResources(),
-//                avatarImages.get(getName().length() % avatarImages.size()),
-//                null);
-    }
 }
 

@@ -39,6 +39,7 @@ public class RadioViewModel extends BaseObservable {
         this.radio = radio;
         name = radio.getName();
         genre = radio.getGenre();
+        imageUrl = radio.getImageUrl();
         this.application = application;
     }
 

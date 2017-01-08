@@ -3,7 +3,7 @@ apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    buildToolsVersion "23.0.2"
     dataBinding {
         enabled = true
     }
@@ -38,4 +38,5 @@ dependencies {
     compile 'com.google.android.exoplayer:exoplayer:r1.5.4'
     compile 'com.google.firebase:firebase-ads:9.2.0'
     compile 'org.jsoup:jsoup:1.9.2'
+    compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
 }

@@ -1,23 +1,26 @@
 package uk.co.qubitssolutions.bharatradios.app.services;
 
+import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.AudioManager;
 import android.media.AudioManager.OnAudioFocusChangeListener;
+import android.media.Image;
 import android.net.wifi.WifiManager;
 import android.os.IBinder;
 import android.os.PowerManager;
-import android.os.SystemClock;
+import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.media.session.MediaSessionCompat;
-import android.support.v4.media.session.PlaybackStateCompat;
 import android.util.Log;
 import android.widget.RemoteViews;
+
+import com.bumptech.glide.request.target.NotificationTarget;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +29,7 @@ import java.util.Timer;
 import uk.co.qubitssolutions.bharatradios.R;
 import uk.co.qubitssolutions.bharatradios.app.BharatRadiosApplication;
 import uk.co.qubitssolutions.bharatradios.app.activities.MainActivity;
+import uk.co.qubitssolutions.bharatradios.app.helpers.ImageHelper;
 import uk.co.qubitssolutions.bharatradios.model.Constants;
 import uk.co.qubitssolutions.bharatradios.model.PlayerStatusType;
 import uk.co.qubitssolutions.bharatradios.model.Stream;
@@ -33,8 +37,6 @@ import uk.co.qubitssolutions.bharatradios.services.data.radio.CurrentlyPlayingIn
 import uk.co.qubitssolutions.bharatradios.services.data.radio.PlsParser;
 import uk.co.qubitssolutions.bharatradios.services.data.radio.ShoutcastDataReader;
 import uk.co.qubitssolutions.bharatradios.services.player.AudioPlayer;
-import uk.co.qubitssolutions.bharatradios.services.player.MediaSessionCallback;
-import uk.co.qubitssolutions.bharatradios.services.player.RemoteControlReceiver;
 
 public class BackgroundAudioPlayerService extends Service
         implements OnAudioFocusChangeListener,
@@ -50,6 +52,8 @@ public class BackgroundAudioPlayerService extends Service
     private static boolean isTransientAudioFocusLoss = false;
     private static boolean isDucked = false;
     private static String currentRadioName;
+    private static String currentRadioImageUrl;
+    private NotificationTarget notificationTarget;
 
     private static final float DUCKING_VOLUME = 0.1f;
     private static final float FULL_VOLUME = 1.0f;
@@ -123,8 +127,13 @@ public class BackgroundAudioPlayerService extends Service
                 case Constants.ACTION_PLAY:
                     currentlyPlayingUrl = resolveShoutcastUrl(application.getCurrentRadio().getStreams());
                     currentRadioName = application.getCurrentRadio().getName();
+                    currentRadioImageUrl = application.getCurrentRadio().getImageUrl();
                     actionPlay();
                     setupAsForeground();
+                    break;
+                case Constants.ACTION_SOFT_STOP:
+                    actionStop();
+                    updateNotification(Constants.ACTION_SOFT_STOP);
                     break;
                 case Constants.ACTION_STOP:
                     actionStop();
@@ -309,35 +318,91 @@ public class BackgroundAudioPlayerService extends Service
     }
 
     private void setupAsForeground() {
-        String contentText = "Tap to open";
+
+        startForeground(NOTIFICATION_ID, getNotification(true));
+    }
+
+    private void updateNotification(String processedAction) {
+        if (processedAction.equals(Constants.ACTION_SOFT_STOP)) {
+            NotificationManagerCompat.from(application.getApplicationContext())
+                    .notify(NOTIFICATION_ID, getNotification(false));
+        }
+    }
+
+    @NonNull
+    private Notification getNotification(boolean isPlaying) {
         PendingIntent pi = PendingIntent.getActivity(
                 getApplicationContext(),
                 0,
                 new Intent(getApplicationContext(), MainActivity.class),
                 PendingIntent.FLAG_UPDATE_CURRENT);
-        int largeIconId = getApplicationContext().getResources()
-                .getIdentifier("ic_launcher", "mipmap", getApplicationContext().getPackageName());
-        Bitmap largeIcon = BitmapFactory.decodeResource(getApplicationContext().getResources(), largeIconId);
 
+        // using resource id for drawable is not stable for notification as sometimes the id changes and causes crash
 
+//        int largeIconId = ImageHelper.getResourceId("ic_launcher", "mipmap");
+//        Bitmap largeIcon = BitmapFactory.decodeResource(getApplicationContext().getResources(), largeIconId);
+
+        Bitmap largeIcon = ImageHelper.drawableToBitmap(R.mipmap.ic_launcher);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
         builder.setSmallIcon(android.R.drawable.ic_media_play)
-              .setLargeIcon(largeIcon)
-                .setContentTitle("Playing " + currentRadioName)
-                .setContentText(contentText)
                 .setContentIntent(pi);
 
-//        RemoteViews notificationView = new RemoteViews(getPackageName(),
-//                R.layout.activity_player_notification);
+
+        RemoteViews notificationView = new RemoteViews(getPackageName(),
+                R.layout.activity_player_notification);
+
+
+        notificationView.setTextViewText(R.id.notification_text_main, "Playing " + currentRadioName);
+
+        notificationView.setImageViewBitmap(R.id.notification_icon_main, largeIcon);
+
+
+        Intent playIntent = new Intent(this, BackgroundAudioPlayerService.class);
+        playIntent.setAction("play"); // this is needed to deliver extras
+        playIntent.putExtra(Constants.EXTRA_ACTION, isPlaying ? Constants.ACTION_SOFT_STOP : Constants.ACTION_PLAY);
+        PendingIntent pendingPlayIntent = PendingIntent.getService(this, 0, playIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        notificationView.setOnClickPendingIntent(R.id.action_notification_play_stop_toggle, pendingPlayIntent);
+
+
+        // wrapped vectors doesn't work in remote view
+        Bitmap playPauseIcon = isPlaying ? ImageHelper.drawableToBitmap(R.drawable.ic_stop_black_36dp) :
+                ImageHelper.drawableToBitmap(R.drawable.ic_play_arrow_black_36dp);
+
+        notificationView.setImageViewBitmap(R.id.action_notification_play_stop_toggle,
+                playPauseIcon);
+
+
+        Intent closeIntent = new Intent(this, BackgroundAudioPlayerService.class);
+        closeIntent.putExtra(Constants.EXTRA_ACTION, Constants.ACTION_STOP);
+        closeIntent.setAction("stop"); // this is needed to deliver extras
+        PendingIntent pendingCloseIntent = PendingIntent.getService(this, 0, closeIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        notificationView.setOnClickPendingIntent(R.id.action_notification_close, pendingCloseIntent);
+        notificationView.setImageViewBitmap(R.id.action_notification_close,
+                ImageHelper.drawableToBitmap(R.drawable.ic_close_black_24dp));
+
+        builder.setContent(notificationView);
+
+        Notification notification = builder.build();
+
+//        NotificationTarget notificationTarget = new NotificationTarget(
+//                application.getApplicationContext(),
+//                notificationView,
+//                R.id.notification_icon_main,
+//                notification,
+//                NOTIFICATION_ID);
 //
-//        Intent playIntent = new Intent(this, BackgroundAudioPlayerService.class);
-//        playIntent.putExtra(Constants.EXTRA_ACTION, Constants.ACTION_PLAY);
-//        PendingIntent pendingPlayIntent = PendingIntent.getService(this, 0, playIntent, 0);
+//
+//
+//        Glide
+//                .with(application.getApplicationContext())
+//                .load(currentRadioImageUrl)
+//                .asBitmap()
+//                .error(ImageHelper.getAvatarImage(currentRadioName))
+//                .into(notificationTarget);
 
-      //  notificationView.setOnClickPendingIntent(R.id.action_radio_player_play_stop_toggle, pendingPlayIntent);
-
-//        builder.setContent(notificationView);
-        startForeground(NOTIFICATION_ID, builder.build());
+        return notification;
     }
 
     /*********************************************************************

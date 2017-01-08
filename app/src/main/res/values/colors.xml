@@ -5,4 +5,5 @@
     <color name="colorAccent">#ff9933</color>
     <color name="colorImageButtonBackgroundLight">#FFFFFFFF</color>
     <color name="selected">#1e1e1e1e</color>
+    <color name="notificationBackground">#90FFFFFF</color>
 </resources>

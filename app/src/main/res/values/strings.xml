@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Bharat Radios</string>
+    <string name="app_name">bharat radios</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -10,7 +10,7 @@
     <string name="list_item_radio_secondary_action_desc">Radio secondary action</string>
     <string name="nav_language_title">Languages</string>
     <string name="nav_preferences_title">Preferences</string>
-    <string name="nav_about_title">about</string>
+    <string name="nav_about_title">About</string>
     <string name="nav_help_title">Help</string>
     <string name="menu_action_fav_toggle">Favorite Toggle</string>
     <string name="menu_action_off_timer">Off Timer</string>

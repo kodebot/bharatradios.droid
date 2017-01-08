@@ -14,93 +14,79 @@
         <import type="uk.co.qubitssolutions.bharatradios.app.helpers.VectorDrawableProvider" />
     </data>
 
+    <LinearLayout
+        android:id="@+id/radio_item_card"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:baselineAligned="false"
+        android:clickable="true"
+        android:foreground="@drawable/card_foreground"
+        android:minHeight="?android:attr/listPreferredItemHeight"
+        android:orientation="horizontal"
+        android:paddingTop="8dp">
+
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/list_item_radio_avatar"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:contentDescription="@string/list_item_radio_avatar_desc"
+            app:errorInitialText="@{viewModel.name}"
+            app:loadImage="@{viewModel.imageUrl}" />
+
         <LinearLayout
-            android:id="@+id/radio_item_card"
-            android:layout_width="match_parent"
-            android:layout_height="72dp"
-            android:paddingTop="8dp"
-            android:baselineAligned="false"
+            android:id="@+id/radio_item"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_weight="1"
             android:clickable="true"
-            android:minHeight="?android:attr/listPreferredItemHeight"
             android:foreground="@drawable/card_foreground"
-            android:orientation="horizontal">
+            android:gravity="center"
+            android:onClick="@{viewModel::onClick}"
+            android:orientation="vertical">
 
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp">
-                <android.support.v7.widget.AppCompatImageView
-                    android:id="@+id/list_item_radio_avatar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:contentDescription="@string/list_item_radio_avatar_desc"
-                    android:src="@{viewModel.imageUrl}" />
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/list_item_radio_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.name}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                android:textColor="#DD000000"
+                tools:text="this is test" />
 
-                <!--<android.support.v7.widget.AppCompatTextView-->
-                    <!--android:id="@+id/list_item_radio_avatar_text"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="match_parent"-->
-                    <!--android:layout_gravity="center"-->
-                    <!--android:gravity="center"-->
-                    <!--android:text="@{viewModel.initial}"-->
-                    <!--android:textColor="@android:color/primary_text_dark"-->
-                    <!--android:textSize="@dimen/avatar_text_size"-->
-                    <!--/>-->
-            </FrameLayout>
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/list_item_radio_subtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.genre}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="#60000000"
+                tools:text="this si another test" />
 
-            <LinearLayout
-                android:id="@+id/radio_item"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:foreground="@drawable/card_foreground"
-                android:onClick="@{viewModel::onClick}"
-                android:orientation="vertical"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:gravity="center">
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/list_item_radio_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@{viewModel.name}"
-                    android:textColor="#DD000000"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                    tools:text="this is test"
-                    />
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/list_item_radio_subtitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@{viewModel.genre}"
-                    android:textColor="#60000000"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                    tools:text="this si another test"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp">
-
-                <android.support.v7.widget.AppCompatImageButton
-                    android:id="@+id/action_list_item_radio_fav"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:contentDescription="@string/list_item_radio_fav_desc"
-                    android:foreground="?android:selectableItemBackground"
-                    android:onClick="@{viewModel::toggleFavorite}"
-                    android:tint="@color/colorAccent"
-                    app:srcCompat="@{viewModel.favorite == true ? R.drawable.ic_favorite_white_24dp : R.drawable.ic_favorite_border_white_24dp}" />
-            </LinearLayout>
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.AppCompatImageButton
+                android:id="@+id/action_list_item_radio_fav"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:contentDescription="@string/list_item_radio_fav_desc"
+                android:foreground="?android:selectableItemBackground"
+                android:onClick="@{viewModel::toggleFavorite}"
+                android:tint="@color/colorAccent"
+                app:srcCompat="@{viewModel.favorite == true ? R.drawable.ic_favorite_white_24dp : R.drawable.ic_favorite_border_white_24dp}" />
+        </LinearLayout>
+    </LinearLayout>
 </layout>

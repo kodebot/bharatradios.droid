@@ -28,7 +28,7 @@
                 android:onClick="@{viewModel::toggleFavorite}"
                 android:text="@{viewModel.name}"
                 android:textColor="#DD000000"
-                android:gravity="center"
+                android:gravity="left"
                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead"/>
     </LinearLayout>
 </layout>
