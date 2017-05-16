@@ -57,7 +57,7 @@ public class StepVisualizerView extends View {
         }
         mRect.set(0, 0, getWidth(), getHeight());
 
-        int mDivisions = 2;
+        int mDivisions = 4;
         boolean mTop = false;
         mForePaint.setStrokeWidth(12f);
         for (int i = 0; i < mBytes.length / mDivisions; i++) {
