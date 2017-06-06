@@ -87,8 +87,10 @@ public class ContentListRadioFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putInt("CURRENT_LANG", this.language.getId());
-        super.onSaveInstanceState(outState);
+        if(this.language != null) { // not sure why this would be null?
+            outState.putInt("CURRENT_LANG", this.language.getId());
+            super.onSaveInstanceState(outState);
+        }
     }
 
     /**********************************************************************************************/
