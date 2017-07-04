@@ -74,7 +74,7 @@ public class ContentListRadioFragment extends Fragment {
         super.setUserVisibleHint(isVisibleToUser);
 
         if (isVisibleToUser) {
-            if (application != null && language !=null) {
+            if (application != null && language != null) {
                 application.setCurrentLanguageId(language.getId());
                 setupRadioList();
                 this.pendingLoading = false;
@@ -87,10 +87,8 @@ public class ContentListRadioFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        if(this.language != null) { // not sure why this would be null?
-            outState.putInt("CURRENT_LANG", this.language.getId());
-            super.onSaveInstanceState(outState);
-        }
+        outState.putInt("CURRENT_LANG", this.language.getId());
+        super.onSaveInstanceState(outState);
     }
 
     /**********************************************************************************************/

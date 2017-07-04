@@ -3,6 +3,7 @@ package uk.co.qubitssolutions.bharatradios.app.adapters;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
 
 import java.util.List;
 
@@ -26,6 +27,12 @@ public class RadioListViewPagerAdapter extends FragmentPagerAdapter {
                 this.application,
                 this.application.getLanguages());
         Language selectedLanguage = favLanguages.get(position);
+        if(selectedLanguage == null){
+            Log.i("Bharatradios", "not sure why but selectedLanguage is null for position" + position);
+            selectedLanguage = favLanguages.get(0); // set to the first fav lang
+        }
+
+
         return new ContentListRadioFragment(selectedLanguage);
     }
 
