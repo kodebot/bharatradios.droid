@@ -96,13 +96,13 @@
                         "genre": "Music",
                         "streams": [
                                 {
-                                        "src": "http://www.shoutcast.com/",
+                                        "src": "http://www.tffm24.com",
                                         "srcName": "Tamilflash",
                                         "br": "96",
-                                        "url": "http://188.165.192.5:8609/stream?icy=http"
+                                        "url": "http://64.71.79.181:5070/;"
                                 }
                         ],
-                        "imageUrl": "tamil-flash",
+                        "imageUrl": "http://www.tffm24.com/images/logos.png",
                         "priority": 5
                 },
                 {
@@ -114,8 +114,8 @@
                                 {
                                         "src": "http://www.puradsifm.com/",
                                         "srcName": "Puradsi FM",
-                                        "br": "96",
-                                        "url": "http://94.23.5.193:9994/;"
+                                        "br": "128",
+                                        "url": "http://puradsifm.net:9994/;"
                                 }
                         ],
                         "imageUrl": "puradsi-isaiyaruvi",
@@ -146,7 +146,7 @@
                                 {
                                         "src": "http://www.shoutcast.com/",
                                         "srcName": "Chellam FM",
-                                        "br": "64",
+                                        "br": "128",
                                         "url": "http://5.63.145.172:7124/;?icy=http"
                                 }
                         ],
@@ -166,7 +166,7 @@
                                         "url": "http://24.235.111.234:8010/;?icy=http"
                                 }
                         ],
-                        "imageUrl": "https://cmr24.net/wp-content/themes/cmr/images/footer-content.png",
+                        "imageUrl": "https://cmr24.net/wp-content/themes/cmr/images/logo.png",
                         "priority": 9
                 },
                 {

@@ -54,12 +54,17 @@ public class ContentListRadioFragment extends Fragment {
 
         if (this.language == null) {
             int langId = savedInstanceState.getInt("CURRENT_LANG");
-            for (final Language lang : application.getLanguages()) {
-                if (lang.getId() == langId) {
-                    this.language = lang;
-                    break;
+            if (langId == 0) {
+                this.language = application.getLanguages().get(0); // fall back to first language
+            } else {
+                for (final Language lang : application.getLanguages()) {
+                    if (lang.getId() == langId) {
+                        this.language = lang;
+                        break;
+                    }
                 }
             }
+
         }
 
         if (this.pendingLoading) {
