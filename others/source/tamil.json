@@ -192,10 +192,10 @@
                         "genre": "Music",
                         "streams": [
                                 {
-                                        "src": "http://www.shoutcast.com/",
+                                        "src": "https://btctamil.com/",
                                         "srcName": "btc tamil fm",
-                                        "br": "64",
-                                        "url": " http://yp.shoutcast.com/<base>?id=<id>"
+                                        "br": "128",
+                                        "url": "http://199.175.48.216:8080/;listen.mp3"
                                 }
                         ],
                         "imageUrl": "btc-tamil-fm",
@@ -208,35 +208,29 @@
                         "genre": "Music",
                         "streams": [
                                 {
-                                        "src": "http://www.shoutcast.com/",
+                                        "src": "http://vanavilfm.com/",
                                         "srcName": "vanavilfm",
                                         "br": "128",
-                                        "url": " http://yp.shoutcast.com/<base>?id=<id>"
+                                        "url": "http://206.190.133.196/proxy/vanavilfm?mp=/stream;"
                                 }
                         ],
-                        "imageUrl": "vanavil-fm",
+                        "imageUrl": "http://vanavilfm.com/wp-content/themes/vanavil1/assets/img/basic/logo.png",
                         "priority": 12
                 },
                 {
                         "id": 13,
-                        "name": "Radio City Tamil",
-                        "desc": "Radio City Tamil",
+                        "name": "Radio City Tamil Gold",
+                        "desc": "Radio City Tamil Gold",
                         "genre": "Music",
                         "streams": [
                                 {
                                         "src": "http://www.shoutcast.com/",
                                         "srcName": "radio city tamil",
-                                        "br": "96",
-                                        "url": " http://yp.shoutcast.com/<base>?id=<id>"
-                                },
-                                {
-                                        "src": "http://www.shoutcast.com/",
-                                        "srcName": "radio city tamil",
-                                        "br": "128",
-                                        "url": " http://yp.shoutcast.com/<base>?id=<id>"
+                                        "br": "64",
+                                        "url": " http://63.143.36.2:8888/TamilGold?icy=http"
                                 }
                         ],
-                        "imageUrl": "radio-city-tamil",
+                        "imageUrl": "radio-city-tamil-gold",
                         "priority": 13
                 },
                 {
