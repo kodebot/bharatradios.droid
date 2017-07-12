@@ -92,6 +92,10 @@ public class ContentListRadioFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
+        if (this.language==null) {
+            this.language = application.getLanguages().get(0); // fall back to first radio
+        }
+
         outState.putInt("CURRENT_LANG", this.language.getId());
         super.onSaveInstanceState(outState);
     }
