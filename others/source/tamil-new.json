@@ -247,6 +247,13 @@
                                 "nameInSource": "ilc tamil",
                                 "bitrate": 64,
                                 "url": "http://s1.voscast.com:9308/;?icy=http"
+                        },
+                         {
+                                "id": 2,
+                                "source": "http://www.shoutcast.com/",
+                                "nameInSource": "ilc tamil",
+                                "bitrate": 128,
+                                "url": "http://s1.voscast.com:9308/;?icy=http"
                         }
                 ],
                 "imageUrl": "ilc-tamil"
