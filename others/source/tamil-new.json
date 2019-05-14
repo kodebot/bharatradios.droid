@@ -1,280 +1,280 @@
 [
         {
-          "id": 1,
-          "name": "Sooriyan FM Sri Lanka",
-          "description": "Sooriyan FM Sri Lanka",
-          "genre": "Music",
-          "radioSources": [
-            {
-              "id": 1,
-              "source": "http://www.sooriyanfm.lk/",
-              "nameInSource": "na",
-              "bitrate": 64,
-              "url": "http://104.238.193.114:7077/;?1468675983387.mp3"
-            },
-            {
-              "id": 2,
-              "source": "http://www.sooriyanfm.lk/",
-              "nameInSource": "na",
-              "bitrate": 48,
-              "url": "http://104.238.193.114:7086/;?1468676137518.mp3"
-            }
-          ],
-          "imageUrl": "https://api.vaanoli.kodebot.com/radio/tamil-resources/sooriyan-fm-srilanka-logo.png"
+                "id": 1,
+                "name": "Sooriyan FM Sri Lanka",
+                "description": "Sooriyan FM Sri Lanka",
+                "genre": "Music",
+                "radioSources": [
+                        {
+                                "id": 1,
+                                "source": "http://www.sooriyanfm.lk/",
+                                "nameInSource": "na",
+                                "bitrate": 64,
+                                "url": "http://104.238.193.114:7077/;?1468675983387.mp3"
+                        },
+                        {
+                                "id": 2,
+                                "source": "http://www.sooriyanfm.lk/",
+                                "nameInSource": "na",
+                                "bitrate": 48,
+                                "url": "http://104.238.193.114:7086/;?1468676137518.mp3"
+                        }
+                ],
+                "imageUrl": "https://api.vaanoli.kodebot.com/radio/tamil-resources/sooriyan-fm-srilanka-logo.png"
         },
         {
-          "id": 2,
-          "name": "Lankasri FM",
-          "description": "Lankasri FM",
-          "genre": "Music",
-          "radioSources": [
-            {
-              "id": 1,
-              "source": "http://www.shoutcast.com/",
-              "nameInSource": "Lankasri FM",
-              "bitrate": 128,
-              "url": "http://149.202.121.175/live?icy=http"
-            },
-            {
-              "id": 2,
-              "source": "http://www.shoutcast.com/",
-              "nameInSource": "Lankasri FM",
-              "bitrate": 64,
-              "url": " http://149.202.121.140/live?icy=http"
-            },
-            {
-              "id": 3,
-              "source": "http://www.shoutcast.com/",
-              "nameInSource": "Lankasri FM",
-              "bitrate": 32,
-              "url": "http://46.105.43.114:8000/live?icy=http"
-            }
-          ],
-          "imageUrl": "https://api.vaanoli.kodebot.com/radio/tamil-resources/lankasri-fm-logo-white-bg.png"
+                "id": 2,
+                "name": "Lankasri FM",
+                "description": "Lankasri FM",
+                "genre": "Music",
+                "radioSources": [
+                        {
+                                "id": 1,
+                                "source": "http://www.shoutcast.com/",
+                                "nameInSource": "Lankasri FM",
+                                "bitrate": 128,
+                                "url": "http://149.202.121.175/live?icy=http"
+                        },
+                        {
+                                "id": 2,
+                                "source": "http://www.shoutcast.com/",
+                                "nameInSource": "Lankasri FM",
+                                "bitrate": 64,
+                                "url": " http://149.202.121.140/live?icy=http"
+                        },
+                        {
+                                "id": 3,
+                                "source": "http://www.shoutcast.com/",
+                                "nameInSource": "Lankasri FM",
+                                "bitrate": 32,
+                                "url": "http://46.105.43.114:8000/live?icy=http"
+                        }
+                ],
+                "imageUrl": "https://api.vaanoli.kodebot.com/radio/tamil-resources/lankasri-fm-logo-white-bg.png"
         },
         {
-          "id": 3,
-          "name": "Mukil App",
-          "description": "Mukil App",
-          "genre": "Music",
-          "radioSources": [
-            {
-              "id": 1,
-              "source": "http://mukilfm.com/",
-              "nameInSource": "na",
-              "bitrate": 128,
-              "url": "http://43.225.52.139:9302/;"
-            }
-          ],
-          "imageUrl": "https://api.vaanoli.kodebot.com/radio/tamil-resources/mukil-fm-logo.png"
+                "id": 3,
+                "name": "Mukil App",
+                "description": "Mukil App",
+                "genre": "Music",
+                "radioSources": [
+                        {
+                                "id": 1,
+                                "source": "http://mukilfm.com/",
+                                "nameInSource": "na",
+                                "bitrate": 128,
+                                "url": "http://43.225.52.139:9302/;"
+                        }
+                ],
+                "imageUrl": "https://api.vaanoli.kodebot.com/radio/tamil-resources/mukil-fm-logo.png"
         },
         {
-          "id": 4,
-          "name": "IBC Tamil",
-          "description": "IBC Tamil",
-          "genre": "Music",
-          "radioSources": [
-            {
-              "id": 1,
-              "source": "http://ibctamil.com/",
-              "nameInSource": "IBC Tamil",
-              "bitrate": 128,
-              "url": "http://38.96.148.226:6176/;",
-              "active": true
-            }
-          ],
-          "imageUrl": "https://api.vaanoli.kodebot.com/radio/tamil-resources/ibc-tamil-fm-logo-white-bg.png"
+                "id": 4,
+                "name": "IBC Tamil",
+                "description": "IBC Tamil",
+                "genre": "Music",
+                "radioSources": [
+                        {
+                                "id": 1,
+                                "source": "http://ibctamil.com/",
+                                "nameInSource": "IBC Tamil",
+                                "bitrate": 128,
+                                "url": "http://38.96.148.226:6176/;",
+                                "active": true
+                        }
+                ],
+                "imageUrl": "https://api.vaanoli.kodebot.com/radio/tamil-resources/ibc-tamil-fm-logo-white-bg.png"
         },
         {
-          "id": 5,
-          "name": "Tamil Flash",
-          "description": "Tamil Falsh",
-          "genre": "Music",
-          "radioSources": [
-            {
-              "id": 1,
-              "source": "http://www.tffm24.com",
-              "nameInSource": "Tamilflash",
-              "bitrate": 96,
-              "url": "http://64.71.79.181:5070/;",
-              "active": true
-            }
-          ],
-          "imageUrl": "https://api.vaanoli.kodebot.com/radio/tamil-resources/tamil-flash-fm-logo.png"
+                "id": 5,
+                "name": "Tamil Flash",
+                "description": "Tamil Falsh",
+                "genre": "Music",
+                "radioSources": [
+                        {
+                                "id": 1,
+                                "source": "http://www.tffm24.com",
+                                "nameInSource": "Tamilflash",
+                                "bitrate": 96,
+                                "url": "http://64.71.79.181:5070/;",
+                                "active": true
+                        }
+                ],
+                "imageUrl": "https://api.vaanoli.kodebot.com/radio/tamil-resources/tamil-flash-fm-logo.png"
         },
         {
-          "id": 6,
-          "name": "Puradsi FM",
-          "description": "Puradsi FM",
-          "genre": "Music",
-          "radioSources": [
-            {
-              "id": 1,
-              "source": "http://www.puradsifm.com/",
-              "nameInSource": "Puradsi FM",
-              "bitrate": 128,
-              "url": "http://puradsifm.net:9994/;",
-              "active": true
-            }
-          ],
-          "imageUrl": "https://api.vaanoli.kodebot.com/radio/tamil-resources/puradsi-fm-logo-white-bg.png"
+                "id": 6,
+                "name": "Puradsi FM",
+                "description": "Puradsi FM",
+                "genre": "Music",
+                "radioSources": [
+                        {
+                                "id": 1,
+                                "source": "http://www.puradsifm.com/",
+                                "nameInSource": "Puradsi FM",
+                                "bitrate": 128,
+                                "url": "http://puradsifm.net:9994/;",
+                                "active": true
+                        }
+                ],
+                "imageUrl": "https://api.vaanoli.kodebot.com/radio/tamil-resources/puradsi-fm-logo-white-bg.png"
         },
         {
-          "id": 7,
-          "name": "TRT Tamil Olli",
-          "description": "TRT Tamil Olli",
-          "genre": "Music",
-          "radioSources": [
-            {
-              "id": 1,
-              "source": "http://www.tamilolli.com/",
-              "nameInSource": "TRT Tamil Olli",
-              "bitrate": 320,
-              "url": "http://91.121.165.41:9035/stream.mp3"
-            }
-          ],
-          "imageUrl": "https://api.vaanoli.kodebot.com/radio/tamil-resources/trt-tamil-olli-logo.png"
+                "id": 7,
+                "name": "TRT Tamil Olli",
+                "description": "TRT Tamil Olli",
+                "genre": "Music",
+                "radioSources": [
+                        {
+                                "id": 1,
+                                "source": "http://www.tamilolli.com/",
+                                "nameInSource": "TRT Tamil Olli",
+                                "bitrate": 320,
+                                "url": "http://91.121.165.41:9035/stream.mp3"
+                        }
+                ],
+                "imageUrl": "https://api.vaanoli.kodebot.com/radio/tamil-resources/trt-tamil-olli-logo.png"
         },
         {
-          "id": 8,
-          "name": "Chellam FM",
-          "description": "Chellam FM",
-          "genre": "Music",
-          "radioSources": [
-            {
-              "id": 1,
-              "source": "http://www.chellam.fm/",
-              "nameInSource": "na",
-              "bitrate": 128,
-              "url": "https://usa17.fastcast4u.com/proxy/svickine/?mp=/stream2"
-            },
-            {
-              "id": 2,
-              "source": "http://www.shoutcast.com/",
-              "nameInSource": "Chellam FM - Tamil",
-              "bitrate": 128,
-              "url": "http://192.95.18.39:5012/stream2?icy=http"
-            },
-            {
-              "id": 3,
-              "source": "http://www.shoutcast.com/",
-              "nameInSource": "Chellam FM - Tamil",
-              "bitrate": 64,
-              "url": "http://192.95.18.39:5012/stream?icy=http"
-            }
-          ],
-          "imageUrl": "https://api.vaanoli.kodebot.com/radio/tamil-resources/chellam-fm-logo.png"
+                "id": 8,
+                "name": "Chellam FM",
+                "description": "Chellam FM",
+                "genre": "Music",
+                "radioSources": [
+                        {
+                                "id": 1,
+                                "source": "http://www.chellam.fm/",
+                                "nameInSource": "na",
+                                "bitrate": 128,
+                                "url": "https://usa17.fastcast4u.com/proxy/svickine/?mp=/stream2"
+                        },
+                        {
+                                "id": 2,
+                                "source": "http://www.shoutcast.com/",
+                                "nameInSource": "Chellam FM - Tamil",
+                                "bitrate": 128,
+                                "url": "http://192.95.18.39:5012/stream2?icy=http"
+                        },
+                        {
+                                "id": 3,
+                                "source": "http://www.shoutcast.com/",
+                                "nameInSource": "Chellam FM - Tamil",
+                                "bitrate": 64,
+                                "url": "http://192.95.18.39:5012/stream?icy=http"
+                        }
+                ],
+                "imageUrl": "https://api.vaanoli.kodebot.com/radio/tamil-resources/chellam-fm-logo.png"
         },
         {
-          "id": 9,
-          "name": "CMR Tamil HD",
-          "description": "CMR Tamil HD",
-          "genre": "Music",
-          "radioSources": [
-            {
-              "id": 1,
-              "source": "https://cmr24.net/",
-              "nameInSource": "na",
-              "bitrate": 128,
-              "url": "http://live.cmr24.net:8081/CMR/TamilHD-MQ/icecast.audio"
-            }
-          ],
-          "imageUrl": "https://api.vaanoli.kodebot.com/radio/tamil-resources/cmr-tamil-fm-logo.png"
+                "id": 9,
+                "name": "CMR Tamil HD",
+                "description": "CMR Tamil HD",
+                "genre": "Music",
+                "radioSources": [
+                        {
+                                "id": 1,
+                                "source": "https://cmr24.net/",
+                                "nameInSource": "na",
+                                "bitrate": 128,
+                                "url": "http://live.cmr24.net:8081/CMR/TamilHD-MQ/icecast.audio"
+                        }
+                ],
+                "imageUrl": "https://api.vaanoli.kodebot.com/radio/tamil-resources/cmr-tamil-fm-logo.png"
         },
         {
-          "id": 10,
-          "name": "Puthu Paadal Radio",
-          "description": "Puthu Paadal Radio",
-          "genre": "Music",
-          "radioSources": [
-            {
-              "id": 1,
-              "source": "https://tunein.com/radio/Puthu-Paadal-Radio-s167504/",
-              "nameInSource": "Puthu Paadal Radio",
-              "bitrate": 128,
-              "url": "http://southradios.net:9090/pudhupaadalradio"
-            }
-          ],
-          "imageUrl": "https://api.vaanoli.kodebot.com/radio/tamil-resources/puthu-padal-fm-logo.png"
+                "id": 10,
+                "name": "Puthu Paadal Radio",
+                "description": "Puthu Paadal Radio",
+                "genre": "Music",
+                "radioSources": [
+                        {
+                                "id": 1,
+                                "source": "https://tunein.com/radio/Puthu-Paadal-Radio-s167504/",
+                                "nameInSource": "Puthu Paadal Radio",
+                                "bitrate": 128,
+                                "url": "http://southradios.net:9090/pudhupaadalradio"
+                        }
+                ],
+                "imageUrl": "https://api.vaanoli.kodebot.com/radio/tamil-resources/puthu-padal-fm-logo.png"
         },
         {
-          "id": 11,
-          "name": "Vanavil FM",
-          "description": "Vanavil FM",
-          "genre": "Music",
-          "radioSources": [
-            {
-              "id": 1,
-              "source": "http://vanavilfm.com/",
-              "nameInSource": "na",
-              "bitrate": 128,
-              "url": "http://s3.yesstreaming.net:9000/"
-            }
-          ],
-          "imageUrl": "https://api.vaanoli.kodebot.com/radio/tamil-resources/vanavil-fm-logo.png"
+                "id": 11,
+                "name": "Vanavil FM",
+                "description": "Vanavil FM",
+                "genre": "Music",
+                "radioSources": [
+                        {
+                                "id": 1,
+                                "source": "http://vanavilfm.com/",
+                                "nameInSource": "na",
+                                "bitrate": 128,
+                                "url": "http://s3.yesstreaming.net:9000/"
+                        }
+                ],
+                "imageUrl": "https://api.vaanoli.kodebot.com/radio/tamil-resources/vanavil-fm-logo.png"
         },
         {
-          "id": 12,
-          "name": "Golden Vanavil FM",
-          "description": "Golden Vanavil 80s Hits FM",
-          "genre": "Music",
-          "radioSources": [
-            {
-              "id": 1,
-              "source": "http://vanavilfm.com/",
-              "nameInSource": "na",
-              "bitrate": 128,
-              "url": "http://s4.yesstreaming.net:8035/goldenvanavil"
-            }
-          ],
-          "imageUrl": "https://api.vaanoli.kodebot.com/radio/tamil-resources/golden-vanavil-fm-logo.png"
+                "id": 12,
+                "name": "Golden Vanavil FM",
+                "description": "Golden Vanavil 80s Hits FM",
+                "genre": "Music",
+                "radioSources": [
+                        {
+                                "id": 1,
+                                "source": "http://vanavilfm.com/",
+                                "nameInSource": "na",
+                                "bitrate": 128,
+                                "url": "http://s4.yesstreaming.net:8035/goldenvanavil"
+                        }
+                ],
+                "imageUrl": "https://api.vaanoli.kodebot.com/radio/tamil-resources/golden-vanavil-fm-logo.png"
         },
         {
-          "id": 13,
-          "name": "Radio City Tamil Gold",
-          "description": "Radio City Tamil Gold",
-          "genre": "Music",
-          "radioSources": [
-            {
-              "id": 1,
-              "source": "https://www.radiocity.in/",
-              "nameInSource": "na",
-              "bitrate": 64,
-              "url": "https://prclive4.listenon.in/TamilGold"
-            }
-          ],
-          "imageUrl": "https://api.vaanoli.kodebot.com/radio/tamil-resources/radio-city-tamil-gold-logo.png"
+                "id": 13,
+                "name": "Radio City Tamil Gold",
+                "description": "Radio City Tamil Gold",
+                "genre": "Music",
+                "radioSources": [
+                        {
+                                "id": 1,
+                                "source": "https://www.radiocity.in/",
+                                "nameInSource": "na",
+                                "bitrate": 64,
+                                "url": "https://prclive4.listenon.in/TamilGold"
+                        }
+                ],
+                "imageUrl": "https://api.vaanoli.kodebot.com/radio/tamil-resources/radio-city-tamil-gold-logo.png"
         },
         {
-          "id": 14,
-          "name": "ILC Tamil",
-          "description": "ILC Tamil",
-          "genre": "Music",
-          "radioSources": [
-            {
-              "id": 1,
-              "source": "http://ilctamil.com/",
-              "nameInSource": "na",
-              "bitrate": 64,
-              "url": "http://s2.voscast.com:9370/;stream1557619954911/1"
-            }
-          ],
-          "imageUrl": "https://api.vaanoli.kodebot.com/radio/tamil-resources/ilc-tamil-logo.png"
+                "id": 14,
+                "name": "ILC Tamil",
+                "description": "ILC Tamil",
+                "genre": "Music",
+                "radioSources": [
+                        {
+                                "id": 1,
+                                "source": "http://ilctamil.com/",
+                                "nameInSource": "na",
+                                "bitrate": 64,
+                                "url": "http://s2.voscast.com:9370/;stream1557619954911/1"
+                        }
+                ],
+                "imageUrl": "https://api.vaanoli.kodebot.com/radio/tamil-resources/ilc-tamil-logo.png"
         },
         {
-          "id": 15,
-          "name": "Paris Tamil FM",
-          "description": "Paris Tamil FM",
-          "genre": "Music",
-          "radioSources": [
-            {
-              "id": 1,
-              "source": "http://www.paristamil.com/",
-              "nameInSource": "na",
-              "bitrate": 128,
-              "url": "http://s6.voscast.com:7108/;"
-            }
-          ],
-          "imageUrl": "https://api.vaanoli.kodebot.com/radio/tamil-resources/paris-tamil-fm-logo.png",
+                "id": 15,
+                "name": "Paris Tamil FM",
+                "description": "Paris Tamil FM",
+                "genre": "Music",
+                "radioSources": [
+                        {
+                                "id": 1,
+                                "source": "http://www.paristamil.com/",
+                                "nameInSource": "na",
+                                "bitrate": 128,
+                                "url": "http://s6.voscast.com:7108/;"
+                        }
+                ],
+                "imageUrl": "https://api.vaanoli.kodebot.com/radio/tamil-resources/paris-tamil-fm-logo.png"
         }
-          ]
+]
